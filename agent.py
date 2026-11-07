@@ -50,7 +50,7 @@ AGENT_NAME = "ManiacAdaptive"
 
 from bot.fallback import State, get_state, policy
 from bot.safety import safe_action, safe_callback
-from time import perf_counter
+from time import monotonic, perf_counter
 
 
 @safe_callback
@@ -64,12 +64,16 @@ def new_half(config: AgentConfig, memory: dict) -> None:
 @safe_action
 def choose_action(obs: Observation, memory: dict) -> Action:
     """Play legal equity-based poker, including without a new_half call."""
+    requested = monotonic()
     start = perf_counter()
     state = None
     try:
         state = get_state(memory)
         state.governor.begin(start)
         state.opponent.observe(obs, state.gear)
+        state.timing.observe(obs, state.opponent, requested)
+        state.opponent.detector.k = state.timing.detector_k(
+            obs.hand_index, state.opponent.settings["checkfold_k"])
         action = policy(obs, state)
         recorded = action if isinstance(action, Action) and action in obs.legal_actions else Action.CHECK_CALL
         state.opponent.record_action(obs, recorded)
@@ -77,12 +81,20 @@ def choose_action(obs: Observation, memory: dict) -> Action:
     finally:
         if state is not None:
             state.governor.record(obs.hand_index, perf_counter() - start)
+            state.timing.finish(obs, state.opponent, monotonic())
 
 
 @safe_callback
 def on_hand_end(result: HandResult, memory: dict) -> None:
     """Update opponent evidence and gears; contain and log callback failures."""
-    get_state(memory).end(result)
+    started = monotonic()
+    state = get_state(memory)
+    try:
+        state.end(result)
+    finally:
+        # Batched callbacks run before choose_action: exclude our own callback
+        # work from the request-gap estimate of opponent/judge time.
+        state.timing.callback_seconds += monotonic() - started
 
 # ===== END OF YOUR CODE =====
 

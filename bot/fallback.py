@@ -5,6 +5,7 @@ from bot.preflop import preflop_strength
 from bot.governor import TimeGovernor
 from bot.opponent import OpponentModel
 from bot.gears import GearSelector
+from bot.timing import PhasedTiming
 from bot.policy import CONFIG, half_parameters, sample_action
 from game import Action, AgentConfig, Street
 
@@ -18,9 +19,11 @@ class State:
         self.hands_played = 0
         self.opponent = OpponentModel(config)
         self.selector = GearSelector()
+        self.timing = PhasedTiming()
 
     def end(self, result):
         if self.opponent.end(result, self.gear):
+            self.timing.end(self.opponent.recent[-1])
             self.hands_played += 1
             self.gear = self.selector.evaluate(self.hands_played, self.opponent.rolling, self.gear)
 
@@ -44,4 +47,5 @@ def policy(obs, state):
             if action in obs.legal_actions:
                 return action
     return sample_action(obs, strength, state.gear, state.rng, state.gear_parameters,
-                         bluff_multiplier=state.selector.bluff_multiplier(state.gear))
+                         bluff_multiplier=(state.selector.bluff_multiplier(state.gear)
+                                           * state.timing.bluff_multiplier(obs.hand_index)))
