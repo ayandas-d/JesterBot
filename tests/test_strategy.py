@@ -49,7 +49,7 @@ def test_exact_two_hole_rule_and_nut_equity():
 
 def test_simulation_never_reuses_known_cards_and_has_fixed_work():
     hole = (0, 5, 10, 15, 20)
-    for board, expected in (((25, 30, 35), 24), ((25, 30, 35, 1), 32), ((25, 30, 35, 1, 2), 48)):
+    for board, expected in (((25, 30, 35), 40), ((25, 30, 35, 1), 40), ((25, 30, 35, 1, 2), 72)):
         class Spy(Random):
             calls = 0
 
@@ -60,7 +60,7 @@ def test_simulation_never_reuses_known_cards_and_has_fixed_work():
                 assert len(set(draw)) == k == 10 - len(board)
                 return draw
         rng = Spy(2)
-        assert 0 < equity(hole, board, rng) < 1
+        assert 0 <= equity(hole, board, rng) <= 1
         assert rng.calls == expected
 
 

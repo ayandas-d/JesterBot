@@ -50,6 +50,7 @@ AGENT_NAME = "ManiacAdaptive"
 
 from bot.fallback import State, get_state, policy
 from bot.safety import safe_action, safe_callback
+from time import perf_counter
 
 
 @safe_callback
@@ -63,7 +64,15 @@ def new_half(config: AgentConfig, memory: dict) -> None:
 @safe_action
 def choose_action(obs: Observation, memory: dict) -> Action:
     """Play legal equity-based poker, including without a new_half call."""
-    return policy(obs, get_state(memory))
+    start = perf_counter()
+    state = None
+    try:
+        state = get_state(memory)
+        state.governor.begin(start)
+        return policy(obs, state)
+    finally:
+        if state is not None:
+            state.governor.record(obs.hand_index, perf_counter() - start)
 
 
 @safe_callback

@@ -146,7 +146,7 @@ def test_live_policy_is_not_the_adaptive_policy():
 
 def test_fixed_postflop_simulation_count(monkeypatch):
     calls = []
-    def estimate(hole, board, rng, samples):
+    def estimate(hole, board, rng, samples, deadline):
         calls.append(samples)
         return 0.5
     monkeypatch.setattr(fallback, "equity", estimate)
@@ -156,4 +156,4 @@ def test_fixed_postflop_simulation_count(monkeypatch):
         if obs.street != Street.PREFLOP:
             fallback.policy(obs, fallback.State(AgentConfig()))
         game.apply(Action.CHECK_CALL)
-    assert calls == [24] * 6
+    assert calls == [40, 40, 40, 40, 72, 72]

@@ -1,0 +1,178 @@
+{
+  "BOT_SEED": "7",
+  "random_decisions": {
+    "decisions": 1000,
+    "seconds": 0.696952,
+    "p50_ms": 0.8614,
+    "p99_ms": 1.379,
+    "max_ms": 2.396,
+    "street_p50_ms": {
+      "PREFLOP": 0.0068,
+      "FLOP": 1.0339,
+      "TURN": 0.9358,
+      "RIVER": 0.7878
+    },
+    "governor_seconds": 0.696388,
+    "reductions": 0,
+    "final_scale": 1.0,
+    "safety_errors": 0
+  },
+  "half_profiles": [
+    {
+      "opponent": "random",
+      "hands": 1000,
+      "decisions": 3840,
+      "seconds": 1.597,
+      "p50_ms": 0.544,
+      "p99_ms": 1.176,
+      "max_ms": 9.145,
+      "safety_errors": 0,
+      "gear": "safety",
+      "governor_seconds": 1.5932,
+      "reductions": 1,
+      "final_scale": 0.75
+    },
+    {
+      "opponent": "call",
+      "hands": 1000,
+      "decisions": 4000,
+      "seconds": 2.5947,
+      "p50_ms": 0.746,
+      "p99_ms": 1.344,
+      "max_ms": 2.374,
+      "safety_errors": 0,
+      "gear": "safety",
+      "governor_seconds": 2.5906,
+      "reductions": 0,
+      "final_scale": 1.0
+    },
+    {
+      "opponent": "pot",
+      "hands": 1000,
+      "decisions": 3887,
+      "seconds": 1.6814,
+      "p50_ms": 0.008,
+      "p99_ms": 1.268,
+      "max_ms": 1.76,
+      "safety_errors": 0,
+      "gear": "safety",
+      "governor_seconds": 1.6777,
+      "reductions": 0,
+      "final_scale": 1.0
+    }
+  ],
+  "matches": [
+    {
+      "match_seed": "7",
+      "num_deals": 200,
+      "verdict": "AGENT1_WIN",
+      "mean_bb_per_deal": 7.4925,
+      "ci": [
+        4.491625958220986,
+        10.493374041779013
+      ],
+      "agent_stats": {
+        "agent1": [
+          {
+            "calls": 691,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.207907,
+            "wall_seconds": 0.708201
+          },
+          {
+            "calls": 666,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.265785,
+            "wall_seconds": 0.754323
+          }
+        ],
+        "agent2": [
+          {
+            "calls": 633,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 8.6e-05,
+            "wall_seconds": 0.151401
+          },
+          {
+            "calls": 611,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.006342,
+            "wall_seconds": 0.16897
+          }
+        ]
+      }
+    },
+    {
+      "match_seed": "19",
+      "num_deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "mean_bb_per_deal": 8.9015,
+      "ci": [
+        7.535088893946209,
+        10.267911106053793
+      ],
+      "agent_stats": {
+        "agent1": [
+          {
+            "calls": 3585,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.822683,
+            "wall_seconds": 3.42987
+          },
+          {
+            "calls": 3523,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.529611,
+            "wall_seconds": 3.041838
+          }
+        ],
+        "agent2": [
+          {
+            "calls": 3252,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.010153,
+            "wall_seconds": 0.749572
+          },
+          {
+            "calls": 3193,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.0,
+            "wall_seconds": 0.673483
+          }
+        ]
+      }
+    }
+  ]
+}

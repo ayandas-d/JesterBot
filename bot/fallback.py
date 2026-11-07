@@ -1,17 +1,15 @@
 """Safety submission: no opponent model, timing tells or adaptive gears."""
 
-from random import Random
-
-from bot.equity import equity, preflop_strength
+from bot.equity import equity, reset_rng
+from bot.preflop import preflop_strength
+from bot.governor import TimeGovernor
 from game import Action, AgentConfig, Street
-
-POSTFLOP_SAMPLES = 24
-
 
 class State:
     def __init__(self, config):
         self.config = config
-        self.rng = Random()
+        self.rng = reset_rng()
+        self.governor = TimeGovernor(config.num_hands, min(4.0, config.time_bank_seconds * 0.75))
         self.hands_played = 0
 
     def end(self, result):
@@ -28,7 +26,9 @@ def get_state(memory):
 def policy(obs, state):
     preflop = obs.street == Street.PREFLOP
     strength = (preflop_strength(obs.hole_cards) if preflop else
-                equity(obs.hole_cards, obs.board, state.rng, samples=POSTFLOP_SAMPLES))
+                equity(obs.hole_cards, obs.board, state.rng,
+                       samples=state.governor.samples_for(len(obs.board)),
+                       deadline=state.governor.deadline))
     call = min(obs.to_call, obs.my_stack)
     pot_odds = call / max(1, obs.pot + call)
     if call and strength < pot_odds + 0.035:

@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 from random import Random
+from statistics import median
 import sys
 from time import perf_counter
 
@@ -37,11 +38,15 @@ def profile(opponent, seed, hands=1000):
         agent.on_hand_end(game.hand_result(seat), memory)
         callbacks += perf_counter() - start
     ordered = sorted(durations)
+    governor = memory["bot"].governor
     report = dict(opponent=opponent, hands=hands, decisions=len(durations),
                   seconds=round(sum(durations) + callbacks, 4),
+                  p50_ms=round(median(durations) * 1000, 3),
                   p99_ms=round(ordered[int(len(ordered) * .99)] * 1000, 3),
                   max_ms=round(max(durations) * 1000, 3),
-                  safety_errors=memory["safety_errors"], gear=getattr(memory["bot"], "gear", "safety"))
+                  safety_errors=memory["safety_errors"], gear=getattr(memory["bot"], "gear", "safety"),
+                  governor_seconds=round(governor.total_seconds, 4),
+                  reductions=governor.reductions, final_scale=governor.scale)
     print(json.dumps(report), flush=True)
     assert report["safety_errors"] == 0
     assert report["seconds"] <= 4 and report["p99_ms"] < 20, report
