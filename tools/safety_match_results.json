@@ -1,0 +1,230 @@
+[
+  {
+    "match_seed": "7",
+    "num_deals": 1000,
+    "agent1_name": "TEAM_NAME_HERE / ManiacAdaptive (http://localhost:51901)",
+    "verdict": "AGENT1_WIN",
+    "mean_bb_per_deal": 8.058,
+    "ci": [
+      6.773242349126078,
+      9.342757650873923
+    ],
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 3487,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.547847,
+          "wall_seconds": 2.99281
+        },
+        {
+          "calls": 3518,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.483719,
+          "wall_seconds": 2.930262
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 3162,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.00026,
+          "wall_seconds": 0.882139
+        },
+        {
+          "calls": 3187,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.013462,
+          "wall_seconds": 0.861732
+        }
+      ]
+    }
+  },
+  {
+    "match_seed": "19",
+    "num_deals": 1000,
+    "agent1_name": "TEAM_NAME_HERE / ManiacAdaptive (http://localhost:51899)",
+    "verdict": "AGENT1_WIN",
+    "mean_bb_per_deal": 7.9145,
+    "ci": [
+      6.564798200233884,
+      9.264201799766116
+    ],
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 3620,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.559888,
+          "wall_seconds": 3.11472
+        },
+        {
+          "calls": 3583,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.486116,
+          "wall_seconds": 2.968048
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 3263,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.000283,
+          "wall_seconds": 0.915524
+        },
+        {
+          "calls": 3209,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.002552,
+          "wall_seconds": 0.853804
+        }
+      ]
+    }
+  },
+  {
+    "match_seed": "41",
+    "num_deals": 1000,
+    "agent1_name": "TEAM_NAME_HERE / ManiacAdaptive (http://localhost:51898)",
+    "verdict": "AGENT1_WIN",
+    "mean_bb_per_deal": 9.141,
+    "ci": [
+      7.813019822247748,
+      10.468980177752252
+    ],
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 3575,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.559097,
+          "wall_seconds": 3.074494
+        },
+        {
+          "calls": 3599,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.49359,
+          "wall_seconds": 2.988933
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 3257,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.000292,
+          "wall_seconds": 0.90988
+        },
+        {
+          "calls": 3228,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.00588,
+          "wall_seconds": 0.866115
+        }
+      ]
+    }
+  },
+  {
+    "match_seed": "7",
+    "num_deals": 200,
+    "agent1_name": "TEAM_NAME_HERE / ManiacAdaptive (http://localhost:51964)",
+    "verdict": "AGENT1_WIN",
+    "mean_bb_per_deal": 7.645,
+    "ci": [
+      4.457850256224814,
+      10.832149743775185
+    ],
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 655,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.047529,
+          "wall_seconds": 0.48329
+        },
+        {
+          "calls": 669,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.038182,
+          "wall_seconds": 0.477838
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 603,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.000164,
+          "wall_seconds": 0.143985
+        },
+        {
+          "calls": 614,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.0,
+          "wall_seconds": 0.146089
+        }
+      ]
+    }
+  }
+]

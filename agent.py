@@ -45,46 +45,31 @@ AGENT_NAME = "JustAsAwesomeAgent"
 
 # ===== YOUR CODE HERE =====
 
-PARTICIPANT = "Brootal"
-AGENT_NAME = "Jester"
+PARTICIPANT = "TEAM_NAME_HERE"
+AGENT_NAME = "ManiacAdaptive"
 
-from time import perf_counter as _clock
+from bot.fallback import State, get_state, policy
+from bot.safety import safe_action, safe_callback
 
-from bot.strategy import State, get_state, policy
 
-
+@safe_callback
 def new_half(config: AgentConfig, memory: dict) -> None:
-    """Reset every learned statistic, random stream and clock each half."""
-    try:
-        memory["bot"] = State(config)
-        memory["safety_errors"] = 0
-    except Exception:
-        memory.pop("bot", None)
-        memory["safety_errors"] = memory.get("safety_errors", 0) + 1
+    """Reset the safety submission's complete half-local state."""
+    memory.clear()
+    memory["bot"] = State(config)
+    memory["safety_errors"] = 0
 
 
+@safe_action
 def choose_action(obs: Observation, memory: dict) -> Action:
-    """Return a legal mixed-strategy action; any internal failure calls/checks."""
-    try:
-        state = get_state(memory)
-        state.observe(obs, _clock())
-        action = policy(obs, state)
-        if not isinstance(action, Action) or action not in obs.legal_actions:
-            raise ValueError("strategy returned an illegal action")
-        state.record_action(obs, action)
-        state.timing.finish(obs, action, _clock())
-        return action
-    except Exception:
-        memory["safety_errors"] = memory.get("safety_errors", 0) + 1
-        return Action.CHECK_CALL
+    """Play legal equity-based poker, including without a new_half call."""
+    return policy(obs, get_state(memory))
 
 
+@safe_callback
 def on_hand_end(result: HandResult, memory: dict) -> None:
-    """Learn from batched results without allowing learning bugs to forfeit."""
-    try:
-        get_state(memory).end(result)
-    except Exception:
-        memory["safety_errors"] = memory.get("safety_errors", 0) + 1
+    """Keep minimal bookkeeping; callback failures are contained and logged."""
+    get_state(memory).end(result)
 
 # ===== END OF YOUR CODE =====
 

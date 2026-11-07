@@ -16,7 +16,7 @@ def observation(seed=4):
 
 
 def test_identity():
-    assert agent.PARTICIPANT == "Brootal" and agent.AGENT_NAME == "Jester"
+    assert agent.PARTICIPANT == "TEAM_NAME_HERE" and agent.AGENT_NAME == "ManiacAdaptive"
 
 
 def result(hand, winner="me", showdown=False):
@@ -82,26 +82,25 @@ def test_safety_wrapper_checks_return_and_exceptions(monkeypatch, failure):
 
 
 def test_new_half_and_result_failures_are_contained(monkeypatch):
+    state_type = agent.State
     monkeypatch.setattr(agent, "State", lambda *_: (_ for _ in ()).throw(ValueError("fault")))
     memory = {}
     agent.new_half(AgentConfig(), memory)
     assert memory["safety_errors"] == 1
-    monkeypatch.setattr(State, "end", lambda *_: (_ for _ in ()).throw(ValueError("fault")))
+    monkeypatch.setattr(state_type, "end", lambda *_: (_ for _ in ()).throw(ValueError("fault")))
     agent.on_hand_end(result(0), memory)
     assert memory["safety_errors"] == 2
 
 
-def test_half_reset_removes_all_learning_and_clock_state():
+def test_half_reset_replaces_all_live_state():
     memory = {}
     agent.new_half(AgentConfig(), memory)
     old = memory["bot"]
-    old.fold_streak, old.gear = 8, "value"
-    old.timing.last = (1, 2, 3, 4, 5)
-    old.recent.append((1, 1, 1, 1, 80, False))
+    old.hands_played = 80
     agent.new_half(AgentConfig(), memory)
     fresh = memory["bot"]
-    assert fresh is not old and fresh.gear == "maniac"
-    assert fresh.fold_streak == 0 and not fresh.recent and fresh.timing.last is None
+    assert fresh is not old and fresh.rng is not old.rng
+    assert fresh.hands_played == 0 and memory["safety_errors"] == 0
 
 
 def test_terminal_folds_are_learned_once_and_defense_revokes_exploit():

@@ -24,6 +24,8 @@ def main():
     parser.add_argument("--seed", default="7")
     parser.add_argument("--opponent", choices=("random", "calling_station", "always_pot", "always_half"), default="random")
     parser.add_argument("--json", type=Path)
+    parser.add_argument("--require-win", action="store_true")
+    parser.add_argument("--max-thinking", type=float)
     args = parser.parse_args()
     # Reserve two distinct ephemeral ports, then release just before spawning.
     sockets = [socket.socket(), socket.socket()]
@@ -31,7 +33,7 @@ def main():
         sock.bind(("127.0.0.1", 0))
     ports = [sock.getsockname()[1] for sock in sockets]
     processes = []
-    with tempfile.TemporaryDirectory(prefix="poker-match-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="poker-match-", dir="/tmp") as tmp:
         logs = []
         try:
             for sock, port, script in zip(sockets, ports, ("agent.py", f"baseline-bots/baseline_{args.opponent}.py")):
@@ -63,6 +65,10 @@ def main():
             # Judge exit status alone is not a compatibility check.
             for stats in report["agent_stats"]["agent1"]:
                 assert stats["errors"] == 0 and not stats["forfeited"] and not stats["timed_out"], stats
+                if args.max_thinking is not None:
+                    assert stats["time_seconds"] <= args.max_thinking, stats
+            if args.require_win:
+                assert report["verdict"] == "AGENT1_WIN", report["verdict"]
         finally:
             for process in processes:
                 if process.poll() is None:

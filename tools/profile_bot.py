@@ -41,7 +41,7 @@ def profile(opponent, seed, hands=1000):
                   seconds=round(sum(durations) + callbacks, 4),
                   p99_ms=round(ordered[int(len(ordered) * .99)] * 1000, 3),
                   max_ms=round(max(durations) * 1000, 3),
-                  safety_errors=memory["safety_errors"], gear=memory["bot"].gear)
+                  safety_errors=memory["safety_errors"], gear=getattr(memory["bot"], "gear", "safety"))
     print(json.dumps(report), flush=True)
     assert report["safety_errors"] == 0
     assert report["seconds"] <= 4 and report["p99_ms"] < 20, report
