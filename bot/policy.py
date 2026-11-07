@@ -1,4 +1,4 @@
-"""Data-driven mixed policies. No opponent model or automatic gear switching."""
+"""Data-driven mixed policies with bounded opponent-model bluff adjustments."""
 
 from copy import deepcopy
 from math import isfinite
@@ -84,7 +84,7 @@ def half_parameters(rng):
     return parameters
 
 
-def action_probabilities(obs, strength, gear=None, parameters=None):
+def action_probabilities(obs, strength, gear=None, parameters=None, bluff_multiplier=1.0):
     """Return a normalized distribution whose keys are exactly legal actions.
 
     Medium postflop equity includes live draws through their runout equity.
@@ -111,6 +111,8 @@ def action_probabilities(obs, strength, gear=None, parameters=None):
                  if strength >= thresholds[band]), "weak")
     raises = [action for action in (Action.RAISE_HALF, Action.RAISE_POT) if action in probabilities]
     raise_probability = params["raise"][band] if raises else 0.0
+    if band == "weak":
+        raise_probability = max(0.0, min(1.0, raise_probability * bluff_multiplier))
     if call and obs.raises_this_street >= 2:
         raise_probability *= params["reraise_multiplier"]
     if big_bet:
@@ -134,8 +136,8 @@ def action_probabilities(obs, strength, gear=None, parameters=None):
     return {action: probability / total for action, probability in probabilities.items()}
 
 
-def sample_action(obs, strength, gear, rng, parameters=None):
-    probabilities = action_probabilities(obs, strength, gear, parameters)
+def sample_action(obs, strength, gear, rng, parameters=None, bluff_multiplier=1.0):
+    probabilities = action_probabilities(obs, strength, gear, parameters, bluff_multiplier)
     point = rng.random()
     cumulative = 0.0
     last_positive = Action.CHECK_CALL

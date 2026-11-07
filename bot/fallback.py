@@ -3,8 +3,10 @@
 from bot.equity import equity, reset_rng
 from bot.preflop import preflop_strength
 from bot.governor import TimeGovernor
+from bot.opponent import OpponentModel
+from bot.gears import GearSelector
 from bot.policy import CONFIG, half_parameters, sample_action
-from game import AgentConfig, Street
+from game import Action, AgentConfig, Street
 
 class State:
     def __init__(self, config):
@@ -14,9 +16,13 @@ class State:
         self.gear_parameters = half_parameters(self.rng)
         self.governor = TimeGovernor(config.num_hands, min(4.0, config.time_bank_seconds * 0.75))
         self.hands_played = 0
+        self.opponent = OpponentModel(config)
+        self.selector = GearSelector()
 
     def end(self, result):
-        self.hands_played += 1
+        if self.opponent.end(result, self.gear):
+            self.hands_played += 1
+            self.gear = self.selector.evaluate(self.hands_played, self.opponent.rolling, self.gear)
 
 
 def get_state(memory):
@@ -32,4 +38,10 @@ def policy(obs, state):
                 equity(obs.hole_cards, obs.board, state.rng,
                        samples=state.governor.samples_for(len(obs.board)),
                        deadline=state.governor.deadline))
-    return sample_action(obs, strength, state.gear, state.rng, state.gear_parameters)
+    # Still estimate strength with the same sample budget during exploitation.
+    if state.opponent.exploit_checkfold:
+        for action in (Action.RAISE_HALF, Action.RAISE_POT):
+            if action in obs.legal_actions:
+                return action
+    return sample_action(obs, strength, state.gear, state.rng, state.gear_parameters,
+                         bluff_multiplier=state.selector.bluff_multiplier(state.gear))

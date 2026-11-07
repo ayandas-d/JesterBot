@@ -69,7 +69,11 @@ def choose_action(obs: Observation, memory: dict) -> Action:
     try:
         state = get_state(memory)
         state.governor.begin(start)
-        return policy(obs, state)
+        state.opponent.observe(obs, state.gear)
+        action = policy(obs, state)
+        recorded = action if isinstance(action, Action) and action in obs.legal_actions else Action.CHECK_CALL
+        state.opponent.record_action(obs, recorded)
+        return action
     finally:
         if state is not None:
             state.governor.record(obs.hand_index, perf_counter() - start)
@@ -77,7 +81,7 @@ def choose_action(obs: Observation, memory: dict) -> Action:
 
 @safe_callback
 def on_hand_end(result: HandResult, memory: dict) -> None:
-    """Keep minimal bookkeeping; callback failures are contained and logged."""
+    """Update opponent evidence and gears; contain and log callback failures."""
     get_state(memory).end(result)
 
 # ===== END OF YOUR CODE =====
