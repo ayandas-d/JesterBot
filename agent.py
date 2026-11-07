@@ -55,7 +55,7 @@ from time import perf_counter
 
 @safe_callback
 def new_half(config: AgentConfig, memory: dict) -> None:
-    """Reset the safety submission's complete half-local state."""
+    """Reset complete half-local state, including gear and threshold jitter."""
     memory.clear()
     memory["bot"] = State(config)
     memory["safety_errors"] = 0

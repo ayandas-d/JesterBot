@@ -1,7 +1,6 @@
 """Engine-generated legality coverage and failure containment for Task 1."""
 
 from collections import Counter
-from random import Random
 
 from fastapi.testclient import TestClient
 import pytest
@@ -9,6 +8,7 @@ import pytest
 import agent
 from bot import fallback, safety
 from game import Action, AgentConfig, Game, Street, make_deal
+from tests.fuzz_states import fuzz_hands
 
 
 def free_observation():
@@ -18,39 +18,27 @@ def free_observation():
 
 
 def test_legality_fuzz_thousands_of_real_states():
-    rng = Random(20261107)
     memories = [{}, {}]  # also exercise lazy initialization in both seats
     coverage = Counter()
     states = 0
-    for hand in range(2500):
-        game = Game(make_deal("safety-fuzz", hand), hand % 2, hand_index=hand)
-        while not game.is_terminal:
-            seat = game.to_act
-            obs = game.observation(seat)
-            action = agent.choose_action(obs, memories[seat])
-            assert isinstance(action, Action) and action in obs.legal_actions
-            coverage[obs.street] += 1
-            coverage["facing_bet" if obs.to_call else "free_check"] += 1
-            if obs.raises_this_street == AgentConfig().raise_cap:
-                coverage["raise_cap"] += 1
-            if obs.opp_stack == 0:
-                coverage["opponent_all_in"] += 1
-            states += 1
-            # Independent legal trajectories prevent the policy from hiding
-            # states it would normally avoid. Mixed regimes cover deep boards,
-            # raise caps, blind options, all-ins, and random early folds.
-            mode = hand % 4
-            if mode == 0:
-                applied = Action.CHECK_CALL
-            elif mode == 1:
-                applied = Action.RAISE_POT if Action.RAISE_POT in obs.legal_actions else Action.CHECK_CALL
-            elif mode == 2:
-                applied = rng.choice(obs.legal_actions)
-            else:
-                applied = rng.choice([a for a in obs.legal_actions if a != Action.FOLD])
-            game.apply(applied)
-        for seat in (0, 1):
-            agent.on_hand_end(game.hand_result(seat), memories[seat])
+    def observe(obs):
+        nonlocal states
+        # Button is hand_index % 2 in this shared walk.
+        button = obs.hand_index % 2
+        seat = button if obs.is_button else 1 - button
+        action = agent.choose_action(obs, memories[seat])
+        assert isinstance(action, Action) and action in obs.legal_actions
+        coverage[obs.street] += 1
+        coverage["facing_bet" if obs.to_call else "free_check"] += 1
+        if obs.raises_this_street == AgentConfig().raise_cap:
+            coverage["raise_cap"] += 1
+        if obs.opp_stack == 0:
+            coverage["opponent_all_in"] += 1
+        states += 1
+    def finish(results):
+        for seat, result in enumerate(results):
+            agent.on_hand_end(result, memories[seat])
+    fuzz_hands(observe, finish)
     assert states > 10_000, states
     assert all(coverage[street] >= 100 for street in Street), coverage
     assert all(coverage[key] > 0 for key in ("facing_bet", "free_check", "raise_cap", "opponent_all_in")), coverage

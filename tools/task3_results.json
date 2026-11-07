@@ -1,0 +1,191 @@
+{
+  "BOT_SEED": "7",
+  "policy": {
+    "fuzz_states": 15781,
+    "raise_legal_sample": 4000,
+    "gears": {
+      "MANIAC": {
+        "raise_rate": 0.966,
+        "expected_raise_rate": 0.9660349999999945,
+        "low_equity_free_raise_rate": 0.982,
+        "low_equity_free_spots": 4000
+      },
+      "AGGRO": {
+        "raise_rate": 0.47175,
+        "expected_raise_rate": 0.473280156249993,
+        "low_equity_free_raise_rate": 0.13125,
+        "low_equity_free_spots": 4000
+      },
+      "VALUE": {
+        "raise_rate": 0.35825,
+        "expected_raise_rate": 0.3525372250000141,
+        "low_equity_free_raise_rate": 0.00675,
+        "low_equity_free_spots": 4000
+      },
+      "TRAP": {
+        "raise_rate": 0.139,
+        "expected_raise_rate": 0.1359687499999996,
+        "low_equity_free_raise_rate": 0.023,
+        "low_equity_free_spots": 4000
+      }
+    }
+  },
+  "half_profiles": [
+    {
+      "opponent": "random",
+      "hands": 1000,
+      "decisions": 2475,
+      "seconds": 0.9971,
+      "p50_ms": 0.01,
+      "p99_ms": 1.734,
+      "max_ms": 2.013,
+      "safety_errors": 0,
+      "gear": "MANIAC",
+      "governor_seconds": 0.994,
+      "reductions": 0,
+      "final_scale": 1.0
+    },
+    {
+      "opponent": "call",
+      "hands": 1000,
+      "decisions": 4000,
+      "seconds": 3.1407,
+      "p50_ms": 0.857,
+      "p99_ms": 1.842,
+      "max_ms": 2.471,
+      "safety_errors": 0,
+      "gear": "MANIAC",
+      "governor_seconds": 3.1353,
+      "reductions": 0,
+      "final_scale": 1.0
+    },
+    {
+      "opponent": "pot",
+      "hands": 1000,
+      "decisions": 3053,
+      "seconds": 0.1218,
+      "p50_ms": 0.008,
+      "p99_ms": 1.258,
+      "max_ms": 6.116,
+      "safety_errors": 0,
+      "gear": "MANIAC",
+      "governor_seconds": 0.1188,
+      "reductions": 0,
+      "final_scale": 1.0
+    }
+  ],
+  "matches": [
+    {
+      "match_seed": "7",
+      "num_deals": 200,
+      "verdict": "AGENT1_WIN",
+      "mean_bb_per_deal": 11.2,
+      "ci": [
+        7.390337785189509,
+        15.00966221481049
+      ],
+      "agent_stats": {
+        "agent1": [
+          {
+            "calls": 385,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.097465,
+            "wall_seconds": 0.271394
+          },
+          {
+            "calls": 378,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.089364,
+            "wall_seconds": 0.259408
+          }
+        ],
+        "agent2": [
+          {
+            "calls": 485,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.000621,
+            "wall_seconds": 0.125053
+          },
+          {
+            "calls": 483,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.0,
+            "wall_seconds": 0.117261
+          }
+        ]
+      }
+    },
+    {
+      "match_seed": "19",
+      "num_deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "mean_bb_per_deal": 11.785,
+      "ci": [
+        9.990148949596895,
+        13.579851050403105
+      ],
+      "agent_stats": {
+        "agent1": [
+          {
+            "calls": 2084,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.524592,
+            "wall_seconds": 1.506156
+          },
+          {
+            "calls": 2077,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.479385,
+            "wall_seconds": 1.434744
+          }
+        ],
+        "agent2": [
+          {
+            "calls": 2586,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.0,
+            "wall_seconds": 0.595002
+          },
+          {
+            "calls": 2536,
+            "skipped_calls": 0,
+            "timed_out": false,
+            "errors": 0,
+            "forfeited": false,
+            "error_messages": [],
+            "time_seconds": 0.0,
+            "wall_seconds": 0.562367
+          }
+        ]
+      }
+    }
+  ]
+}
