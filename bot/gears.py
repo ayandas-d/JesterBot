@@ -8,7 +8,7 @@ CONFIG = {
     "folder_fold_rate": 0.55,
     "station_fold_rate": 0.30,
     "station_call_rate": 0.55,
-    "reraise_rate": 0.30,
+    "reraise_rate": 0.35,
     "losing_net_bb": 0.0,
     "folder_bluff_multiplier": 1.10,
 }
