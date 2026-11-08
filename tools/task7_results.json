@@ -1,0 +1,3436 @@
+{
+  "tests_passed": 127,
+  "starter_tests_passed": 12,
+  "deals": 1000,
+  "seeds": [
+    "7",
+    "19",
+    "41"
+  ],
+  "bot_seed": "7",
+  "hardening": {
+    "doubled_samples": {
+      "3": 80,
+      "4": 80,
+      "5": 144
+    },
+    "benchmarks": [
+      {
+        "opponent": "random",
+        "hands": 1000,
+        "decisions": 3604,
+        "seconds": 5.903343689016765,
+        "max_decision_ms": 17.155583016574383,
+        "errors": 0,
+        "governor_reductions": 0
+      },
+      {
+        "opponent": "calling_station",
+        "hands": 1000,
+        "decisions": 3727,
+        "seconds": 6.612307346280431,
+        "max_decision_ms": 15.95266698859632,
+        "errors": 0,
+        "governor_reductions": 0
+      },
+      {
+        "opponent": "pot_maniac",
+        "hands": 1000,
+        "decisions": 4137,
+        "seconds": 6.28129625658039,
+        "max_decision_ms": 8.052832999965176,
+        "errors": 0,
+        "governor_reductions": 0
+      }
+    ],
+    "peak_rss_bytes": 103923712,
+    "peak_rss_mib": 99.109375,
+    "runtime_imports": [
+      "agent.py",
+      "bot/__init__.py",
+      "bot/equity.py",
+      "bot/fallback.py",
+      "bot/gears.py",
+      "bot/governor.py",
+      "bot/opponent.py",
+      "bot/policy.py",
+      "bot/preflop.py",
+      "bot/safety.py",
+      "bot/timing.py",
+      "evaluator.py",
+      "game.py"
+    ],
+    "all_runtime_imports_tracked": true,
+    "runtime_source_bytes": 83016,
+    "runtime_file_writes": [],
+    "blocked_operations": [],
+    "bytecode_writes_disabled": true,
+    "runtime_requirements": [
+      "fastapi==0.156.1",
+      "uvicorn==0.54.0"
+    ]
+  },
+  "docker_source_payload_bytes": 90524,
+  "docker_source_files": 15,
+  "docker_build_verified": false,
+  "matches": [
+    {
+      "opponent": "baseline_random",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 7.158,
+      "ci": [
+        5.8529256469593145,
+        8.463074353040685
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.545124,
+        0.845692
+      ],
+      "opponent_think_seconds": [
+        0.00776,
+        0.0
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 373.0,
+            "TRAP": 4144.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3151,
+            "raises": 1866,
+            "faced_raises": 579,
+            "reraises": 236,
+            "hands": 1000,
+            "showdowns": 397,
+            "aggressive_showdowns": 385,
+            "folds": 286,
+            "weak_aggressive_showdowns": 106,
+            "calls": 305,
+            "calls_to_raise": 175,
+            "folds_to_raise": 168,
+            "checks": 694
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.1703805726137944,
+          "gate": "closed",
+          "gate_hand": 350,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 397,
+          "timing_gaps": {
+            "baseline": 780,
+            "clean": 2533,
+            "multiple": 309,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.1546967218850472,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 97,
+            "TRAP": 3526
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 432.5,
+            "TRAP": 2208.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3136,
+            "raises": 1866,
+            "folds": 295,
+            "faced_raises": 531,
+            "folds_to_raise": 161,
+            "reraises": 212,
+            "hands": 1000,
+            "showdowns": 372,
+            "aggressive_showdowns": 364,
+            "weak_aggressive_showdowns": 92,
+            "calls": 282,
+            "calls_to_raise": 158,
+            "checks": 693
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.583704099728493,
+          "gate": "closed",
+          "gate_hand": 362,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 372,
+          "timing_gaps": {
+            "baseline": 760,
+            "clean": 2549,
+            "multiple": 293,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.9673809958442829,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 95,
+            "TRAP": 3508
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/baseline_random-0-7"
+    },
+    {
+      "opponent": "baseline_random",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 6.233,
+      "ci": [
+        4.937745561892553,
+        7.528254438107446
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.172256,
+        1.980511
+      ],
+      "opponent_think_seconds": [
+        0.019767,
+        0.059811
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 255.5,
+            "TRAP": 2861.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3159,
+            "raises": 1886,
+            "faced_raises": 565,
+            "reraises": 235,
+            "hands": 1000,
+            "showdowns": 399,
+            "aggressive_showdowns": 392,
+            "folds": 294,
+            "calls": 293,
+            "calls_to_raise": 159,
+            "folds_to_raise": 171,
+            "checks": 686,
+            "weak_aggressive_showdowns": 98
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.6832290554593783,
+          "gate": "closed",
+          "gate_hand": 339,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 398,
+          "timing_gaps": {
+            "baseline": 805,
+            "clean": 2553,
+            "multiple": 303,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.3974586374053666,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 97,
+            "TRAP": 3565
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 69.5,
+            "TRAP": 3046.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3132,
+            "raises": 1856,
+            "folds": 293,
+            "faced_raises": 549,
+            "folds_to_raise": 164,
+            "reraises": 212,
+            "hands": 1000,
+            "showdowns": 397,
+            "aggressive_showdowns": 384,
+            "calls": 282,
+            "calls_to_raise": 173,
+            "weak_aggressive_showdowns": 85,
+            "checks": 701
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.465166479058098,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 396,
+          "timing_gaps": {
+            "baseline": 755,
+            "clean": 2479,
+            "multiple": 326,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.3910563693778382,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 94,
+            "TRAP": 3467
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/baseline_random-1-19"
+    },
+    {
+      "opponent": "baseline_random",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 6.2255,
+      "ci": [
+        4.998500391965133,
+        7.452499608034867
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.967238,
+        1.498908
+      ],
+      "opponent_think_seconds": [
+        0.037515,
+        0.031276
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -51.0,
+            "TRAP": 3158.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3089,
+            "raises": 1837,
+            "faced_raises": 533,
+            "reraises": 235,
+            "hands": 1000,
+            "showdowns": 390,
+            "aggressive_showdowns": 380,
+            "folds": 285,
+            "calls": 271,
+            "calls_to_raise": 145,
+            "weak_aggressive_showdowns": 108,
+            "folds_to_raise": 153,
+            "checks": 696
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.439605223858962,
+          "gate": "closed",
+          "gate_hand": 321,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 389,
+          "timing_gaps": {
+            "baseline": 780,
+            "clean": 2509,
+            "multiple": 290,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.363682893634149,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 98,
+            "TRAP": 3482
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 309.5,
+            "TRAP": 2808.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 3089,
+            "raises": 1829,
+            "folds": 303,
+            "faced_raises": 554,
+            "folds_to_raise": 178,
+            "reraises": 216,
+            "hands": 1000,
+            "showdowns": 362,
+            "aggressive_showdowns": 350,
+            "weak_aggressive_showdowns": 73,
+            "calls": 296,
+            "calls_to_raise": 160,
+            "checks": 661
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.0264063036302105,
+          "gate": "closed",
+          "gate_hand": 364,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 362,
+          "timing_gaps": {
+            "baseline": 806,
+            "clean": 2486,
+            "multiple": 301,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.311073386337682,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 94,
+            "TRAP": 3500
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/baseline_random-2-41"
+    },
+    {
+      "opponent": "nit_folder",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.135,
+      "ci": [
+        0.8537973111931677,
+        1.4162026888068322
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.060555,
+        0.061987
+      ],
+      "opponent_think_seconds": [
+        1.157247,
+        1.190456
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 582.5
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1107,
+            "folds": 994,
+            "faced_raises": 560,
+            "folds_to_raise": 515,
+            "hands": 1000,
+            "calls": 66,
+            "checks": 47,
+            "calls_to_raise": 45,
+            "showdowns": 6
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.10301378116128035,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 1,
+            "clean": 21,
+            "multiple": 542,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 236,
+          "exploit_raises": 236,
+          "gear_decisions": {
+            "MANIAC": 565
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 552.5
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1097,
+            "folds": 992,
+            "hands": 1000,
+            "faced_raises": 553,
+            "folds_to_raise": 505,
+            "calls": 61,
+            "calls_to_raise": 48,
+            "checks": 44,
+            "showdowns": 8
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.09750853016157635,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 15,
+            "multiple": 540,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 326,
+          "exploit_raises": 326,
+          "gear_decisions": {
+            "MANIAC": 556
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/nit_folder-0-7"
+    },
+    {
+      "opponent": "nit_folder",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.456,
+      "ci": [
+        1.2899689131994125,
+        1.6220310868005874
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.037506,
+        0.034585
+      ],
+      "opponent_think_seconds": [
+        1.311333,
+        1.053141
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 733.5
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1061,
+            "folds": 997,
+            "faced_raises": 544,
+            "folds_to_raise": 520,
+            "hands": 1000,
+            "calls": 47,
+            "checks": 17,
+            "calls_to_raise": 24,
+            "showdowns": 3
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.060694535728544,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 1,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 27,
+            "multiple": 516,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 295,
+          "exploit_raises": 295,
+          "gear_decisions": {
+            "MANIAC": 544
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 722.5
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1063,
+            "folds": 998,
+            "hands": 1000,
+            "faced_raises": 539,
+            "folds_to_raise": 513,
+            "calls": 41,
+            "calls_to_raise": 26,
+            "showdowns": 2,
+            "checks": 24
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.065145245695021,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 1,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 19,
+            "multiple": 521,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 347,
+          "exploit_raises": 347,
+          "gear_decisions": {
+            "MANIAC": 541
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/nit_folder-1-19"
+    },
+    {
+      "opponent": "nit_folder",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.564,
+      "ci": [
+        1.3847615978334686,
+        1.7432384021665315
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.071514,
+        0.043791
+      ],
+      "opponent_think_seconds": [
+        1.558355,
+        1.650843
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 800.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1079,
+            "folds": 999,
+            "faced_raises": 548,
+            "folds_to_raise": 515,
+            "hands": 1000,
+            "calls": 49,
+            "checks": 31,
+            "calls_to_raise": 33,
+            "showdowns": 1
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.09647986100753769,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 21,
+            "multiple": 528,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 303,
+          "exploit_raises": 303,
+          "gear_decisions": {
+            "MANIAC": 550
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 764.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1057,
+            "folds": 996,
+            "hands": 1000,
+            "faced_raises": 536,
+            "folds_to_raise": 510,
+            "calls": 40,
+            "checks": 21,
+            "calls_to_raise": 26,
+            "showdowns": 4
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.06715299483039416,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 15,
+            "multiple": 520,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 349,
+          "exploit_raises": 349,
+          "gear_decisions": {
+            "MANIAC": 536
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/nit_folder-2-41"
+    },
+    {
+      "opponent": "check_fold",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.5,
+      "ci": [
+        1.5,
+        1.5
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.001403,
+        0.007624
+      ],
+      "opponent_think_seconds": [
+        0.001314,
+        0.012013
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500,
+            "hands": 1000
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.014032381644938141,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 492,
+          "exploit_raises": 492,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "hands": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.013608440262032673,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 493,
+          "exploit_raises": 493,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/check_fold-0-7"
+    },
+    {
+      "opponent": "check_fold",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.5,
+      "ci": [
+        1.5,
+        1.5
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.001029,
+        0.008255
+      ],
+      "opponent_think_seconds": [
+        0.0017,
+        0.007747
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500,
+            "hands": 1000
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.014400227140868083,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 492,
+          "exploit_raises": 492,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "hands": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.014002018986502662,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 493,
+          "exploit_raises": 493,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/check_fold-1-19"
+    },
+    {
+      "opponent": "check_fold",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.5,
+      "ci": [
+        1.5,
+        1.5
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.000827,
+        0.0
+      ],
+      "opponent_think_seconds": [
+        0.001055,
+        0.001229
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500,
+            "hands": 1000
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.013470766687532887,
+          "gate": "closed",
+          "gate_hand": 700,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 492,
+          "exploit_raises": 492,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "MANIAC",
+          "transitions": [],
+          "gear_net_bb": {
+            "MANIAC": 750.0
+          },
+          "gear_hands": {
+            "MANIAC": 1000
+          },
+          "opponent_events": {
+            "actions": 1000,
+            "folds": 1000,
+            "hands": 1000,
+            "faced_raises": 500,
+            "folds_to_raise": 500
+          },
+          "safety_errors": 0,
+          "governor_seconds": 0.013549274735851213,
+          "gate": "closed",
+          "gate_hand": 701,
+          "gate_reason": "insufficient labelled or baseline samples",
+          "timing_labels": 0,
+          "timing_gaps": {
+            "baseline": 0,
+            "clean": 0,
+            "multiple": 499,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 0.0,
+          "exploit_decisions": 493,
+          "exploit_raises": 493,
+          "gear_decisions": {
+            "MANIAC": 500
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/check_fold-2-41"
+    },
+    {
+      "opponent": "calling_station",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 8.019,
+      "ci": [
+        6.992305058117999,
+        9.045694941882001
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.522625,
+        0.703213
+      ],
+      "opponent_think_seconds": [
+        0.005822,
+        0.035398
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              100,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -61.0,
+            "VALUE": 4888.0
+          },
+          "gear_hands": {
+            "MANIAC": 100,
+            "VALUE": 900
+          },
+          "opponent_events": {
+            "actions": 4444,
+            "calls": 2191,
+            "checks": 2208,
+            "faced_raises": 1712,
+            "calls_to_raise": 1695,
+            "hands": 1000,
+            "showdowns": 903,
+            "raises": 45,
+            "reraises": 17,
+            "aggressive_showdowns": 34,
+            "weak_aggressive_showdowns": 8
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.0799429943726864,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 773,
+          "timing_gaps": {
+            "baseline": 300,
+            "clean": 2449,
+            "multiple": 997,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.241941321567129,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 396,
+            "VALUE": 3351
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              150,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -37.0,
+            "VALUE": 3229.0
+          },
+          "gear_hands": {
+            "MANIAC": 150,
+            "VALUE": 850
+          },
+          "opponent_events": {
+            "actions": 4465,
+            "calls": 2265,
+            "faced_raises": 1793,
+            "calls_to_raise": 1770,
+            "hands": 1000,
+            "showdowns": 907,
+            "checks": 2155,
+            "raises": 45,
+            "reraises": 23,
+            "aggressive_showdowns": 32,
+            "weak_aggressive_showdowns": 5
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.2863347352831624,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 770,
+          "timing_gaps": {
+            "baseline": 283,
+            "clean": 2476,
+            "multiple": 994,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.3456716267250752,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 597,
+            "VALUE": 3157
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/calling_station-0-7"
+    },
+    {
+      "opponent": "calling_station",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 8.133,
+      "ci": [
+        7.040033685559292,
+        9.225966314440706
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.363933,
+        1.00476
+      ],
+      "opponent_think_seconds": [
+        0.052481,
+        0.081493
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              150,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -54.0,
+            "VALUE": 4292.0
+          },
+          "gear_hands": {
+            "MANIAC": 150,
+            "VALUE": 850
+          },
+          "opponent_events": {
+            "actions": 4531,
+            "calls": 2362,
+            "checks": 2124,
+            "faced_raises": 1884,
+            "calls_to_raise": 1865,
+            "hands": 1000,
+            "showdowns": 912,
+            "raises": 45,
+            "reraises": 19,
+            "aggressive_showdowns": 36,
+            "weak_aggressive_showdowns": 10
+          },
+          "safety_errors": 0,
+          "governor_seconds": 1.7206091572006699,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 759,
+          "timing_gaps": {
+            "baseline": 290,
+            "clean": 2400,
+            "multiple": 1065,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.4526373731108824,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 593,
+            "VALUE": 3163
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -310.0,
+            "VALUE": 4205.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 950
+          },
+          "opponent_events": {
+            "actions": 4374,
+            "calls": 2041,
+            "faced_raises": 1563,
+            "calls_to_raise": 1547,
+            "hands": 1000,
+            "showdowns": 908,
+            "checks": 2288,
+            "raises": 45,
+            "reraises": 16,
+            "aggressive_showdowns": 39,
+            "weak_aggressive_showdowns": 10
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.5199988998065237,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 800,
+          "timing_gaps": {
+            "baseline": 312,
+            "clean": 2517,
+            "multiple": 928,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.624819106684542,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 199,
+            "VALUE": 3559
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/calling_station-1-19"
+    },
+    {
+      "opponent": "calling_station",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 8.405,
+      "ci": [
+        7.35610446382597,
+        9.453895536174029
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.685015,
+        0.788563
+      ],
+      "opponent_think_seconds": [
+        0.017797,
+        0.015459
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -198.0,
+            "VALUE": 4635.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 950
+          },
+          "opponent_events": {
+            "actions": 4353,
+            "calls": 2062,
+            "checks": 2246,
+            "faced_raises": 1578,
+            "calls_to_raise": 1566,
+            "hands": 1000,
+            "showdowns": 889,
+            "raises": 45,
+            "reraises": 12,
+            "aggressive_showdowns": 30,
+            "weak_aggressive_showdowns": 8
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.2634329100255854,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 761,
+          "timing_gaps": {
+            "baseline": 328,
+            "clean": 2424,
+            "multiple": 964,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.24953673355183,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 198,
+            "VALUE": 3519
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              125,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -24.0,
+            "VALUE": 3991.5
+          },
+          "gear_hands": {
+            "MANIAC": 125,
+            "VALUE": 875
+          },
+          "opponent_events": {
+            "actions": 4471,
+            "calls": 2207,
+            "faced_raises": 1728,
+            "calls_to_raise": 1710,
+            "hands": 1000,
+            "showdowns": 902,
+            "checks": 2219,
+            "raises": 45,
+            "reraises": 18,
+            "aggressive_showdowns": 34,
+            "weak_aggressive_showdowns": 15
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.417485393816605,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 750,
+          "timing_gaps": {
+            "baseline": 288,
+            "clean": 2430,
+            "multiple": 1020,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 2.06830490781175,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 497,
+            "VALUE": 3242
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/calling_station-2-41"
+    },
+    {
+      "opponent": "pot_maniac",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 6.181,
+      "ci": [
+        4.608441705458226,
+        7.753558294541774
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        0.899116,
+        1.043892
+      ],
+      "opponent_think_seconds": [
+        0.012248,
+        2.4e-05
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -40.0,
+            "TRAP": 4423.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2897,
+            "raises": 2734,
+            "faced_raises": 546,
+            "reraises": 383,
+            "hands": 1000,
+            "showdowns": 552,
+            "aggressive_showdowns": 552,
+            "calls": 163,
+            "calls_to_raise": 163,
+            "weak_aggressive_showdowns": 144
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.380095453612739,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 552,
+          "timing_gaps": {
+            "baseline": 1177,
+            "clean": 2803,
+            "multiple": 47,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.366714630460483,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 127,
+            "TRAP": 3901
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 40.0,
+            "TRAP": 1758.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2924,
+            "raises": 2772,
+            "calls": 152,
+            "faced_raises": 498,
+            "calls_to_raise": 152,
+            "reraises": 346,
+            "hands": 1000,
+            "showdowns": 540,
+            "aggressive_showdowns": 540,
+            "weak_aggressive_showdowns": 141
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.6948875475209206,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 540,
+          "timing_gaps": {
+            "baseline": 1219,
+            "clean": 2839,
+            "multiple": 42,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.0822028275397968,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 128,
+            "TRAP": 3973
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_maniac-0-7"
+    },
+    {
+      "opponent": "pot_maniac",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 5.7945,
+      "ci": [
+        4.215619408506839,
+        7.373380591493161
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.33364,
+        0.777972
+      ],
+      "opponent_think_seconds": [
+        0.02235,
+        0.0
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 360.0,
+            "TRAP": 3717.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2916,
+            "raises": 2788,
+            "faced_raises": 511,
+            "reraises": 383,
+            "hands": 1000,
+            "showdowns": 564,
+            "aggressive_showdowns": 564,
+            "calls": 128,
+            "calls_to_raise": 128,
+            "weak_aggressive_showdowns": 159
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.9253439438471105,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 564,
+          "timing_gaps": {
+            "baseline": 1205,
+            "clean": 2841,
+            "multiple": 37,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.2970326289275431,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 127,
+            "TRAP": 3957
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -360.0,
+            "TRAP": 2077.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2873,
+            "raises": 2722,
+            "calls": 151,
+            "faced_raises": 525,
+            "calls_to_raise": 151,
+            "reraises": 374,
+            "hands": 1000,
+            "showdowns": 531,
+            "aggressive_showdowns": 531,
+            "weak_aggressive_showdowns": 114
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.3625003485940397,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 531,
+          "timing_gaps": {
+            "baseline": 1208,
+            "clean": 2766,
+            "multiple": 53,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.0866549649530661,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 128,
+            "TRAP": 3900
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_maniac-1-19"
+    },
+    {
+      "opponent": "pot_maniac",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 6.4755,
+      "ci": [
+        4.91717146008362,
+        8.033828539916382
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.688136,
+        1.45103
+      ],
+      "opponent_think_seconds": [
+        0.027333,
+        0.033035
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -240.0,
+            "TRAP": 3817.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2881,
+            "raises": 2727,
+            "faced_raises": 554,
+            "reraises": 400,
+            "hands": 1000,
+            "showdowns": 558,
+            "aggressive_showdowns": 558,
+            "calls": 154,
+            "calls_to_raise": 154,
+            "weak_aggressive_showdowns": 147
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.036811528902035,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 558,
+          "timing_gaps": {
+            "baseline": 1176,
+            "clean": 2771,
+            "multiple": 55,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.5496316329733337,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 127,
+            "TRAP": 3876
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": 274.0,
+            "TRAP": 2624.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "TRAP": 950
+          },
+          "opponent_events": {
+            "actions": 2892,
+            "raises": 2751,
+            "calls": 141,
+            "faced_raises": 519,
+            "calls_to_raise": 141,
+            "reraises": 378,
+            "hands": 1000,
+            "showdowns": 551,
+            "aggressive_showdowns": 551,
+            "weak_aggressive_showdowns": 139
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.7512302963004913,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 551,
+          "timing_gaps": {
+            "baseline": 1200,
+            "clean": 2807,
+            "multiple": 42,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 1.298786204060697,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 128,
+            "TRAP": 3922
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_maniac-2-41"
+    },
+    {
+      "opponent": "pot_odds_bot",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "CHOP",
+      "bb_per_deal": -0.0775,
+      "ci": [
+        -1.2412991022252682,
+        1.0862991022252684
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.688256,
+        1.871889
+      ],
+      "opponent_think_seconds": [
+        0.49476,
+        0.490966
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              350,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -152.0,
+            "VALUE": 364.5,
+            "TRAP": 1057.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 300,
+            "TRAP": 650
+          },
+          "opponent_events": {
+            "actions": 3347,
+            "raises": 1032,
+            "calls": 702,
+            "faced_raises": 767,
+            "calls_to_raise": 390,
+            "hands": 1000,
+            "showdowns": 491,
+            "aggressive_showdowns": 332,
+            "checks": 1403,
+            "reraises": 186,
+            "weak_aggressive_showdowns": 63,
+            "folds": 210,
+            "folds_to_raise": 191
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.9067861434305087,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 483,
+          "timing_gaps": {
+            "baseline": 659,
+            "clean": 2298,
+            "multiple": 524,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 3.9634193119955965,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 128,
+            "VALUE": 874,
+            "TRAP": 2480
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              375,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              625,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -651.0,
+            "VALUE": -176.5,
+            "TRAP": -520.0
+          },
+          "gear_hands": {
+            "MANIAC": 375,
+            "VALUE": 250,
+            "TRAP": 375
+          },
+          "opponent_events": {
+            "actions": 3279,
+            "raises": 1039,
+            "calls": 941,
+            "faced_raises": 1240,
+            "calls_to_raise": 639,
+            "reraises": 348,
+            "hands": 1000,
+            "showdowns": 500,
+            "aggressive_showdowns": 397,
+            "folds": 278,
+            "checks": 1021,
+            "folds_to_raise": 253,
+            "weak_aggressive_showdowns": 68
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.921565966011258,
+          "gate": "closed",
+          "gate_hand": 394,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 473,
+          "timing_gaps": {
+            "baseline": 472,
+            "clean": 2046,
+            "multiple": 616,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 3.942620627177564,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 952,
+            "VALUE": 748,
+            "TRAP": 1435
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_odds_bot-0-7"
+    },
+    {
+      "opponent": "pot_odds_bot",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "CHOP",
+      "bb_per_deal": -0.53,
+      "ci": [
+        -1.5580077498218066,
+        0.4980077498218065
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        2.089233,
+        1.534937
+      ],
+      "opponent_think_seconds": [
+        0.44302,
+        0.325129
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              75,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              250,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -152.5,
+            "VALUE": 418.0,
+            "TRAP": -627.0
+          },
+          "gear_hands": {
+            "MANIAC": 75,
+            "VALUE": 175,
+            "TRAP": 750
+          },
+          "opponent_events": {
+            "actions": 3475,
+            "raises": 1154,
+            "calls": 669,
+            "faced_raises": 756,
+            "calls_to_raise": 373,
+            "reraises": 204,
+            "hands": 1000,
+            "showdowns": 538,
+            "aggressive_showdowns": 377,
+            "folds": 207,
+            "folds_to_raise": 179,
+            "checks": 1445,
+            "weak_aggressive_showdowns": 72
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.4705740046629217,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 527,
+          "timing_gaps": {
+            "baseline": 713,
+            "clean": 2440,
+            "multiple": 517,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 3.968747956555439,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 198,
+            "VALUE": 559,
+            "TRAP": 2914
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              400,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -378.5,
+            "VALUE": 178.0,
+            "TRAP": 32.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 350,
+            "TRAP": 600
+          },
+          "opponent_events": {
+            "actions": 3321,
+            "raises": 1112,
+            "calls": 719,
+            "faced_raises": 791,
+            "calls_to_raise": 392,
+            "reraises": 220,
+            "hands": 1000,
+            "showdowns": 483,
+            "aggressive_showdowns": 338,
+            "folds": 199,
+            "checks": 1291,
+            "folds_to_raise": 179,
+            "weak_aggressive_showdowns": 60
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.829049034655327,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 475,
+          "timing_gaps": {
+            "baseline": 686,
+            "clean": 2347,
+            "multiple": 486,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 3.5298399198909944,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 134,
+            "VALUE": 1015,
+            "TRAP": 2371
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_odds_bot-1-19"
+    },
+    {
+      "opponent": "pot_odds_bot",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "CHOP",
+      "bb_per_deal": -0.199,
+      "ci": [
+        -1.3268936588633278,
+        0.9288936588633276
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.847251,
+        2.257646
+      ],
+      "opponent_think_seconds": [
+        0.583476,
+        0.902436
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -232.0,
+            "VALUE": 316.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 950
+          },
+          "opponent_events": {
+            "actions": 3023,
+            "calls": 916,
+            "folds": 271,
+            "checks": 1043,
+            "faced_raises": 1052,
+            "folds_to_raise": 244,
+            "calls_to_raise": 580,
+            "hands": 1000,
+            "raises": 793,
+            "reraises": 228,
+            "showdowns": 355,
+            "aggressive_showdowns": 223,
+            "weak_aggressive_showdowns": 35
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.8650155035720672,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 345,
+          "timing_gaps": {
+            "baseline": 510,
+            "clean": 1915,
+            "multiple": 554,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 3.7868508583874116,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 149,
+            "VALUE": 2831
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "VALUE",
+          "transitions": [
+            [
+              100,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -414.0,
+            "VALUE": 130.5
+          },
+          "gear_hands": {
+            "MANIAC": 100,
+            "VALUE": 900
+          },
+          "opponent_events": {
+            "actions": 3095,
+            "calls": 1007,
+            "folds": 269,
+            "faced_raises": 1140,
+            "folds_to_raise": 239,
+            "calls_to_raise": 655,
+            "hands": 1000,
+            "checks": 1039,
+            "raises": 780,
+            "reraises": 246,
+            "showdowns": 392,
+            "aggressive_showdowns": 258,
+            "weak_aggressive_showdowns": 44
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.178325226472225,
+          "gate": "closed",
+          "gate_hand": 372,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 374,
+          "timing_gaps": {
+            "baseline": 495,
+            "clean": 1915,
+            "multiple": 589,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.123688942686729,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 267,
+            "VALUE": 2733
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/pot_odds_bot-2-41"
+    },
+    {
+      "opponent": "slow_tell",
+      "seed": "7",
+      "deals": 1000,
+      "verdict": "AGENT1_WIN",
+      "bb_per_deal": 1.157,
+      "ci": [
+        0.21675042799304656,
+        2.0972495720069535
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        2.312688,
+        2.480237
+      ],
+      "opponent_think_seconds": [
+        1.568189,
+        1.709594
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              225,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -78.0,
+            "VALUE": 299.5,
+            "TRAP": 1439.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 175,
+            "TRAP": 775
+          },
+          "opponent_events": {
+            "actions": 3442,
+            "raises": 1105,
+            "calls": 660,
+            "faced_raises": 700,
+            "calls_to_raise": 343,
+            "reraises": 194,
+            "hands": 1000,
+            "showdowns": 518,
+            "aggressive_showdowns": 346,
+            "folds": 184,
+            "folds_to_raise": 163,
+            "checks": 1493,
+            "weak_aggressive_showdowns": 73
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.5868224622681737,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 512,
+          "timing_gaps": {
+            "baseline": 710,
+            "clean": 2487,
+            "multiple": 477,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.857342491900661,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 123,
+            "VALUE": 543,
+            "TRAP": 3009
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              75,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              375,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -35.5,
+            "VALUE": 93.5,
+            "TRAP": -561.5
+          },
+          "gear_hands": {
+            "MANIAC": 75,
+            "VALUE": 300,
+            "TRAP": 625
+          },
+          "opponent_events": {
+            "actions": 3301,
+            "raises": 1106,
+            "calls": 654,
+            "faced_raises": 767,
+            "calls_to_raise": 382,
+            "reraises": 208,
+            "hands": 1000,
+            "showdowns": 472,
+            "aggressive_showdowns": 325,
+            "folds": 203,
+            "folds_to_raise": 177,
+            "checks": 1338,
+            "weak_aggressive_showdowns": 62
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.5532948444597423,
+          "gate": "closed",
+          "gate_hand": 315,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 465,
+          "timing_gaps": {
+            "baseline": 644,
+            "clean": 2314,
+            "multiple": 493,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.856803783108852,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 199,
+            "VALUE": 844,
+            "TRAP": 2409
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/slow_tell-0-7"
+    },
+    {
+      "opponent": "slow_tell",
+      "seed": "19",
+      "deals": 1000,
+      "verdict": "CHOP",
+      "bb_per_deal": 0.3765,
+      "ci": [
+        -0.7908510916290468,
+        1.5438510916290469
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.690669,
+        1.830774
+      ],
+      "opponent_think_seconds": [
+        1.461977,
+        1.394161
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              200,
+              "MANIAC",
+              "AGGRO",
+              "rolling losses in current gear"
+            ],
+            [
+              300,
+              "AGGRO",
+              "VALUE",
+              "rolling losses in current gear"
+            ],
+            [
+              700,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -130.5,
+            "AGGRO": -329.5,
+            "VALUE": 863.0,
+            "TRAP": -123.0
+          },
+          "gear_hands": {
+            "MANIAC": 200,
+            "AGGRO": 100,
+            "VALUE": 400,
+            "TRAP": 300
+          },
+          "opponent_events": {
+            "actions": 3196,
+            "raises": 1009,
+            "calls": 866,
+            "faced_raises": 1129,
+            "calls_to_raise": 572,
+            "reraises": 300,
+            "hands": 1000,
+            "showdowns": 466,
+            "aggressive_showdowns": 354,
+            "folds": 281,
+            "folds_to_raise": 257,
+            "checks": 1040,
+            "weak_aggressive_showdowns": 66
+          },
+          "safety_errors": 0,
+          "governor_seconds": 2.8668444884824567,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 458,
+          "timing_gaps": {
+            "baseline": 519,
+            "clean": 2135,
+            "multiple": 530,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.235038912697131,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 503,
+            "AGGRO": 309,
+            "VALUE": 1203,
+            "TRAP": 1170
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              75,
+              "MANIAC",
+              "AGGRO",
+              "rolling losses in current gear"
+            ],
+            [
+              350,
+              "AGGRO",
+              "VALUE",
+              "rolling losses in current gear"
+            ],
+            [
+              425,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -90.5,
+            "AGGRO": 65.0,
+            "VALUE": -20.0,
+            "TRAP": 142.0
+          },
+          "gear_hands": {
+            "MANIAC": 75,
+            "AGGRO": 275,
+            "VALUE": 75,
+            "TRAP": 575
+          },
+          "opponent_events": {
+            "actions": 3405,
+            "raises": 1058,
+            "calls": 792,
+            "faced_raises": 918,
+            "reraises": 257,
+            "hands": 1000,
+            "showdowns": 501,
+            "aggressive_showdowns": 353,
+            "folds": 221,
+            "checks": 1334,
+            "folds_to_raise": 178,
+            "calls_to_raise": 483,
+            "weak_aggressive_showdowns": 52
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.246542235981906,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 496,
+          "timing_gaps": {
+            "baseline": 634,
+            "clean": 2314,
+            "multiple": 545,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.432694316394754,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 192,
+            "AGGRO": 908,
+            "VALUE": 232,
+            "TRAP": 2162
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/slow_tell-1-19"
+    },
+    {
+      "opponent": "slow_tell",
+      "seed": "41",
+      "deals": 1000,
+      "verdict": "CHOP",
+      "bb_per_deal": 0.474,
+      "ci": [
+        -0.5830001299683709,
+        1.5310001299683709
+      ],
+      "our_errors": [
+        0,
+        0
+      ],
+      "our_think_seconds": [
+        1.772639,
+        1.907594
+      ],
+      "opponent_think_seconds": [
+        1.463709,
+        1.305514
+      ],
+      "forfeits": {
+        "agent1": [
+          false,
+          false
+        ],
+        "agent2": [
+          false,
+          false
+        ]
+      },
+      "diagnostics": [
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              475,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -184.0,
+            "VALUE": 322.5,
+            "TRAP": 23.0
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 425,
+            "TRAP": 525
+          },
+          "opponent_events": {
+            "actions": 3249,
+            "calls": 702,
+            "folds": 236,
+            "checks": 1260,
+            "faced_raises": 825,
+            "folds_to_raise": 205,
+            "calls_to_raise": 396,
+            "hands": 1000,
+            "raises": 1051,
+            "reraises": 224,
+            "showdowns": 468,
+            "aggressive_showdowns": 332,
+            "weak_aggressive_showdowns": 65
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.10180341580417,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 465,
+          "timing_gaps": {
+            "baseline": 668,
+            "clean": 2211,
+            "multiple": 519,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.252545832916462,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 136,
+            "VALUE": 1221,
+            "TRAP": 2042
+          }
+        },
+        {
+          "hands": 1000,
+          "final": true,
+          "gear": "TRAP",
+          "transitions": [
+            [
+              50,
+              "MANIAC",
+              "VALUE",
+              "calling station punishes MANIAC"
+            ],
+            [
+              400,
+              "VALUE",
+              "TRAP",
+              "frequent re-raises"
+            ]
+          ],
+          "gear_net_bb": {
+            "MANIAC": -111.0,
+            "VALUE": 269.0,
+            "TRAP": 154.5
+          },
+          "gear_hands": {
+            "MANIAC": 50,
+            "VALUE": 350,
+            "TRAP": 600
+          },
+          "opponent_events": {
+            "actions": 3331,
+            "calls": 688,
+            "folds": 217,
+            "faced_raises": 797,
+            "folds_to_raise": 189,
+            "calls_to_raise": 394,
+            "hands": 1000,
+            "raises": 1086,
+            "checks": 1340,
+            "reraises": 214,
+            "showdowns": 467,
+            "aggressive_showdowns": 329,
+            "weak_aggressive_showdowns": 56
+          },
+          "safety_errors": 0,
+          "governor_seconds": 3.3570462552888785,
+          "gate": "closed",
+          "gate_hand": 300,
+          "gate_reason": "no confirmed signal",
+          "timing_labels": 456,
+          "timing_gaps": {
+            "baseline": 687,
+            "clean": 2271,
+            "multiple": 529,
+            "discarded": 0
+          },
+          "nudges": 0,
+          "lowered_k": 0,
+          "bank_estimate": 4.004664279738041,
+          "exploit_decisions": 0,
+          "exploit_raises": 0,
+          "gear_decisions": {
+            "MANIAC": 140,
+            "VALUE": 1007,
+            "TRAP": 2341
+          }
+        }
+      ],
+      "failures": [],
+      "passed": true,
+      "log_directory": "/private/tmp/heads-up-task7-final-matches/slow_tell-2-41"
+    }
+  ],
+  "regression_200": {
+    "kind": "match_result",
+    "match_seed": "7",
+    "num_deals": 200,
+    "agent1_name": "TEAM_NAME_HERE / ManiacAdaptive (http://localhost:59576)",
+    "agent2_name": "Challenges Team / RandomBot (http://localhost:59577)",
+    "verdict": "AGENT1_WIN",
+    "points": {
+      "agent1": 1.0,
+      "agent2": 0.0
+    },
+    "reason": "interval [+3.446, +9.459] is entirely above 0",
+    "mean_bb_per_deal": 6.4525,
+    "std_bb": 21.69226279288025,
+    "stderr_bb": 1.533874612012626,
+    "ci": [
+      3.4461057604552527,
+      9.458894239544748
+    ],
+    "chop_z": 1.96,
+    "half_totals_chips": {
+      "half1": {
+        "agent1": 1089,
+        "agent2": -1089
+      },
+      "half2": {
+        "agent1": 1492,
+        "agent2": -1492
+      }
+    },
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 658,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.112539,
+          "wall_seconds": 0.577223
+        },
+        {
+          "calls": 617,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.079933,
+          "wall_seconds": 0.506225
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 606,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 5.6e-05,
+          "wall_seconds": 0.148184
+        },
+        {
+          "calls": 571,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.000256,
+          "wall_seconds": 0.134347
+        }
+      ]
+    },
+    "paired_bb": [
+      -13.0,
+      40.5,
+      0.0,
+      0.0,
+      -28.0,
+      36.0,
+      36.5,
+      40.5,
+      40.5,
+      40.5,
+      0.0,
+      0.0,
+      4.5,
+      1.5,
+      1.5,
+      12.0,
+      -22.0,
+      10.0,
+      67.0,
+      4.0,
+      1.5,
+      52.0,
+      42.0,
+      -39.5,
+      43.0,
+      58.0,
+      -16.0,
+      37.0,
+      19.0,
+      19.0,
+      1.0,
+      4.0,
+      19.0,
+      58.0,
+      0.0,
+      41.0,
+      8.0,
+      26.0,
+      36.5,
+      -17.5,
+      42.0,
+      41.0,
+      11.0,
+      1.5,
+      18.5,
+      1.5,
+      2.0,
+      10.0,
+      11.0,
+      3.0,
+      3.5,
+      2.0,
+      40.5,
+      -1.5,
+      6.5,
+      3.0,
+      -4.0,
+      0.0,
+      -1.5,
+      0.0,
+      6.0,
+      1.0,
+      -21.0,
+      -9.0,
+      11.0,
+      -3.0,
+      -7.0,
+      15.0,
+      -39.0,
+      22.0,
+      -22.0,
+      -39.5,
+      0.0,
+      8.0,
+      -6.0,
+      10.0,
+      -4.0,
+      38.0,
+      0.0,
+      22.0,
+      -1.5,
+      -39.5,
+      31.0,
+      38.0,
+      40.5,
+      2.5,
+      0.0,
+      -39.5,
+      -7.5,
+      0.0,
+      -2.5,
+      2.0,
+      -1.5,
+      -5.5,
+      15.0,
+      3.0,
+      3.5,
+      -2.0,
+      10.0,
+      17.0,
+      -3.0,
+      -0.5,
+      -11.0,
+      10.0,
+      1.0,
+      -17.0,
+      -13.0,
+      31.0,
+      -76.0,
+      33.0,
+      -4.0,
+      -4.0,
+      2.5,
+      -1.5,
+      -5.5,
+      25.0,
+      -10.0,
+      20.0,
+      36.0,
+      6.0,
+      -14.0,
+      -5.0,
+      40.5,
+      -11.5,
+      35.0,
+      14.0,
+      -37.0,
+      39.0,
+      -4.0,
+      6.5,
+      -1.5,
+      -7.0,
+      33.0,
+      -10.0,
+      -4.0,
+      28.0,
+      3.5,
+      -13.0,
+      10.0,
+      -0.5,
+      3.5,
+      -18.0,
+      40.5,
+      7.0,
+      -35.5,
+      -37.0,
+      -6.0,
+      -6.0,
+      0.0,
+      -1.0,
+      0.0,
+      21.0,
+      -6.0,
+      -4.0,
+      -6.0,
+      -12.0,
+      38.0,
+      -2.5,
+      -2.5,
+      -0.5,
+      40.5,
+      3.0,
+      9.5,
+      -3.5,
+      -4.0,
+      23.0,
+      -7.5,
+      -2.5,
+      0.0,
+      -13.0,
+      38.0,
+      7.0,
+      12.5,
+      9.0,
+      36.0,
+      40.5,
+      4.0,
+      17.5,
+      -34.0,
+      -2.0,
+      31.0,
+      7.0,
+      -28.0,
+      0.0,
+      12.0,
+      6.5,
+      28.0,
+      34.0,
+      8.5,
+      39.0,
+      40.5,
+      -4.0,
+      10.0,
+      0.0,
+      -0.5,
+      -3.5,
+      6.0,
+      -30.0,
+      -7.0,
+      -26.5
+    ],
+    "elapsed_seconds": 1.417
+  }
+}

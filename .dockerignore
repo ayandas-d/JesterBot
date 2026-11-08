@@ -1,0 +1,8 @@
+# Only runtime sources belong in the participant image.
+**
+!agent.py
+!game.py
+!evaluator.py
+!requirements.txt
+!bot/
+!bot/*.py
