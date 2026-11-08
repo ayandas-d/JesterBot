@@ -1,0 +1,13 @@
+{
+  "source_commit": "0f27ad3b8c4bfe43f8a892df22e361d20b700725",
+  "status": "REJECTED; archive only, not active runtime",
+  "archive": "rejected_timing_audit.tar.gz",
+  "sha256": "e171c45aee8d711d8b0459cfa01a4f951e68b3907a5ecca83d301b4c237433c0",
+  "contents": [
+    "agent.py",
+    "bot/",
+    "tests/",
+    "tools/phase2_candidates/rejected_iteration2/"
+  ],
+  "resolution": "Keep main runtime and newer league infrastructure. Preserve experimental source and tests in this archive; do not promote rejected strategy."
+}

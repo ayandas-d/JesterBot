@@ -331,3 +331,12 @@ time per half. Intentional opponent faults are reported separately.
 - Resume: BOT_SEED=7 .venv/bin/python -B tools/league.py --challenger v2 --full --cache --jobs 4 --label expanded-training-resume
   Then complete full Hard/holdout/oracle validation before claiming Part 2
   done; complete live continuous validation before claiming Part 3 done.
+
+## Experimental branch merge (2026-11-08) — ARCHIVE ONLY
+
+- Merged experiment/phase2-timing-audit at 0f27ad3b8c4bfe43f8a892df22e361d20b700725 following the user request to resolve all conflicts.
+- Resolution: retain main's validated v2 runtime, current tests, newer league configuration, infrastructure, and audit conclusions. Rejected experiments are not promoted.
+- Preserved the experiment's agent, bot package, complete tests, and prior rejected-iteration snapshot in tools/phase2_candidates/rejected_timing_audit.tar.gz with source SHA and archive checksum in the adjacent JSON manifest.
+- Validation: BOT_SEED=7 .venv/bin/python -B -m pytest -q — 296 passed, 3 slow deselected.
+- Regression: BOT_SEED=7 .venv/bin/python -B tools/league.py --opponents baseline_random --seeds 7 --deals 200 --label merge-resolution-regression — AGENT1_WIN, +6.4525 bb/deal, CI [3.4461, 9.4589], zero errors/forfeits, max charged half 0.318 s.
+- Runtime and protected engine files remain identical to pre-merge main. No new champion or strategy promotion.
