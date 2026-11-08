@@ -28,7 +28,8 @@ def options(**kwargs):
 
 def test_holdout_names_and_seeds_are_disjoint_and_cannot_be_used_accidentally():
     config = league.load_config()
-    assert set(config["holdout"]["opponents"]) == {"gto_ish", "adaptive_counter", "erratic"}
+    assert len(config["holdout"]["opponents"]) >= 3
+    assert set(config["holdout"]["opponents"]) <= set(config["opponents"])
     opponents, seeds, deals = league.plan(options(quick=True), config)
     assert len(seeds) == 3 and seeds == ["1", "2", "3"] and deals == 300
     assert "v1" in opponents and not set(opponents) & set(config["holdout"]["opponents"])
@@ -56,6 +57,18 @@ def test_champions_are_discovered_dynamically_and_head_to_head_pools_deals():
     assert summary["opponents"]["v1"]["ci"] == summary["ci"]
 
 
+def test_retired_holdout_names_and_seeds_still_require_a_milestone(monkeypatch):
+    config = league.load_config()
+    config["holdout_history"] = [{"opponents": ["retired_control"], "seeds": [999]}]
+    monkeypatch.setattr(league, "command", lambda *_: [])
+    for args in (options(opponents=["retired_control"], seeds=["1"]),
+                 options(opponents=["check_fold"], seeds=["999"])):
+        with pytest.raises(ValueError, match="holdout"):
+            league.plan(args, config)
+    names, seeds, _ = league.plan(options(opponents=["retired_control"], seeds=["999"], milestone="historical-audit"), config)
+    assert names == ["retired_control"] and seeds == ["999"]
+
+
 def test_expected_crashy_forfeit_is_separate_from_our_safety_failures():
     half = dict(errors=0, forfeited=False, skipped_calls=0, timed_out=False, time_seconds=1)
     report = {"agent_stats": {p: [deepcopy(half), deepcopy(half)] for p in ("agent1", "agent2")}}
@@ -66,6 +79,21 @@ def test_expected_crashy_forfeit_is_separate_from_our_safety_failures():
     report["agent_stats"]["agent1"][1]["errors"] = 1
     assert league.violations(report, diagnostics, "crashy", league.load_config())[0]
     assert league.violations(report, diagnostics, "anti_maniac", league.load_config())[0]
+
+
+def test_our_four_second_ceiling_is_distinct_from_test_opponents_own_bank():
+    half = dict(errors=0, forfeited=False, skipped_calls=0, timed_out=False, time_seconds=1)
+    report = {"agent_stats": {p: [deepcopy(half), deepcopy(half)] for p in ("agent1", "agent2")}}
+    diagnostics = [dict(final=True, safety_errors=0)] * 2
+    # The deliberate-delay fixture is required to fit its own 8 s bank.
+    # Jester must still meet our stricter 4 s ceiling in every comparison.
+    report["agent_stats"]["agent2"][0]["time_seconds"] = 4.5
+    assert not league.violations(report, diagnostics, "strong_tell", league.load_config())[0]
+    report["agent_stats"]["agent1"][0]["time_seconds"] = 4.01
+    assert "agent1/half1/think=4.010s" in league.violations(report, diagnostics, "strong_tell", league.load_config())[0]
+    report["agent_stats"]["agent1"][0]["time_seconds"] = 1
+    report["agent_stats"]["agent2"][0]["time_seconds"] = 8.01
+    assert league.violations(report, diagnostics, "strong_tell", league.load_config())[0]
 
 
 def test_snapshot_numbering_hashes_and_independence(tmp_path):

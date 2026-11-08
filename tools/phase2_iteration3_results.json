@@ -1,0 +1,427 @@
+{
+  "iteration": 3,
+  "status": "REJECTED",
+  "champion": "v2",
+  "champion_sha": "c81268ec9317ed64f2728e3f3070a004ab16a443",
+  "runtime_sha256": {
+    "agent.py": "01dab8b49d75aaeeddc1023875f9dfd862791c54e21135de270fe9d8c1ec0b32",
+    "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+    "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+    "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+    "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+    "bot/gears.py": "9f660907737e549cb8dbcfe5524b8403b8b1351cfbe591b2cfa13300adaa6c72",
+    "bot/policy.py": "ed38a504b92e72427326c3644a9d69585492a3114524d8af6a42e371d5edf5f2",
+    "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+    "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+    "bot/governor.py": "1a173f7266f0e02350e0a9795ba0dd88fe911f2cd0033f49d9da9d79214d52aa",
+    "bot/timing.py": "ee1858751016ba74aed789361b1cf14d162fd9cacae0d277e16d54816975d273",
+    "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+    "bot/timing_gate.py": "dbffc32d7e4baa159003db704a825bdc62feab6612db6ee763d1515c32adfc7d",
+    "bot/fallback.py": "907371513366faf41dceb37b5d76374603947187698dcb401c0ea5266f846a88"
+  },
+  "controls": {
+    "positive": {
+      "path": "league/results/20261108T153942159475Z_phase2-final-positive.json",
+      "sha256": "96efde39ef707224542a889b244d4eabcf9fc3106d6c4506e69c80385c7a57ae",
+      "assessment": {
+        "halves": 40,
+        "opened": 38,
+        "rate": 0.95,
+        "safety_scope": "Jester <=4s; controls <=their 8s bank; zero faults on either side"
+      },
+      "max_jester_seconds": 1.331367
+    },
+    "negative": {
+      "path": "league/results/20261108T155633799314Z_phase2-final-negative.json",
+      "sha256": "f3265a59284b0aeb492497d72e9601ee4d723230da9f99465f78c59905ee0783",
+      "assessment": {
+        "halves": 60,
+        "opened": 0,
+        "rate": 0.0,
+        "safety_scope": "Jester <=4s; controls <=their 8s bank; zero faults on either side",
+        "one_sided_95_percent_upper_bound": 0.04870291331009746
+      },
+      "max_jester_seconds": 0.319198
+    },
+    "known": {
+      "path": "league/results/20261108T155839724136Z_phase2-final-known.json",
+      "sha256": "0fe1047a7397c27b5936b7e5070a66081674bcb0a257d7dc73ea5696399bbbc2",
+      "assessment": {
+        "halves": 20,
+        "opened": 0,
+        "rate": 0.0,
+        "safety_scope": "Jester <=4s; controls <=their 8s bank; zero faults on either side",
+        "hand_700_relative_errors": [
+          0.11511063280957594,
+          0.11322046044157576,
+          0.11087858817385934,
+          0.10898992426762998,
+          0.11050285454170689,
+          0.11593672952127684,
+          0.12677528671922203,
+          0.1106416490201485,
+          0.11378124497197264,
+          0.10363314963684696,
+          0.11984572064660917,
+          0.11615923435717952,
+          0.12682001788813907,
+          0.11108549411876084,
+          0.1246055834665684,
+          0.10888587165638118,
+          0.11325965355679968,
+          0.11024864153687779,
+          0.13174605042977403,
+          0.18862298267059585
+        ],
+        "maximum_relative_error": 0.18862298267059585
+      },
+      "max_jester_seconds": 0.638427
+    },
+    "fake": {
+      "path": "league/results/20261108T160149360862Z_phase2-final-fake.json",
+      "sha256": "8b4a06cb70c7539554612a49caa775895041c50234e2bce88ac7a3d04f97ff1a",
+      "assessment": {
+        "halves": 40,
+        "opened": 40,
+        "rate": 1.0,
+        "safety_scope": "Jester <=4s; controls <=their 8s bank; zero faults on either side"
+      },
+      "max_jester_seconds": 1.624156
+    },
+    "fake-disabled": {
+      "path": "league/results/20261108T160426687835Z_phase2-final-fake-disabled.json",
+      "sha256": "7bb2aef9d558b8200afa86a06ca08130a7086a5ae5b5eeb3a30d64f26ff30fc7",
+      "assessment": {
+        "halves": 40,
+        "opened": 0,
+        "rate": 0.0,
+        "safety_scope": "Jester <=4s; controls <=their 8s bank; zero faults on either side"
+      },
+      "max_jester_seconds": 0.931236
+    }
+  },
+  "fake_comparison": {
+    "deals": 20000,
+    "mean_bb_per_deal": -0.33125,
+    "ci": [
+      -0.601980291131971,
+      -0.06051970886802893
+    ],
+    "loss_bound": 0.25,
+    "passed": false,
+    "actual_nudges": 0
+  },
+  "partial_training": {
+    "path": "league/results/20261108T153941346005Z_phase2-budget-configured-full.json",
+    "complete": false,
+    "matches": 246,
+    "matched_before": {
+      "deals": 246000,
+      "mean_bb_per_deal": 3.436599593495935,
+      "ci": [
+        3.3678635134934294,
+        3.50533567349844
+      ],
+      "tournament_points": 228.0,
+      "completed_matches": 246,
+      "requested_matches": 246,
+      "worst_matchup": "slow_starter",
+      "opponents": {
+        "anti_maniac": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.152425,
+          "ci": [
+            0.9075165226551696,
+            1.3973334773448305
+          ],
+          "points": 15.0,
+          "matches": 20
+        },
+        "baseline_random": {
+          "deals": 20000,
+          "mean_bb_per_deal": 6.7916,
+          "ci": [
+            6.502368495476036,
+            7.080831504523964
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "bluff_heavy": {
+          "deals": 20000,
+          "mean_bb_per_deal": 6.902325,
+          "ci": [
+            6.600843435657221,
+            7.20380656434278
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "calling_station": {
+          "deals": 20000,
+          "mean_bb_per_deal": 8.108075,
+          "ci": [
+            7.843844143477941,
+            8.372305856522058
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "check_fold": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.5,
+          "ci": [
+            1.5,
+            1.5
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "crashy": {
+          "deals": 6000,
+          "mean_bb_per_deal": 1.0960833333333333,
+          "ci": [
+            0.7875832865115258,
+            1.4045833801551408
+          ],
+          "points": 6.0,
+          "matches": 6
+        },
+        "loose_passive": {
+          "deals": 20000,
+          "mean_bb_per_deal": 4.606175,
+          "ci": [
+            4.402598178592994,
+            4.809751821407007
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "nit_folder": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.330625,
+          "ci": [
+            1.2835414271734795,
+            1.3777085728265204
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "pot_maniac": {
+          "deals": 20000,
+          "mean_bb_per_deal": 6.003,
+          "ci": [
+            5.651780865117922,
+            6.3542191348820785
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "pot_odds_bot": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.19465,
+          "ci": [
+            0.9451469593176154,
+            1.4441530406823846
+          ],
+          "points": 16.0,
+          "matches": 20
+        },
+        "slow_starter": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.0513,
+          "ci": [
+            0.8541886423583096,
+            1.2484113576416902
+          ],
+          "points": 16.5,
+          "matches": 20
+        },
+        "slow_tell": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.104075,
+          "ci": [
+            0.836158345417121,
+            1.371991654582879
+          ],
+          "points": 14.5,
+          "matches": 20
+        },
+        "tight_aggressive": {
+          "deals": 20000,
+          "mean_bb_per_deal": 2.1971,
+          "ci": [
+            1.9837015151246977,
+            2.410498484875302
+          ],
+          "points": 20.0,
+          "matches": 20
+        }
+      },
+      "safety_violations": [],
+      "expected_fault_matches": 6
+    },
+    "after": {
+      "deals": 246000,
+      "mean_bb_per_deal": 2.952560975609756,
+      "ci": [
+        2.8828776505673446,
+        3.0222443006521678
+      ],
+      "tournament_points": 221.5,
+      "completed_matches": 246,
+      "requested_matches": 246,
+      "worst_matchup": "anti_maniac",
+      "opponents": {
+        "anti_maniac": {
+          "deals": 20000,
+          "mean_bb_per_deal": 0.684475,
+          "ci": [
+            0.43549254496201184,
+            0.933457455037988
+          ],
+          "points": 12.0,
+          "matches": 20
+        },
+        "baseline_random": {
+          "deals": 20000,
+          "mean_bb_per_deal": 6.086925,
+          "ci": [
+            5.785688517236091,
+            6.388161482763909
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "bluff_heavy": {
+          "deals": 20000,
+          "mean_bb_per_deal": 5.2614,
+          "ci": [
+            4.95674941906488,
+            5.56605058093512
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "calling_station": {
+          "deals": 20000,
+          "mean_bb_per_deal": 6.678825,
+          "ci": [
+            6.423739396954877,
+            6.933910603045122
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "check_fold": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.5,
+          "ci": [
+            1.5,
+            1.5
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "crashy": {
+          "deals": 6000,
+          "mean_bb_per_deal": 1.13525,
+          "ci": [
+            0.7998413191820062,
+            1.470658680817994
+          ],
+          "points": 6.0,
+          "matches": 6
+        },
+        "loose_passive": {
+          "deals": 20000,
+          "mean_bb_per_deal": 3.9462,
+          "ci": [
+            3.741277143747176,
+            4.151122856252824
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "nit_folder": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.3276,
+          "ci": [
+            1.2796782484350493,
+            1.3755217515649505
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "pot_maniac": {
+          "deals": 20000,
+          "mean_bb_per_deal": 5.274825,
+          "ci": [
+            4.914516534195567,
+            5.635133465804433
+          ],
+          "points": 20.0,
+          "matches": 20
+        },
+        "pot_odds_bot": {
+          "deals": 20000,
+          "mean_bb_per_deal": 0.70905,
+          "ci": [
+            0.4447781939594365,
+            0.9733218060405634
+          ],
+          "points": 11.5,
+          "matches": 20
+        },
+        "slow_starter": {
+          "deals": 20000,
+          "mean_bb_per_deal": 0.88595,
+          "ci": [
+            0.689422748148854,
+            1.082477251851146
+          ],
+          "points": 16.0,
+          "matches": 20
+        },
+        "slow_tell": {
+          "deals": 20000,
+          "mean_bb_per_deal": 1.3233,
+          "ci": [
+            1.0556621352860918,
+            1.590937864713908
+          ],
+          "points": 16.0,
+          "matches": 20
+        },
+        "tight_aggressive": {
+          "deals": 20000,
+          "mean_bb_per_deal": 2.297375,
+          "ci": [
+            2.0772763307794473,
+            2.517473669220553
+          ],
+          "points": 20.0,
+          "matches": 20
+        }
+      },
+      "safety_violations": [],
+      "expected_fault_matches": 6
+    },
+    "reassessed_safety": [],
+    "max_jester_seconds": 1.703904
+  },
+  "unrun_gates": [
+    "full enabled/disabled training comparison",
+    "head-to-head",
+    "holdout"
+  ],
+  "fast_tests": {
+    "passed": 222,
+    "slow_deselected": 6,
+    "seconds": 19.43
+  },
+  "decision": "Do not promote; false-gate default-off end-to-end loss bound failed. Live source returns to frozen v2; experiment and tests retained on experiment/phase2-timing-audit.",
+  "experiment_commit": "0f27ad3b8c4bfe43f8a892df22e361d20b700725",
+  "live_restored_to_verified_v2": true
+}

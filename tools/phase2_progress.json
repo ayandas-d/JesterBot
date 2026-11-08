@@ -1,0 +1,120 @@
+{
+  "task": "Phase 2 Part 1 timing audit",
+  "status": "Timing candidates rejected; live runtime verified byte-identical to v2. Audit evidence retained on main; full feature tests/source retained on experiment branch. Part2 expansion now in progress.",
+  "champion": "v2",
+  "champion_source_commit": "c81268ec9317ed64f2728e3f3070a004ab16a443",
+  "iteration": 3,
+  "runtime_frozen_sha256": {
+    "agent.py": "01dab8b49d75aaeeddc1023875f9dfd862791c54e21135de270fe9d8c1ec0b32",
+    "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+    "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+    "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+    "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+    "bot/gears.py": "9f660907737e549cb8dbcfe5524b8403b8b1351cfbe591b2cfa13300adaa6c72",
+    "bot/policy.py": "ed38a504b92e72427326c3644a9d69585492a3114524d8af6a42e371d5edf5f2",
+    "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+    "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+    "bot/governor.py": "1a173f7266f0e02350e0a9795ba0dd88fe911f2cd0033f49d9da9d79214d52aa",
+    "bot/timing.py": "ee1858751016ba74aed789361b1cf14d162fd9cacae0d277e16d54816975d273",
+    "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+    "bot/timing_gate.py": "dbffc32d7e4baa159003db704a825bdc62feab6612db6ee763d1515c32adfc7d",
+    "bot/fallback.py": "907371513366faf41dceb37b5d76374603947187698dcb401c0ea5266f846a88"
+  },
+  "timing_nudges_default": false,
+  "holdout_generation": 2,
+  "planned_holdout_rotation_generation": 3,
+  "own_leak_records": [
+    "/tmp/phase2-own-timing-leak.json",
+    "/tmp/phase2-own-timing-leak-counterbalanced.json",
+    "/tmp/phase2-own-timing-leak-fixed-work.json",
+    "/tmp/phase2-own-timing-leak-uniform-work.json"
+  ],
+  "final_control_labels": [
+    "phase2-final-positive",
+    "phase2-final-negative",
+    "phase2-final-known",
+    "phase2-final-fake",
+    "phase2-final-fake-disabled"
+  ],
+  "baseline_label": "phase2-v2-baseline",
+  "remaining": [
+    "Expanded F/H/C league, oracle harness/evolution, >=60 training and12 holdouts, full new baseline",
+    "Continuous runner,2cycles,STOP/dashboard/alerts",
+    "Adversarial loop after infrastructure"
+  ],
+  "controls_supervisor_exec_session": null,
+  "active_baseline_exec_session": null,
+  "failed_prototypes": [
+    {
+      "label": "phase2-positive-control",
+      "opens": 21,
+      "halves": 40,
+      "negative_opens": 0,
+      "negative_halves": 60,
+      "reason": "insufficient live positive-control power"
+    },
+    {
+      "label": "phase2-final-positive",
+      "timestamp": "20261108T102003791867Z",
+      "opens": 24,
+      "halves": 40,
+      "opponent_time_violations": 4,
+      "reason": "action-association power insufficient; clock fixture 4s cap failed under overload"
+    },
+    {
+      "label": "phase2-final-positive",
+      "timestamp": "20261108T104556492373Z",
+      "reason": "intentionally stopped on 63us p99 module-overhead failure; partial run not validation"
+    }
+  ],
+  "notes": [
+    "Diagnostic gate can establish repeatable latency structure, not strength. Bluff hints remain separately qualified and default disabled.",
+    "Location/MAD recalculated every8 public samples; all sample counts remain strength blind.",
+    "Bank replays max4096 unpriced pre-calibration gaps; borrowed calibration explicit; only direct>=70% permits K reduction.",
+    "A/B new holdout policies frozen before any score; gen2 seeds201-210; gen3 rotation reserved before scores.",
+    "No protected engine/plumbing edits; v1 andv2 manifests verified unchanged.",
+    "Deferred strength fits to the three planned checks; standalone pair p99 34us. Strong test fixture now 40ms with2.4s sleep fund and5s own elapsed pacing target (charged clock remains<4 under validation)."
+  ],
+  "final_positive_result_prefix": "20261108T110615040622Z",
+  "latest_fast_tests": {
+    "passed": 203,
+    "slow_deselected": 6,
+    "seconds": 18.116,
+    "report": "/tmp/phase2-budget-fast.xml"
+  },
+  "latest_unit_tests": {
+    "passed": 40,
+    "seconds": 1.28,
+    "report": "/tmp/phase2-stable-unit-controls.xml",
+    "module_pair_p99_us": 34.043012419715524
+  },
+  "new_tasks_attachment": "/Users/ayan/.codex/attachments/56ba1238-3249-4af4-9bf5-e363458b95b8/Pasted text.txt",
+  "active_candidate_exec_session": null,
+  "queued_tasks": [
+    "Phase2 Part2 expanded F/H/C league, oracle judge, evolution and expanded baseline",
+    "Phase2 Part3 continuous runner:2cycles, STOP test, dashboards and alerts",
+    "Phase2 Part4 adversarial loop after Parts1-3 done"
+  ],
+  "iteration3_regression": {
+    "path": "league/results/20261108T152417747693Z_phase2-budget-regression.json",
+    "matches": 6,
+    "points": 6,
+    "safety_violations": 0
+  },
+  "iteration3_positive": {
+    "path": "league/results/20261108T153942159475Z_phase2-final-positive.json",
+    "opens": 38,
+    "halves": 40,
+    "rate": 0.95,
+    "clock_scope": "Jester4s; deliberate controls own8s. Historical raw runner flagged two controls4.48s; these remain unmodified."
+  },
+  "clock_scope_regression": {
+    "test": "test_our_four_second_ceiling_is_distinct_from_test_opponents_own_bank",
+    "failed_before_fix": true,
+    "why": "The user requires a strong_tell fixture inside its own time bank, while the4s headroom requirement applies to Jester. No error/timeout/forfeit is waived; the rejected4.252s Jester result remains rejected."
+  },
+  "iteration3_results": "tools/phase2_iteration3_results.json",
+  "experiment_commit": "0f27ad3b8c4bfe43f8a892df22e361d20b700725",
+  "live_restored_to_verified_v2": true
+}

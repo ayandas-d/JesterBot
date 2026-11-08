@@ -1,0 +1,11 @@
+{
+  "iteration": 2,
+  "status": "REJECTED",
+  "decisive_gate": "safety",
+  "archive": "tools/phase2_candidates/rejected_iteration2",
+  "maximum_challenger_charged_half_seconds": 4.251613,
+  "choose_timer_seconds_in_that_half": 3.3380826278589666,
+  "timing_disabled_control_failure_seconds": 4.225189,
+  "runtime_revert_verified": true,
+  "next_experiment": "Only change budget accounting/headroom; retain the same audited measurement implementation and all poker thresholds."
+}
