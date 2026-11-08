@@ -867,7 +867,10 @@
     "BOT_SEED=7 .venv/bin/python -B tools/league.py --full --group holdout --milestone iteration-1-promotion --challenger v1 --jobs 2 --label iteration-1-holdout-v1",
     "BOT_SEED=7 .venv/bin/python -B tools/run_local_match.py --deals 200 --seed 7 --require-win --max-thinking 4 --json /tmp/iteration-1-random-200.json",
     "BOT_SEED=7 .venv/bin/python -B tools/league.py --full --group holdout --milestone iteration-1-promotion --jobs 2 --label iteration-1-holdout-challenger",
-    "BOT_SEED=7 .venv/bin/python -m pytest -q --junitxml=/tmp/iteration-1-final-fast.xml -o junit_family=xunit1"
+    "BOT_SEED=7 .venv/bin/python -m pytest -q --junitxml=/tmp/iteration-1-final-fast.xml -o junit_family=xunit1",
+    ".venv/bin/python -B tools/snapshot.py --tag",
+    ".venv/bin/python -B tools/run_snapshot.py v2 --inspect",
+    "BOT_SEED=7 .venv/bin/python -B tools/league.py --challenger v2 --opponents baseline_random --seeds 7 --deals 200 --jobs 1 --label v2-snapshot-smoke"
   ],
   "holdout_baseline": {
     "path": "league/results/20261108T084110633904Z_iteration-1-holdout-v1.json",
@@ -1433,11 +1436,53 @@
     "max_our_think_seconds": 1.900951,
     "benchmark_p99_max_ms": 1.664
   },
-  "source_commit": "recorded after source commit in league/champions/v2/META.json",
+  "source_commit": "c81268ec9317ed64f2728e3f3070a004ab16a443",
   "final_fast_tests": {
     "passed": 173,
     "slow_deselected": 2,
     "seconds": 16.521
   },
-  "frozen_champion_contract": "tools/iteration_1_champion_contract.txt"
+  "frozen_champion_contract": "tools/iteration_1_champion_contract.txt",
+  "champion_version": "v2",
+  "champion_tag": "champion-v2",
+  "snapshot_manifest": "league/champions/v2/META.json",
+  "champion_discovery": [
+    "v1",
+    "v2"
+  ],
+  "frozen_snapshot_smoke": {
+    "path": "league/results/20261108T085117919417Z_v2-snapshot-smoke.json",
+    "sha256": "993e38121f34287aa227fe071474101678dca6cc47b074ab4d0b616c7e9121cd",
+    "summary": {
+      "deals": 200,
+      "mean_bb_per_deal": 6.4525,
+      "ci": [
+        3.4461057604552527,
+        9.458894239544748
+      ],
+      "tournament_points": 1.0,
+      "completed_matches": 1,
+      "requested_matches": 1,
+      "worst_matchup": "baseline_random",
+      "opponents": {
+        "baseline_random": {
+          "deals": 200,
+          "mean_bb_per_deal": 6.4525,
+          "ci": [
+            3.4461057604552527,
+            9.458894239544748
+          ],
+          "points": 1.0,
+          "matches": 1
+        }
+      },
+      "safety_violations": [],
+      "expected_fault_matches": 0
+    }
+  },
+  "frozen_v2_contract": {
+    "passed": 12,
+    "seconds": 2.06,
+    "report": "tools/iteration_1_champion_contract.txt"
+  }
 }

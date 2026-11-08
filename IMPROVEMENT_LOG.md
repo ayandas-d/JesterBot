@@ -87,9 +87,10 @@ time per half. Intentional opponent faults are reported separately.
 ## Iteration 1 (2026-11-08) — ACCEPTED as v2
 
 - Champion / commit: v1, `486507685c326ee891397c03adb2af8321fbc201`, before
-  the experiment. The accepted v2 source commit is recorded in
-  `league/champions/v2/META.json` and tagged `champion-v2` after committing
-  the tested source. [Loop rules](tools/LOOP_RULES.md) preserve the user's
+  the experiment. Accepted v2 source commit:
+  `c81268ec9317ed64f2728e3f3070a004ab16a443`, tagged `champion-v2`. The
+  following packaging commit stores `league/champions/v2/META.json` and the
+  independent frozen runtime. [Loop rules](tools/LOOP_RULES.md) preserve the user's
   Part 4 and acceptance protocol for future sessions.
 - Weakness targeted: slow_tell, **10.5/20 points**, **+0.120900 bb/deal**,
   CI **[-0.116286, +0.358086]** in the unchanged v1 training baseline.
@@ -115,6 +116,9 @@ time per half. Intentional opponent faults are reported separately.
   asserting a config literal. This was a tuning experiment, not a bug fix;
   `tests/test_regressions.py` remains empty. Final fast suite: **173 passed,
   two slow tests deselected, in 16.53 seconds** (under the 60-second limit).
+  Frozen v2 separately passed all **12** unchanged `test_agent.py` tests in
+  an isolated directory, and its own HTTP snapshot server won the 200-deal
+  random smoke match with no faults. All local imports resolve inside v2.
 - Results: training points **242.5/280 → 248/280**, mean bb/deal
   **+2.780288 → +3.018275** (challenger CI **[+2.956622, +3.079928]**).
   **216 wins, 64 chops, zero losses**; no v1 WIN became a LOSS on any
@@ -160,6 +164,9 @@ time per half. Intentional opponent faults are reported separately.
   BOT_SEED=7 .venv/bin/python -B tools/run_local_match.py --deals 200 --seed 7 --require-win --max-thinking 4 --json /tmp/iteration-1-random-200.json
   BOT_SEED=7 .venv/bin/python -B tools/league.py --full --group holdout --milestone iteration-1-promotion --jobs 2 --label iteration-1-holdout-challenger
   BOT_SEED=7 .venv/bin/python -m pytest -q --junitxml=/tmp/iteration-1-final-fast.xml -o junit_family=xunit1
+  .venv/bin/python -B tools/snapshot.py --tag
+  .venv/bin/python -B tools/run_snapshot.py v2 --inspect
+  BOT_SEED=7 .venv/bin/python -B tools/league.py --challenger v2 --opponents baseline_random --seeds 7 --deals 200 --jobs 1 --label v2-snapshot-smoke
   ```
 
   Full training uses seeds 1–20, 14 opponents, 1,000 duplicate deals each.
