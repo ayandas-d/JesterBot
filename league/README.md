@@ -25,6 +25,14 @@ The infrastructure commit stores the v1 snapshot and launcher. Future snapshots
 are discovered automatically as training opponents, including the current
 champion for a self-play sanity check.
 
+Current champion: **v2**, source commit
+`c81268ec9317ed64f2728e3f3070a004ab16a443`, tag `champion-v2`.
+Iteration 1 changed only the re-raise gear threshold from 0.30 to 0.35.
+Training points rose from 242.5/280 to 248/280; holdout points from 26/30
+to 26.5/30, with all acceptance gates passed. See `../IMPROVEMENT_LOG.md`.
+The next full training run automatically includes both v1 and v2, making
+300 matches; remeasure the baseline before comparing the expanded field.
+
 ## Evaluation
 
 ```sh

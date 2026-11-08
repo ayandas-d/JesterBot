@@ -1,0 +1,22 @@
+{
+  "version": "v2",
+  "commit_sha": "c81268ec9317ed64f2728e3f3070a004ab16a443",
+  "created_at": "2026-11-08T08:50:48.908653+00:00",
+  "runtime_dirty": false,
+  "files": {
+    "agent.py": "bcfdc5e7b1c6544f133c24155cbac006095c9acf82021cb6956deaa22514f46f",
+    "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+    "bot/fallback.py": "3db8af3367e2baf62a5eb8a25f01c66f08eef63b6de2217d747bcbcffa653e20",
+    "bot/gears.py": "9f660907737e549cb8dbcfe5524b8403b8b1351cfbe591b2cfa13300adaa6c72",
+    "bot/governor.py": "33f5c891f8b33fc5f299ef3795d7af3137379de404660e91cfec4773ef83898c",
+    "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+    "bot/policy.py": "d6bc07eb672a273ba5b330da66690a9b46fa28f5dacaee109ccdf30611e1e3bf",
+    "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+    "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+    "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+    "bot/timing.py": "7efdde536abbcbee8ec38531cfe7b1928ba307fb4bdb61b074dd76d8cc827ba6",
+    "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+    "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db"
+  }
+}
