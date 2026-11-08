@@ -1,0 +1,64 @@
+"""Local runner adapter: unchanged submission endpoints plus stderr telemetry.
+
+Does not inspect the opponent, judge state or unrevealed cards. Run only for
+tests; tournament agent.py does not import this observer.
+"""
+
+from collections import Counter
+import json
+import os
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import agent
+from game import RAISE_ACTIONS
+
+original_new_half = agent.new_half
+original_choose = agent.choose_action
+original_end = agent.on_hand_end
+diagnostics = {}
+
+
+def new_half(config, memory):
+    original_new_half(config, memory)
+    diagnostics.clear()
+    diagnostics.update(exploit_decisions=0, exploit_raises=0, gear_decisions=Counter())
+
+
+def choose(obs, memory):
+    action = original_choose(obs, memory)
+    state = memory["bot"]
+    diagnostics["gear_decisions"][state.gear] += 1
+    if state.opponent.exploit_checkfold:
+        diagnostics["exploit_decisions"] += 1
+        diagnostics["exploit_raises"] += action in RAISE_ACTIONS
+    return action
+
+
+def end(result, memory):
+    original_end(result, memory)
+    state = memory["bot"]
+    if state.hands_played % 25 == 0 or state.hands_played == state.config.num_hands:
+        timing = state.timing
+        report = {
+            "hands": state.hands_played, "final": state.hands_played == state.config.num_hands,
+            "gear": state.gear, "transitions": state.selector.transitions,
+            "gear_net_bb": dict(state.opponent.whole.net_bb_by_gear),
+            "gear_hands": dict(state.opponent.whole.hands_by_gear),
+            "opponent_events": dict(state.opponent.whole.events),
+            "safety_errors": memory["safety_errors"],
+            "governor_seconds": state.governor.total_seconds,
+            "gate": timing.gate, "gate_hand": timing.gate_hand, "gate_reason": timing.gate_reason,
+            "timing_labels": len(timing.labelled_hands), "timing_gaps": timing.gap_counts,
+            "nudges": timing.nudged_decisions, "lowered_k": timing.lowered_k_decisions,
+            "bank_estimate": timing.bank_estimate, **diagnostics,
+        }
+        print("BOT_DIAGNOSTICS " + json.dumps(report), file=sys.stderr, flush=True)
+
+
+agent.new_half, agent.choose_action, agent.on_hand_end = new_half, choose, end
+
+if __name__ == "__main__":
+    agent.uvicorn.run(agent.app, host="127.0.0.1", port=int(os.environ["PORT"]),
+                      log_level="warning", access_log=False)
