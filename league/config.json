@@ -40,22 +40,23 @@
     ]
   },
   "holdout": {
+    "generation": 2,
     "opponents": [
-      "gto_ish",
+      "holdout_sentinel_a",
       "adaptive_counter",
       "erratic"
     ],
     "seeds": [
-      101,
-      102,
-      103,
-      104,
-      105,
-      106,
-      107,
-      108,
-      109,
-      110
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210
     ],
     "requires_milestone": true
   },
@@ -124,6 +125,88 @@
     },
     "crashy": {
       "script": "league/opponents/crashy.py"
+    },
+    "strong_tell": {
+      "script": "league/opponents/strong_tell.py"
+    },
+    "known_thinker": {
+      "script": "league/opponents/known_thinker.py"
+    },
+    "variable_thinker": {
+      "script": "league/opponents/variable_thinker.py"
+    },
+    "fake_tell": {
+      "script": "league/opponents/fake_tell.py"
+    },
+    "holdout_sentinel_a": {
+      "script": "league/opponents/holdout_sentinel_a.py"
+    },
+    "holdout_sentinel_b": {
+      "script": "league/opponents/holdout_sentinel_b.py"
     }
+  },
+  "timing_controls": {
+    "positive": [
+      "strong_tell"
+    ],
+    "negative": [
+      "baseline_random",
+      "calling_station",
+      "pot_maniac"
+    ],
+    "known_clock": [
+      "known_thinker",
+      "variable_thinker"
+    ],
+    "adversarial": [
+      "fake_tell"
+    ]
+  },
+  "holdout_history": [
+    {
+      "opponents": [
+        "gto_ish",
+        "adaptive_counter",
+        "erratic"
+      ],
+      "seeds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110
+      ],
+      "requires_milestone": true,
+      "generation": 1,
+      "consumed_by": "iteration-1 v2 promotion"
+    }
+  ],
+  "holdout_rotation_plan": {
+    "after_phase2_decision": {
+      "generation": 3,
+      "opponents": [
+        "holdout_sentinel_a",
+        "holdout_sentinel_b",
+        "erratic"
+      ],
+      "seeds": [
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310
+      ]
+    },
+    "reason": "fixed round-robin slot rotation and fresh seed decade; declared before validation scores"
   }
 }

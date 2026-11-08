@@ -15,3 +15,5 @@ A match is won only if the 95% confidence interval of our average bb/deal is ent
 - Don't add dependencies unless truly needed. The base image already has FastAPI, uvicorn and PyTorch (CPU). Don't change the pins in requirements.txt for fastapi/uvicorn.
 - After every task: run the full test suite, run a 200-deal match against baseline_random.py, report results, then git commit with a clear message.
 - If a requirement is ambiguous, ask me before guessing.
+
+Phase 2 work follows codex_phase2_adversarial.md. Its Part 5 rules apply on top of the existing loop rules.

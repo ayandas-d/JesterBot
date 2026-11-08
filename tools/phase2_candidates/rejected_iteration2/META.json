@@ -1,0 +1,22 @@
+{
+  "status": "REJECTED: not a champion",
+  "champion": "v2",
+  "reason": "judge-charged half 4.251613 s; 4 s safety gate failed despite internal choose timer 3.338083 s",
+  "runtime_files": {
+    "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+    "agent.py": "cf5f6191baaaf99219cceb75feb843a9b02c9df220d2a71940e276e8f61dd312",
+    "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+    "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+    "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+    "bot/gears.py": "9f660907737e549cb8dbcfe5524b8403b8b1351cfbe591b2cfa13300adaa6c72",
+    "bot/policy.py": "ed38a504b92e72427326c3644a9d69585492a3114524d8af6a42e371d5edf5f2",
+    "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+    "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+    "bot/governor.py": "33f5c891f8b33fc5f299ef3795d7af3137379de404660e91cfec4773ef83898c",
+    "bot/timing.py": "ee1858751016ba74aed789361b1cf14d162fd9cacae0d277e16d54816975d273",
+    "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+    "bot/timing_gate.py": "dbffc32d7e4baa159003db704a825bdc62feab6612db6ee763d1515c32adfc7d",
+    "bot/fallback.py": "e8041c363cd451bdde957863c74f833f15328c9062f974ed5a7d57d1fc4d31cf"
+  }
+}

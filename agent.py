@@ -91,10 +91,16 @@ def on_hand_end(result: HandResult, memory: dict) -> None:
     state = get_state(memory)
     try:
         state.end(result)
+        if result.hand_index + 1 == state.config.num_hands:
+            state.timing.finalize(state.opponent, started)
+            state.timing.checkpoint(state.config.num_hands, state.opponent)
+            state.timing.emit_diagnostics()
     finally:
         # Batched callbacks run before choose_action: exclude our own callback
         # work from the request-gap estimate of opponent/judge time.
-        state.timing.callback_seconds += monotonic() - started
+        elapsed = monotonic() - started
+        state.timing.callback_seconds += elapsed
+        state.governor.record_callback(result.hand_index, elapsed)
 
 # ===== END OF YOUR CODE =====
 

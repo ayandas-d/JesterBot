@@ -2,7 +2,7 @@
 
 from bot.equity import equity, reset_rng
 from bot.preflop import preflop_strength
-from bot.governor import TimeGovernor
+from bot.governor import TimeGovernor, computation_budget
 from bot.opponent import OpponentModel
 from bot.gears import GearSelector
 from bot.timing import PhasedTiming
@@ -15,7 +15,7 @@ class State:
         self.rng = reset_rng()
         self.gear = CONFIG["default_gear"]
         self.gear_parameters = half_parameters(self.rng)
-        self.governor = TimeGovernor(config.num_hands, min(4.0, config.time_bank_seconds * 0.75))
+        self.governor = TimeGovernor(config.num_hands, computation_budget(config))
         self.hands_played = 0
         self.opponent = OpponentModel(config)
         self.selector = GearSelector()
@@ -25,6 +25,7 @@ class State:
         if self.opponent.end(result, self.gear):
             self.timing.end(self.opponent.recent[-1])
             self.hands_played += 1
+            self.timing.checkpoint(result.hand_index + 1, self.opponent)
             self.gear = self.selector.evaluate(self.hands_played, self.opponent.rolling, self.gear)
 
 
@@ -46,6 +47,8 @@ def policy(obs, state):
         for action in (Action.RAISE_HALF, Action.RAISE_POT):
             if action in obs.legal_actions:
                 return action
+    boost = state.selector.bluff_multiplier(state.gear)
+    timing_multiplier = state.timing.bluff_multiplier(obs.hand_index)
+    state.timing.record_nudge(obs, strength, state.gear, state.gear_parameters, boost, timing_multiplier)
     return sample_action(obs, strength, state.gear, state.rng, state.gear_parameters,
-                         bluff_multiplier=(state.selector.bluff_multiplier(state.gear)
-                                           * state.timing.bluff_multiplier(obs.hand_index)))
+                         bluff_multiplier=boost * timing_multiplier)

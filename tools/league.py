@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.run_matches import processes, read_diagnostics
 from tools.run_snapshot import resolve_snapshot
+from game import AgentConfig
 
 
 def load_config(path=None):
@@ -47,6 +48,12 @@ def champions():
     parent = ROOT / "league/champions"
     names = [p.name for p in parent.iterdir() if re.fullmatch(r"v[1-9]\d*", p.name)] if parent.exists() else []
     return sorted(names, key=lambda name: int(name[1:]))
+
+
+def runtime_hashes(source):
+    paths = [source / name for name in ("agent.py", "game.py", "evaluator.py")]
+    paths += list((source / "bot").rglob("*.py"))
+    return {str(p.relative_to(source)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
 def command(name, config):
@@ -78,7 +85,11 @@ def violations(report, diagnostics, opponent, config):
                 if half[key]:
                     item = f"{player}/half{number}/{key}={half[key]}"
                     (expected if intentional and key != "timed_out" else issues).append(item)
-            if half["time_seconds"] > config["safety"]["max_thinking_seconds"]:
+            # Four seconds is Jester's submission headroom requirement.
+            # Deliberate-delay controls must fit their own tournament bank.
+            limit = (config["safety"]["max_thinking_seconds"] if player == "agent1"
+                     else AgentConfig().time_bank_seconds)
+            if half["time_seconds"] > limit:
                 issues.append(f"{player}/half{number}/think={half['time_seconds']:.3f}s")
     finals = [d for d in diagnostics if d["final"]]
     if len(finals) != 2:
@@ -105,8 +116,36 @@ def ready(process, port, stop, timeout=15):
     raise TimeoutError("server startup exceeded 15 seconds")
 
 
-def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=False, timeout=180, bot_seed="7"):
+def timing_audits(log, report, prefix="TIMING_AUDIT "):
+    """Pair passive observations with the judge's external half reference."""
+    records = [json.loads(line.removeprefix(prefix))
+               for line in log.read_text().splitlines() if line.startswith(prefix)]
+    for index, record in enumerate(records):
+        if index < len(report["agent_stats"]["agent2"]):
+            half = report["agent_stats"]["agent2"][index]
+            record["judge_opponent_reference"] = {
+                "charged_seconds": half["time_seconds"],
+                "http_wall_seconds": half["wall_seconds"], "calls": half["calls"],
+                "scope": "whole half; each HTTP request has 1 ms free grace",
+            }
+            references = report.get("timing_reference", {}).get("agent2", [])
+            if index < len(references):
+                record["judge_opponent_reference"]["checkpoints"] = references[index]
+                for checkpoint in record.get("bank_checkpoints", []):
+                    truth = references[index].get(str(checkpoint["hands"]))
+                    if truth is not None:
+                        checkpoint["judge_charged_seconds"] = truth["time_seconds"]
+                        error = checkpoint["estimate"] - truth["time_seconds"]
+                        checkpoint["absolute_error_seconds"] = abs(error)
+                        checkpoint["relative_error"] = abs(error) / truth["time_seconds"] if truth["time_seconds"] else None
+    return records
+
+
+def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=False, timeout=180,
+            bot_seed="7", timing_reference=False, timing_mode="configured", force_fake_gate=False):
     directory.mkdir(parents=True, exist_ok=True)
+    source = ROOT if challenger == "live" else resolve_snapshot(challenger)
+    initial_runtime = runtime_hashes(source)
     sockets, handles = [socket.socket(), socket.socket()], []
     try:
         if stop.is_set():
@@ -123,6 +162,15 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
                            PYTHONDONTWRITEBYTECODE="1")
                 env.pop("PYTHONPATH", None)
                 env.pop("BOT_SOURCE_ROOT", None)
+                if i == 0:
+                    env["JESTER_TIMING_MODE"] = timing_mode
+                    if force_fake_gate:
+                        env["JESTER_FORCE_FAKE_GATE"] = "1"
+                    else:
+                        env.pop("JESTER_FORCE_FAKE_GATE", None)
+                else:
+                    env.pop("JESTER_TIMING_MODE", None)
+                    env.pop("JESTER_FORCE_FAKE_GATE", None)
                 process = subprocess.Popen(command(name, config), cwd=ROOT, env=env,
                                            stdout=handle, stderr=subprocess.STDOUT)
                 owned.append(process)
@@ -130,7 +178,8 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
             handle = (directory / "judge.log").open("w")
             handles.append(handle)
             output = directory / "match.json"
-            args = [sys.executable, "-B", str(ROOT / "judge_engine.py"), "--agent1", str(ports[0]),
+            judge_script = ROOT / "tools/judge_timing_audit.py" if timing_reference else ROOT / "judge_engine.py"
+            args = [sys.executable, "-B", str(judge_script), "--agent1", str(ports[0]),
                     "--agent2", str(ports[1]), "--seed", str(seed), "--deals", str(deals), "--json", str(output)]
             if logs:
                 args.append("--logs")
@@ -150,13 +199,18 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
         report = json.loads(output.read_text())
         diagnostics = read_diagnostics(directory / "agent1.log")
         issues, expected = violations(report, diagnostics, opponent, config)
+        if runtime_hashes(source) != initial_runtime:
+            issues.append("challenger runtime source changed during match")
         times = [h["time_seconds"] for h in report["agent_stats"]["agent1"]]
         return {"opponent": opponent, "seed": seed, "verdict": report["verdict"],
                 "points": report["points"]["agent1"], "bb_per_deal": report["mean_bb_per_deal"], "ci": report["ci"],
+                "runtime_source_sha256": initial_runtime,
                 "our_errors": [h["errors"] for h in report["agent_stats"]["agent1"]],
                 "think_seconds": times, "think_max": max(times), "think_mean": mean(times),
                 "forfeits": {p: [h["forfeited"] for h in halves] for p, halves in report["agent_stats"].items()},
                 "safety_violations": issues, "expected_opponent_faults": expected,
+                "timing_audit": timing_audits(directory / "agent1.log", report),
+                "timing_diagnostics": timing_audits(directory / "agent1.log", report, "JESTER_TIMING "),
                 "diagnostics": [d for d in diagnostics if d["final"]],
                 "raw": report, "log_directory": str(directory)}
     finally:
@@ -214,10 +268,13 @@ def plan(args, config):
         opponents = [args.head_to_head]
     elif not args.opponents and group == "training" and config["champions"]["include_all"]:
         opponents += champions()
-    if set(opponents) & set(config["holdout"]["opponents"]) and not args.milestone:
+    historical = config.get("holdout_history", [])
+    protected_names = set(config["holdout"]["opponents"]).union(*(set(v["opponents"]) for v in historical))
+    protected_seeds = set(map(str, config["holdout"]["seeds"])).union(*(set(map(str, v["seeds"])) for v in historical))
+    if set(opponents) & protected_names and not args.milestone:
         raise ValueError("holdout opponents require an explicit milestone, even with --opponents")
     seeds = args.seeds or list(config[group]["seeds"])
-    if set(map(str, seeds)) & set(map(str, config["holdout"]["seeds"])) and not args.milestone:
+    if set(map(str, seeds)) & protected_seeds and not args.milestone:
         raise ValueError("holdout seeds require an explicit milestone")
     if args.quick:
         seeds = seeds[:config["quick"]["seed_count"]]
@@ -260,6 +317,9 @@ def main(argv=None):
     parser.add_argument("--logs", action="store_true")
     parser.add_argument("--timeout", type=float, default=180)
     parser.add_argument("--bot-seed", default="7")
+    parser.add_argument("--timing-reference", action="store_true", help="test-only unchanged-judge prefix telemetry")
+    parser.add_argument("--timing-mode", choices=("configured", "enabled", "disabled", "observe"), default="configured")
+    parser.add_argument("--force-fake-gate", action="store_true", help="adversarial TEST ONLY: force an invalid timing model")
     args = parser.parse_args(argv)
     config = load_config()
     try:
@@ -280,11 +340,18 @@ def main(argv=None):
                 "deals": deals, "jobs": args.jobs, "bot_seed": args.bot_seed, "head_to_head": args.head_to_head,
                 "log_directory": str(log_root), "ci_method": "pooled duplicate-pair returns, normal 95% CI"}
     metadata["config"] = config
+    metadata["timing_probe"] = os.environ.get("JESTER_TIMING_PROBE") == "1"
+    metadata["diagnostics_enabled"] = os.environ.get("JESTER_DIAG") == "1"
+    metadata["timing_reference"] = args.timing_reference
+    metadata["timing_mode"] = args.timing_mode
+    metadata["force_fake_gate"] = args.force_fake_gate
+    metadata["observer_source_sha256"] = {
+        name: hashlib.sha256((ROOT / "tools" / name).read_bytes()).hexdigest()
+        for name in ("serve_agent.py", "timing_probe.py", "judge_timing_audit.py")}
     metadata["opponent_source_sha256"] = {
         p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "league/opponents").glob("*.py"))}
     source = ROOT if args.challenger == "live" else resolve_snapshot(args.challenger)
-    runtime_paths = [source / name for name in ("agent.py", "game.py", "evaluator.py")] + list((source / "bot").rglob("*.py"))
-    metadata["challenger_source_sha256"] = {str(p.relative_to(source)): hashlib.sha256(p.read_bytes()).hexdigest() for p in runtime_paths}
+    metadata["challenger_source_sha256"] = runtime_hashes(source)
     stop, rows = Event(), []
     def terminate(*_):
         raise KeyboardInterrupt("league received SIGTERM")
@@ -297,7 +364,8 @@ def main(argv=None):
         for name in opponents:
             for index, seed in enumerate(seeds):
                 future = executor.submit(run_one, args.challenger, name, seed, deals,
-                                         log_root / f"{name}-{index}", config, stop, args.logs, args.timeout, args.bot_seed)
+                                         log_root / f"{name}-{index}", config, stop, args.logs, args.timeout, args.bot_seed,
+                                         args.timing_reference, args.timing_mode, args.force_fake_gate)
                 futures[future] = (name, seed)
         for future in as_completed(futures):
             name, seed = futures[future]

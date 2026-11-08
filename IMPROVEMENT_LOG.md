@@ -180,3 +180,120 @@ time per half. Intentional opponent faults are reported separately.
   changes improves consistency. These ideas come from training evidence.
   If future tuning targets an observed holdout weakness, rotate holdout
   seeds and a bot before validation, as required by Part 4.
+
+## Iteration 2 (2026-11-08) — REJECTED
+
+- Champion / commit: v2, `c81268ec9317ed64f2728e3f3070a004ab16a443`.
+- Weakness targeted: the timing gate never opened in the accepted 560-half
+  training evaluation, and its time-bank estimate used a different clock from
+  the judge. slow_tell's median estimate was 3.347 s versus 1.195 s charged.
+- Diagnosis: final-category/current-equity label mismatch, fragmented and
+  underpowered early gate decisions, previous-hand hint attribution, omitted
+  final gaps, per-request-grace mismatch and discarded pre-calibration work.
+  The audit and individual failing regressions are in `tools/timing_audit.md`.
+- Change: audited passive timing measurement and diagnostics; planned-look
+  work-pattern/action association tests; conservative default-off strength
+  nudges; semantics-preserving fixed-work band/bluff calculations. All poker
+  thresholds and gear parameters stayed unchanged. Strong-pattern detection
+  does not itself establish a private-strength model.
+- Tests added: timing audit/isolation/clock/false-gate tests, dose-response
+  and statistical-control tests, unchanged-v2 probability equivalence, and
+  source-hand/late-baseline regression cases. Fast suite: **198 passed in
+  31.01 s**. The final gate prototype detected **40/40** live positive halves
+  and **0/60** negatives. Hand-700 clock errors were at most **13.87%** over
+  20 known-clock halves. Failed prototypes and their raw records are retained.
+- Results: fresh expanded v2 reference **262/300 points**, **+2.852877 bb/deal**.
+  Challenger evaluation was intentionally stopped after **214/300** completed
+  matches when the safety gate failed; no full-league acceptance comparison,
+  head-to-head gate or holdout gate was claimed. No new champion was tagged.
+- Safety: **REJECTED**, maximum Jester charged half **4.251613 s > 4 s**
+  (slow_tell, seed 3, half 1), despite **3.338083 s** in its choose governor.
+  The timing-disabled fake-tell comparison also reached **4.225189 s** while
+  its governor recorded **3.072345 s**. There were no Jester HTTP errors,
+  timeouts or forfeits in those cases. The discrepancy exposes missing
+  callback accounting and insufficient headroom for charged work outside
+  choose_action; it is not excused by the absence of a tournament forfeit.
+- Holdout (if run): not run. Fresh generation-2 opponents/seeds were reserved
+  without looking at their scores; validation remains pending.
+- Decision: reject on the priority-one safety gate. Experimental runtime
+  files were reverted to verified v2 bytes, with the rejected implementation
+  archived in `tools/phase2_candidates/rejected_iteration2/` and the revert
+  recorded in `tools/phase2_rejection_2.json`. The audited measurement code
+  remains the experimental base for the next narrowly focused safety fix;
+  it is not a promoted champion. v2 snapshots/tags remain unchanged.
+- Commands and raw evidence: `phase2-configured-full` raw JSON under
+  `league/results/20261108T112013486950Z_phase2-configured-full.json` and
+  `phase2-final-fake-disabled` under
+  `league/results/20261108T111820886547Z_phase2-final-fake-disabled.json`.
+  Exact options, source hashes and completed match records are embedded in
+  each file. The configured run used:
+
+  ```sh
+  JESTER_DIAG=1 BOT_SEED=7 .venv/bin/python -B tools/league.py --full --jobs 2 --timing-mode configured --label phase2-configured-full
+  ```
+
+- Tier results (F / H / C): legacy fair field only; expanded Hard/cheater
+  tiers have not been built or evaluated yet. Adversaries added: none.
+- Next idea: count all result-callback work and reserve 1.5 s of the 4 s
+  ceiling for unobserved request costs. A regression-first experiment must
+  then repeat safety and performance gates. This changes only the time-budget
+  accounting/headroom relative to the failed timing candidate. The newly
+  supplied expansion, oracle/evolution and continuous-runner tasks follow
+  the timing-audit commit; they do not alter the current comparison field.
+
+## Iteration 3 (2026-11-08) — REJECTED
+
+- Champion / commit: v2, `c81268ec9317ed64f2728e3f3070a004ab16a443`.
+- Weakness targeted: iteration 2 exceeded the 4 s charged half ceiling while
+  its choose-only governor understated work by 0.9–1.2 s.
+- Diagnosis: callbacks were unaccounted, and the internal budget left too
+  little room for framework/request work. Passive instrumentation can also
+  alter sample-governor decisions, even with zero policy nudges.
+- Change: relative to the unchanged audited timing base, account callback
+  work and reserve 1.5 s external headroom (2.5 s internal budget). No poker
+  threshold or gear change. Correct the test runner's clock scope: Jester
+  ≤4 s; deliberately delayed controls inside their own 8 s bank. Raw older
+  summaries are retained, and neither prior Jester safety failure is waived.
+- Tests added: `tests/test_safety_budget.py`, clock-scope regression in
+  `tests/test_league_infrastructure.py`, matched-field/safety comparison tests.
+  Before/after regressions were demonstrated. The candidate's final fast
+  suite passed 222 tests in 19.43 s, including preliminary independent league
+  tooling tests. Profile p99 ≤1.383 ms; maximum offline half 1.8442 s.
+- Results: the six-case 1,000-deal budget regression won 6/6 with zero safety
+  issues. Positive timing controls opened 38/40 (95%); negative controls 0/60;
+  known-clock hand-700 error ≤18.86%. **Fake-tell guardrail failed:** default-off
+  instrumented play versus disabled play −0.33125 bb/deal, 95% CI
+  [−0.60198, −0.06052], below the predefined −0.25 lower-CI bound. Actual
+  distribution nudges were zero. The difference can arise through timing
+  cost, global sample reduction and subsequent RNG trajectory changes.
+- Tournament points / bb/deal: on the **partial matched 246-match subset**, v2
+  228.0 → challenger 221.5 points; +3.436600 → +2.952561 bb/deal. The run was
+  stopped after rejection, so this is not a completed full-league result.
+- Safety: zero Jester errors/timeouts/forfeits in completed candidate matches;
+  partial-training maximum charged half 1.703904 s. No safety failure is hidden
+  by the performance rejection. The 200-deal random regression won at
+  +6.4525 bb/deal with zero safety issues.
+- Holdout (if run): not run; no reserved generation-2 scores were observed.
+  Head-to-head and full enabled/disabled training were not completed after
+  the guardrail failure. They are not claimed as passes.
+- Decision: reject. Preserve the complete experimental source and tests on
+  `experiment/phase2-timing-audit`, restore live source to champion v2, and
+  retain audit/results on main. No new champion/tag. The audit feature remains
+  unpromoted; default-off nudges exist only in that experiment.
+- Commands: `JESTER_DIAG=1 BOT_SEED=7 .venv/bin/python -B tools/league.py --full --jobs 2 --timing-mode configured --label phase2-budget-configured-full`;
+  `BOT_SEED=7 .venv/bin/python -B tools/timing_controls.py --run positive negative known fake fake-disabled --jobs 2`
+  (the negative/known/fake/fake-disabled sequence resumed after the clock-scope
+  bug, preserving the original positive raw record). Controls use 1,000 deals:
+  positive/fake seeds 1–20; negative seeds 1–10 against three opponents; known
+  seeds 1–5 against two opponents. Final tests:
+  `BOT_SEED=7 .venv/bin/python -B -m pytest -q --junitxml=/tmp/phase2-rejected-final-fast.xml`.
+  Profile: `BOT_SEED=7 .venv/bin/python -B tools/profile_bot.py`.
+  Random regression: `BOT_SEED=7 .venv/bin/python -B tools/league.py --opponents baseline_random --seeds 7 --deals 200 --label phase2-rejected-regression`.
+  Exact paths/hashes/assessments: `tools/phase2_iteration3_results.json`;
+  detailed limitations and failed prototypes: `tools/timing_audit.md`.
+- Tier results (F / H / C): old fair field only; expanded tiers pending.
+- Adversaries added: independent test-only family/oracle scaffolds prepared,
+  none registered in this comparison field and no hall-of-fame entry removed.
+- Next idea: reduce timing instrumentation cost before another feature
+  promotion attempt. First complete the user's independently requested
+  expanded league and continuous runner around frozen v2.

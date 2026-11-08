@@ -107,12 +107,17 @@ def action_probabilities(obs, strength, gear=None, parameters=None, bluff_multip
         return probabilities
 
     thresholds = params["thresholds"]["PREFLOP" if obs.street == Street.PREFLOP else "POSTFLOP"]
-    band = next((band for band in ("top", "strong", "medium")
-                 if strength >= thresholds[band]), "weak")
+    # Always compare all three thresholds. Preserve the old priority even if
+    # a teammate temporarily configures thresholds out of order.
+    top = strength >= thresholds["top"]
+    strong = strength >= thresholds["strong"]
+    medium = strength >= thresholds["medium"]
+    band_index = 3 * top + (1 - top) * (2 * strong + (1 - strong) * medium)
+    band = ("weak", "medium", "strong", "top")[band_index]
     raises = [action for action in (Action.RAISE_HALF, Action.RAISE_POT) if action in probabilities]
     raise_probability = params["raise"][band] if raises else 0.0
-    if band == "weak":
-        raise_probability = max(0.0, min(1.0, raise_probability * bluff_multiplier))
+    adjusted = max(0.0, min(1.0, raise_probability * bluff_multiplier))
+    raise_probability = adjusted if band == "weak" else raise_probability
     if call and obs.raises_this_street >= 2:
         raise_probability *= params["reraise_multiplier"]
     if big_bet:
@@ -124,7 +129,8 @@ def action_probabilities(obs, strength, gear=None, parameters=None, bluff_multip
         probabilities[raises[0]] = raise_probability
 
     remaining = 1 - raise_probability
-    continuation = params["continue_weak"] if call and band == "weak" else 1.0
+    weak_continuation = params["continue_weak"]
+    continuation = weak_continuation if call and band == "weak" else 1.0
     probabilities[Action.CHECK_CALL] = remaining * continuation
     if Action.FOLD in probabilities:
         probabilities[Action.FOLD] = remaining * (1 - continuation)

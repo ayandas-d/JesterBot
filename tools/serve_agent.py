@@ -22,6 +22,31 @@ diagnostics = {}
 
 def new_half(config, memory):
     original_new_half(config, memory)
+    if os.environ.get("JESTER_TIMING_PROBE") == "1":
+        # Keep frozen runtime imports first; the observer itself is test-only.
+        sys.path.append(str(Path(__file__).resolve().parents[1]))
+        from tools.timing_probe import probe_type
+        memory["bot"].timing = probe_type(type(memory["bot"].timing))()
+    mode = os.environ.get("JESTER_TIMING_MODE", "configured")
+    if mode == "disabled":
+        memory["bot"].timing.enabled = False
+    elif mode == "enabled":
+        memory["bot"].timing.enabled = True
+        memory["bot"].timing.settings["nudges"] = True
+    elif mode == "observe":
+        memory["bot"].timing.settings["nudges"] = False
+    if os.environ.get("JESTER_FORCE_FAKE_GATE") == "1":
+        timing = memory["bot"].timing
+        def forced_gate(hand):
+            if hand < timing.settings["cautious_start"]:
+                return
+            timing.gate = "open"
+            timing.gate_hand = timing.gate_hand if timing.gate_hand is not None else hand
+            timing.gate_reason = "test-only deliberately false gate; not validated evidence"
+            timing.signal_kind = "forced_invalid"
+            timing.models = {(street, action, cross): {"weak": (.040, .025), "strong": (.0006, .001)}
+                             for street in range(4) for action in range(4) for cross in (False, True)}
+        timing._gate = forced_gate
     diagnostics.clear()
     diagnostics.update(exploit_decisions=0, exploit_raises=0, gear_decisions=Counter())
 
@@ -49,12 +74,15 @@ def end(result, memory):
             "opponent_events": dict(state.opponent.whole.events),
             "safety_errors": memory["safety_errors"],
             "governor_seconds": state.governor.total_seconds,
+            "governor_reductions": state.governor.reductions,
             "gate": timing.gate, "gate_hand": timing.gate_hand, "gate_reason": timing.gate_reason,
             "timing_labels": len(timing.labelled_hands), "timing_gaps": timing.gap_counts,
             "nudges": timing.nudged_decisions, "lowered_k": timing.lowered_k_decisions,
             "bank_estimate": timing.bank_estimate, **diagnostics,
         }
         print("BOT_DIAGNOSTICS " + json.dumps(report), file=sys.stderr, flush=True)
+        if report["final"] and os.environ.get("JESTER_TIMING_PROBE") == "1":
+            print("TIMING_AUDIT " + json.dumps(timing.audit_report()), file=sys.stderr, flush=True)
 
 
 agent.new_half, agent.choose_action, agent.on_hand_end = new_half, choose, end

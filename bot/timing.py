@@ -5,6 +5,13 @@ to the opponent. Separate contexts and held-out confirmation are mandatory.
 from collections import defaultdict, deque
 from math import sqrt
 from statistics import median
+import json
+import os
+import sys
+
+from bot.timing_gate import ActionTimingGate
+
+TIMING_NUDGES = False  # Strength nudges need measured value; diagnostic gates do not imply it.
 
 # Active Task 5 implementation. The older Timing class below remains solely
 # for the archived strategy's tests; the live adapter imports PhasedTiming.
@@ -26,6 +33,8 @@ CONFIG = {
     "endgame_detector_k": 8,
     "weak_category_max": 2,
     "medium_category_max": 4,
+    "bank_request_grace": .001,
+    "minimum_bank_coverage": .70,
 }
 
 
@@ -59,6 +68,7 @@ evidence. Gate failure is permanent and disables *all* timing effects.
         self.enabled = enabled
         self.last = None
         self.current = None
+        self.current_hand = None
         self.callback_seconds = 0.0
         self.baselines = {cross: deque(maxlen=self.settings["baseline_window"]) for cross in (False, True)}
         self.overhead = {False: 0.0, True: 0.0}
@@ -72,6 +82,25 @@ evidence. Gate failure is permanent and disables *all* timing effects.
         self.context_counts = {}
         self.candidates = {}
         self.models = {}
+        self.action_gate = ActionTimingGate()
+        self.signal_kind = None
+        self.fit_statistics = {}
+        self.last_gate_review = -1
+        self.gate_looks_used = set()
+        self.baseline_moments = {cross: Moments() for cross in (False, True)}
+        self.free_allowance = {cross: Moments() for cross in (False, True)}
+        self.bank_charged_sum = 0.0
+        self.bank_covered_actions = 0
+        self.bank_direct_actions = 0
+        self.bank_borrowed_actions = 0
+        self.unpriced_gaps = deque(maxlen=4096)
+        self.bank_dropped_actions = 0
+        self.checkpoints = {}
+        self.nudge_records = deque(maxlen=16384)
+        self.k_changes = deque(maxlen=128)
+        self.last_detector_k = None
+        self.diagnostics_enabled = os.environ.get("JESTER_DIAG") == "1"
+        self._finalizing = False
         self.gate = "pending"
         self.gate_reason = "learning"
         self.gate_hand = None
@@ -97,6 +126,7 @@ evidence. Gate failure is permanent and disables *all* timing effects.
 
     def observe(self, obs, model, now):
         self.current = None
+        self.current_hand = None
         if not self.enabled:
             return
         self.opponent_actions = self._actions(model)
@@ -121,9 +151,14 @@ evidence. Gate failure is permanent and disables *all* timing effects.
                 valid = valid and obs.action_history[:len(prefix)] == prefix
             if not valid:
                 self.gap_counts["discarded"] += 1
+            elif count == 0 and self._finalizing:
+                # /hand-end has a different payload/route from /act; never
+                # contaminate request-overhead baselines with the final flush.
+                self.gap_counts["discarded"] += 1
             elif count == 0:
                 self.baselines[cross].append(gap)
                 self.overhead[cross] = median(self.baselines[cross])
+                self.baseline_moments[cross].add(gap)
                 self.gap_counts["baseline"] += 1
             elif count == 1:
                 self.clean_counts[cross] += 1
@@ -141,17 +176,55 @@ evidence. Gate failure is permanent and disables *all* timing effects.
                 if action is not None:
                     context = (int(action.street), int(action.action), cross)
                     self.current = (context, gap)
+                    self.current_hand = source.index
+                    self.action_gate.add(source.index, context, gap,
+                                         sqrt(self.baseline_moments[cross].variance))
                     if source.showdown is not None:
                         self._label(source.index, context, gap, source.showdown["category"])
                     elif source is model.current:
                         self.pending = (source.index, context, gap)
             else:
                 self.gap_counts["multiple"] += 1
+            self._price_pending()
+            if valid and count > 0 and not self._price_gap(cross, gap, count):
+                if len(self.unpriced_gaps) == self.unpriced_gaps.maxlen:
+                    self.bank_dropped_actions += self.unpriced_gaps[0][2]
+                self.unpriced_gaps.append((cross, gap, count))
         # Standalone callers may omit results; never label a stale sample as
         # belonging to a newer hand, and do not grow an unbounded pending map.
         if self.pending is not None and self.pending[0] < obs.hand_index:
             self.pending = None
+        self.action_gate.complete(obs.hand_index)
         self._gate(obs.hand_index)
+
+    def _price_gap(self, cross, gap, count):
+        direct = len(self.baselines[cross]) >= self.settings["minimum_baselines"]
+        borrowed = not direct and len(self.baselines[not cross]) >= self.settings["minimum_baselines"]
+        if not (direct or borrowed):
+            return False
+        # The clock is charged per request, with explicit same-half borrowed
+        # calibration when a boundary class has no zero-action opportunities.
+        baseline = self.overhead[cross] if self.baselines[cross] else self.overhead[not cross]
+        wall = max(0.0, gap - baseline)
+        grace = self.settings["bank_request_grace"]
+        if count == 1:
+            charge = max(0.0, wall - grace)
+            self.free_allowance[cross].add(max(0.0, grace - wall))
+        else:
+            allowance = self.free_allowance[cross] if self.free_allowance[cross].n else self.free_allowance[not cross]
+            charge = max(0.0, wall - count * grace + count * allowance.mean)
+        self.bank_charged_sum += charge
+        self.bank_covered_actions += count
+        self.bank_direct_actions += count if direct else 0
+        self.bank_borrowed_actions += count if borrowed else 0
+        return True
+
+    def _price_pending(self):
+        if self.unpriced_gaps and any(len(v) >= self.settings["minimum_baselines"] for v in self.baselines.values()):
+            for _ in range(len(self.unpriced_gaps)):
+                cross, gap, count = self.unpriced_gaps.popleft()
+                if not self._price_gap(cross, gap, count):
+                    self.unpriced_gaps.append((cross, gap, count))
 
     def end(self, hand):
         if not self.enabled or self.pending is None or self.pending[0] != hand.index:
@@ -173,12 +246,6 @@ evidence. Gate failure is permanent and disables *all* timing effects.
         # Each strength group gets its own balanced split, without RNG use.
         pair[(pair[0].n + pair[1].n) % 2].add(gap)
         self.context_counts[context] = self.context_counts.get(context, 0) + 1
-        if self.gate == "pending" and self.context_counts[context] >= self.settings["minimum_labels"]:
-            fitted = self._fit(groups)
-            if fitted:
-                self.candidates[context] = fitted
-            else:
-                self.candidates.pop(context, None)
 
     def _fit(self, groups):
         cfg = self.settings
@@ -186,17 +253,19 @@ evidence. Gate failure is permanent and disables *all* timing effects.
                   if min(part.n for part in pair) >= cfg["minimum_group_split"]}
         names = tuple(usable)
         passed = False
+        self._last_fit_statistic = 0.0
         for i, left in enumerate(names):
             for right in names[i + 1:]:
-                differences = []
+                differences, statistics = [], []
                 for a, b in zip(usable[left], usable[right]):
                     difference = a.mean - b.mean
                     se = sqrt(a.variance / a.n + b.variance / b.n)
-                    if (abs(difference) < cfg["minimum_mean_difference"]
-                            or abs(difference) < cfg["minimum_signal_se"] * max(se, 1e-12)):
-                        break
                     differences.append(difference)
-                if len(differences) == 2 and differences[0] * differences[1] > 0:
+                    statistics.append(abs(difference) / max(se, 1e-12))
+                self._last_fit_statistic = max(self._last_fit_statistic, min(statistics))
+                if (min(abs(v) for v in differences) >= cfg["minimum_mean_difference"]
+                        and min(statistics) >= cfg["minimum_signal_se"]
+                        and differences[0] * differences[1] > 0):
                     passed = True
         if not passed:
             return None
@@ -207,19 +276,44 @@ evidence. Gate failure is permanent and disables *all* timing effects.
     def _gate(self, hand):
         if self.gate != "pending" or self.phase(hand) == "learn":
             return
+        start, stop = self.settings["cautious_start"], self.settings["endgame_start"]
+        looks = (start, (start + stop) // 2, stop - 1)
+        available = [i for i, boundary in enumerate(looks) if hand >= boundary and i not in self.gate_looks_used]
+        if not available:
+            if self.phase(hand) == "endgame":
+                self.gate, self.gate_reason, self.gate_hand = "closed", "statistic below threshold or insufficient samples", hand
+            return
+        look = max(available)
+        self.gate_looks_used.update(range(look + 1))
+        self.last_gate_review = hand
         eligible = [context for context, n in self.context_counts.items()
                     if n >= self.settings["minimum_labels"]
                     and len(self.baselines[context[2]]) >= self.settings["minimum_baselines"]]
-        if eligible:
-            self.models = {c: self.candidates[c] for c in eligible if c in self.candidates}
-            self.gate = "open" if self.models else "closed"
-            self.gate_reason = "confirmed group difference" if self.models else "no confirmed signal"
+        for context in eligible:
+            fitted = self._fit(self.groups[context])
+            self.fit_statistics[context] = self._last_fit_statistic
+            if fitted:
+                self.candidates[context] = fitted
+            else:
+                self.candidates.pop(context, None)
+        self.models = {c: self.candidates[c] for c in eligible if c in self.candidates}
+        action_fit = self.action_gate.evaluate(self.action_gate.settings["alpha_spending"][look]) if any(
+            len(v) >= self.settings["minimum_baselines"] for v in self.baselines.values()) else None
+        if self.models or action_fit:
+            self.gate = "open"
+            self.signal_kind = "showdown_strength" if self.models else action_fit["kind"]
+            self.gate_reason = "confirmed group difference" if self.models else action_fit["reason"]
             self.gate_hand = hand
         elif self.phase(hand) == "endgame":
-            self.gate, self.gate_reason, self.gate_hand = "closed", "insufficient labelled or baseline samples", hand
+            reason = "statistic below threshold" if eligible else "not enough labelled samples or baselines"
+            self.gate, self.gate_reason, self.gate_hand = "closed", reason, hand
+        else:
+            self.gate_reason = "collecting independent evidence; no timing effect"
 
     def bluff_multiplier(self, hand):
-        if not self.enabled or self.phase(hand) == "learn" or self.gate != "open" or self.current is None:
+        if (not self.settings.get("nudges", TIMING_NUDGES) or not self.enabled
+                or self.phase(hand) == "learn" or self.gate != "open"
+                or self.current is None or self.current_hand != hand):
             return 1.0
         context, gap = self.current
         fitted = self.models.get(context, {})
@@ -228,8 +322,18 @@ evidence. Gate failure is permanent and disables *all* timing effects.
         # slow) do not identify weakness and must not increase bluffing.
         if len(matches) != 1 or matches[0] == "medium":
             return 1.0
-        self.nudged_decisions += 1
         return 1 + self.settings["bluff_nudge"] * (1 if matches[0] == "weak" else -1)
+
+    def record_nudge(self, obs, strength, gear, parameters, baseline_boost, multiplier):
+        """Count changed distributions, not merely queries of a timing hint."""
+        if multiplier == 1:
+            return
+        from bot.policy import action_probabilities
+        plain = action_probabilities(obs, strength, gear, parameters, baseline_boost)
+        nudged = action_probabilities(obs, strength, gear, parameters, baseline_boost * multiplier)
+        if any(abs(plain[a] - nudged[a]) > 1e-12 for a in plain):
+            self.nudged_decisions += 1
+            self.nudge_records.append({"hand": obs.hand_index, "multiplier": multiplier})
 
     @property
     def bank_samples(self):
@@ -238,21 +342,89 @@ evidence. Gate failure is permanent and disables *all* timing effects.
 
     @property
     def bank_estimate(self):
-        # Subtract overhead before extrapolating the clean mean to all known
-        # opponent actions. This is an estimate, not access to their clock.
-        usable = [cross for cross in (False, True)
-                  if len(self.baselines[cross]) >= self.settings["minimum_baselines"]]
-        count = sum(self.clean_counts[cross] for cross in usable)
-        net = sum(max(0.0, self.clean_sums[cross] - self.clean_counts[cross] * self.overhead[cross]) for cross in usable)
-        return net * self.opponent_actions / count if count else 0.0
+        return (self.bank_charged_sum * self.opponent_actions / self.bank_covered_actions
+                if self.bank_covered_actions else 0.0)
+
+    @property
+    def bank_coverage(self):
+        return self.bank_covered_actions / max(1, self.opponent_actions)
+
+    @property
+    def bank_direct_coverage(self):
+        return self.bank_direct_actions / max(1, self.opponent_actions)
 
     def detector_k(self, hand, normal_k):
         if (self.enabled and self.phase(hand) == "endgame" and self.gate == "open"
                 and self.bank_samples >= self.settings["minimum_bank_samples"]
+                and self.bank_direct_coverage >= self.settings["minimum_bank_coverage"]
+                and not self.bank_dropped_actions
                 and self.bank_estimate >= self.settings["bank_threshold"]):
             self.lowered_k_decisions += 1
-            return min(normal_k, self.settings["endgame_detector_k"])
+            result = min(normal_k, self.settings["endgame_detector_k"])
+            if self.last_detector_k != result:
+                self.k_changes.append({"hand": hand, "k": result, "bank_estimate": self.bank_estimate})
+            self.last_detector_k = result
+            return result
+        self.last_detector_k = normal_k
         return normal_k
+
+    def checkpoint(self, hands, model):
+        self.opponent_actions = self._actions(model)
+        if hands in (300, 500, 700, 900, model.config.num_hands):
+            self.checkpoints[hands] = {"hands": hands, "estimate": self.bank_estimate,
+                                       "coverage": self.bank_coverage,
+                                       "direct_context_coverage": self.bank_direct_coverage,
+                                       "samples": self.bank_samples}
+
+    def finalize(self, model, requested):
+        """Close the final normal result-delivery gap without inventing a turn."""
+        if self.last is None or not self.enabled:
+            return
+        from types import SimpleNamespace
+        self._finalizing = True
+        try:
+            self.observe(SimpleNamespace(hand_index=model.last_finished + 1, action_history=()), model, requested)
+        finally:
+            self._finalizing = False
+            self.last = None
+
+    def diagnostics(self):
+        overhead = {}
+        for cross, moments in self.baseline_moments.items():
+            window = sorted(self.baselines[cross])
+            overhead[str(cross)] = {"samples": moments.n, "mean": moments.mean,
+                                     "sd": sqrt(moments.variance),
+                                     "p99_window": window[min(len(window) - 1, int(.99 * len(window)))] if window else None,
+                                     "window_samples": len(window)}
+        action = self.action_gate.last_test
+        statistic = (max((self.fit_statistics.get(c, 0) for c in self.models), default=0)
+                     if self.signal_kind == "showdown_strength" else action["statistic"])
+        return {"overhead": overhead, "clean_samples": self.gap_counts["clean"],
+                "showdown_labelled_clean_samples": len(self.labelled_hands),
+                "action_labelled_hands": self.action_gate.samples,
+                "large_latency_hand_parts": [v.copy() for v in self.action_gate.large_parts],
+                "contexts": [{"context": c, "labels": n,
+                               "groups": {g: [p.n for p in pair] for g, pair in self.groups[c].items()}}
+                              for c, n in self.context_counts.items()],
+                "gate": {"statistic": statistic,
+                         "threshold": self.settings["minimum_signal_se"] if self.signal_kind == "showdown_strength" else action["threshold"],
+                         "decision": self.gate, "reason": self.gate_reason,
+                         "hand": self.gate_hand, "signal_kind": self.signal_kind,
+                         "action_test": action},
+                "nudged_decisions": self.nudged_decisions, "nudges": list(self.nudge_records),
+                "bank_checkpoints": list(self.checkpoints.values()),
+                "final_bank_estimate": self.bank_estimate, "bank_coverage": self.bank_coverage,
+                "bank_direct_context_coverage": self.bank_direct_coverage,
+                "bank_borrowed_actions": self.bank_borrowed_actions,
+                "bank_unpriced_gaps": len(self.unpriced_gaps), "bank_dropped_actions": self.bank_dropped_actions,
+                "k_changes": list(self.k_changes), "lowered_k_decisions": self.lowered_k_decisions}
+
+    def emit_diagnostics(self):
+        if self.diagnostics_enabled:
+            try:
+                print("JESTER_TIMING " + json.dumps(self.diagnostics()), file=sys.stderr, flush=True)
+            except (OSError, ValueError):
+                pass
 
 
 def correlation(samples):

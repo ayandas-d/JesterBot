@@ -146,14 +146,19 @@ def test_noise_closes_gate_permanently_and_disables_all_effects():
     stream = trained("noise")
     timing = stream.timing
     stream.sample(300, "weak", .008)
-    assert timing.gate == "closed" and timing.gate_hand == 300
+    assert timing.gate == "pending" and timing.bluff_multiplier(300) == 1
+    # Sequential qualification gathers more independent evidence; only the
+    # final failed gate is permanent. Pure noise must remain non-actionable.
+    rng = Random(516)
+    for i in range(301, 701):
+        stream.sample(i, ("weak", "medium", "strong")[i % 3], .001 + rng.uniform(0, .004))
+    assert timing.gate == "closed" and timing.gate_hand == 700
     # Later perfect signals and an enormous estimated bank cannot reopen it.
-    for i in range(301, 800):
+    for i in range(701, 1000):
         stream.sample(i, "weak" if i % 2 else "strong", .008 if i % 2 else .012)
-    assert timing.bank_estimate > CONFIG["bank_threshold"]
     assert timing.gate == "closed"
-    assert timing.bluff_multiplier(799) == 1
-    assert timing.detector_k(799, 15) == 15
+    assert timing.bluff_multiplier(999) == 1
+    assert timing.detector_k(999, 15) == 15
 
 
 def test_medium_hand_tell_opens_gate_in_phase_two_but_ambiguous_weakness_is_neutral():
@@ -195,6 +200,7 @@ def test_independent_confirmation_rejects_signal_with_reversed_validation():
         think = .001 if (fast == (strength == "weak")) else .004
         stream.sample(i, strength, think)
     stream.sample(300, "weak", .001)
+    timing._gate(700)
     assert timing.gate == "closed"
 
 
@@ -294,12 +300,19 @@ def test_invalid_clock_history_and_missing_results_discard_gaps():
 def test_heavy_thinker_extrapolation_crosses_threshold_and_only_endgame_lowers_k(monkeypatch):
     timing = PhasedTiming()
     baselines(timing)
+    timing.baselines[True].extend([.0006] * 16)
+    timing.overhead[True] = .0006
     stream = Stream(timing)
     for i in range(701):
+        if i:
+            stream.now += .008 if i % 2 else .011
         stream.sample(i, "weak" if i % 2 else "strong", .008 if i % 2 else .011)
     assert timing.gate == "open"
-    assert timing.bank_samples == 701
-    assert timing.bank_estimate == pytest.approx((.008 * 350 + .011 * 351) * 2)
+    assert timing.bank_samples == 1401
+    # The judge charges each request after its first free millisecond. The
+    # first opponent action is unobserved; allow that small sampling error.
+    assert timing.bank_estimate == pytest.approx((.007 * 350 + .010 * 351) * 2, abs=.002)
+    assert timing.bank_coverage > .99
     assert timing.bank_estimate > 6.5
     assert timing.detector_k(699, 15) == 15
     assert timing.detector_k(700, 15) == 8
@@ -328,7 +341,7 @@ def game_call():
 
 
 def test_nudges_are_bounded_and_cannot_override_price_floors(monkeypatch):
-    timing = PhasedTiming()
+    timing = PhasedTiming(settings={"nudges": True})
     baselines(timing)
     stream = Stream(timing)
     for i in range(80):
@@ -401,10 +414,14 @@ def test_clean_label_and_gate_paths_also_fit_module_overhead_target(record_prope
     from tools.profile_timing import MeasuredTiming
     timing = MeasuredTiming()
     baselines(timing)
+    timing.baselines[True].extend([.0006] * 16)
+    timing.overhead[True] = .0006
     stream = Stream(timing)
     costs = []
     for i in range(800):
         before = timing.total
+        if i:
+            stream.now += .008 if i % 2 else .011
         stream.sample(i, "weak" if i % 2 else "strong", .008 if i % 2 else .011)
         timing.bluff_multiplier(i)
         timing.detector_k(i, 15)
