@@ -1,0 +1,5 @@
+timestamp,label,challenger,commit,group,deals,seeds,matches,points,mean_bb_per_deal,worst_matchup,safety_violations,complete,result
+20261108T053414304430Z,infrastructure-smoke,live,486507685c326ee891397c03adb2af8321fbc201,training,20,1,3,2.5,-0.6583333333333333,crashy,0,True,league/results/20261108T053414304430Z_infrastructure-smoke.json
+20261108T054037078620Z,baseline-v1-quick,v1,486507685c326ee891397c03adb2af8321fbc201,training,300,1;2;3,42,34.5,2.461904761904762,slow_tell,0,True,league/results/20261108T054037078620Z_baseline-v1-quick.json
+20261108T054350682648Z,baseline-v1-full,v1,486507685c326ee891397c03adb2af8321fbc201,training,1000,1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20,280,242.5,2.7802875,v1,0,True,league/results/20261108T054350682648Z_baseline-v1-full.json
+20261108T080112639677Z,baseline-v1-h2h,v1,486507685c326ee891397c03adb2af8321fbc201,training,300,1;2;3,3,1.5,0.0,v1,0,True,league/results/20261108T080112639677Z_baseline-v1-h2h.json

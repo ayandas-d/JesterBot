@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "training": {
+    "opponents": [
+      "baseline_random",
+      "calling_station",
+      "nit_folder",
+      "pot_maniac",
+      "check_fold",
+      "slow_tell",
+      "pot_odds_bot",
+      "anti_maniac",
+      "tight_aggressive",
+      "loose_passive",
+      "bluff_heavy",
+      "slow_starter",
+      "crashy"
+    ],
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "holdout": {
+    "opponents": [
+      "gto_ish",
+      "adaptive_counter",
+      "erratic"
+    ],
+    "seeds": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110
+    ],
+    "requires_milestone": true
+  },
+  "champions": {
+    "include_all": true,
+    "group": "training"
+  },
+  "quick": {
+    "deals": 300,
+    "seed_count": 3
+  },
+  "full": {
+    "deals": 1000
+  },
+  "safety": {
+    "max_thinking_seconds": 4.0,
+    "expected_fault_opponents": [
+      "crashy"
+    ]
+  },
+  "opponents": {
+    "baseline_random": {
+      "script": "league/opponents/baseline_random.py"
+    },
+    "calling_station": {
+      "script": "league/opponents/calling_station.py"
+    },
+    "nit_folder": {
+      "script": "league/opponents/nit_folder.py"
+    },
+    "pot_maniac": {
+      "script": "league/opponents/pot_maniac.py"
+    },
+    "check_fold": {
+      "script": "league/opponents/check_fold.py"
+    },
+    "slow_tell": {
+      "script": "league/opponents/slow_tell.py"
+    },
+    "pot_odds_bot": {
+      "script": "league/opponents/pot_odds_bot.py"
+    },
+    "anti_maniac": {
+      "script": "league/opponents/anti_maniac.py"
+    },
+    "adaptive_counter": {
+      "script": "league/opponents/adaptive_counter.py"
+    },
+    "gto_ish": {
+      "script": "league/opponents/gto_ish.py"
+    },
+    "tight_aggressive": {
+      "script": "league/opponents/tight_aggressive.py"
+    },
+    "loose_passive": {
+      "script": "league/opponents/loose_passive.py"
+    },
+    "bluff_heavy": {
+      "script": "league/opponents/bluff_heavy.py"
+    },
+    "erratic": {
+      "script": "league/opponents/erratic.py"
+    },
+    "slow_starter": {
+      "script": "league/opponents/slow_starter.py"
+    },
+    "crashy": {
+      "script": "league/opponents/crashy.py"
+    }
+  }
+}

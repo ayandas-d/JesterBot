@@ -1,0 +1,1362 @@
+{
+  "champion": "v1",
+  "source_commit": "486507685c326ee891397c03adb2af8321fbc201",
+  "strategy_changed": false,
+  "holdouts_evaluated": false,
+  "runs": {
+    "quick": {
+      "path": "league/results/20261108T054037078620Z_baseline-v1-quick.json",
+      "sha256": "e686c176f722e8af591c48b7aab455d2d83d266a9d93eb5c6dac811a22e75790",
+      "metadata": {
+        "timestamp": "20261108T054037078620Z",
+        "label": "baseline-v1-quick",
+        "challenger": "v1",
+        "commit": "486507685c326ee891397c03adb2af8321fbc201",
+        "group": "training",
+        "milestone": null,
+        "opponents": [
+          "baseline_random",
+          "calling_station",
+          "nit_folder",
+          "pot_maniac",
+          "check_fold",
+          "slow_tell",
+          "pot_odds_bot",
+          "anti_maniac",
+          "tight_aggressive",
+          "loose_passive",
+          "bluff_heavy",
+          "slow_starter",
+          "crashy",
+          "v1"
+        ],
+        "seeds": [
+          "1",
+          "2",
+          "3"
+        ],
+        "deals": 300,
+        "jobs": 2,
+        "bot_seed": "7",
+        "head_to_head": null,
+        "log_directory": "/tmp/league-baseline-v1-quick-oz1pakro",
+        "ci_method": "pooled duplicate-pair returns, normal 95% CI",
+        "config": {
+          "schema_version": 1,
+          "training": {
+            "opponents": [
+              "baseline_random",
+              "calling_station",
+              "nit_folder",
+              "pot_maniac",
+              "check_fold",
+              "slow_tell",
+              "pot_odds_bot",
+              "anti_maniac",
+              "tight_aggressive",
+              "loose_passive",
+              "bluff_heavy",
+              "slow_starter",
+              "crashy"
+            ],
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "holdout": {
+            "opponents": [
+              "gto_ish",
+              "adaptive_counter",
+              "erratic"
+            ],
+            "seeds": [
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110
+            ],
+            "requires_milestone": true
+          },
+          "champions": {
+            "include_all": true,
+            "group": "training"
+          },
+          "quick": {
+            "deals": 300,
+            "seed_count": 3
+          },
+          "full": {
+            "deals": 1000
+          },
+          "safety": {
+            "max_thinking_seconds": 4.0,
+            "expected_fault_opponents": [
+              "crashy"
+            ]
+          },
+          "opponents": {
+            "baseline_random": {
+              "script": "league/opponents/baseline_random.py"
+            },
+            "calling_station": {
+              "script": "league/opponents/calling_station.py"
+            },
+            "nit_folder": {
+              "script": "league/opponents/nit_folder.py"
+            },
+            "pot_maniac": {
+              "script": "league/opponents/pot_maniac.py"
+            },
+            "check_fold": {
+              "script": "league/opponents/check_fold.py"
+            },
+            "slow_tell": {
+              "script": "league/opponents/slow_tell.py"
+            },
+            "pot_odds_bot": {
+              "script": "league/opponents/pot_odds_bot.py"
+            },
+            "anti_maniac": {
+              "script": "league/opponents/anti_maniac.py"
+            },
+            "adaptive_counter": {
+              "script": "league/opponents/adaptive_counter.py"
+            },
+            "gto_ish": {
+              "script": "league/opponents/gto_ish.py"
+            },
+            "tight_aggressive": {
+              "script": "league/opponents/tight_aggressive.py"
+            },
+            "loose_passive": {
+              "script": "league/opponents/loose_passive.py"
+            },
+            "bluff_heavy": {
+              "script": "league/opponents/bluff_heavy.py"
+            },
+            "erratic": {
+              "script": "league/opponents/erratic.py"
+            },
+            "slow_starter": {
+              "script": "league/opponents/slow_starter.py"
+            },
+            "crashy": {
+              "script": "league/opponents/crashy.py"
+            }
+          }
+        },
+        "opponent_source_sha256": {
+          "__init__.py": "626d17e68d55af5d1f3415d089b8a9fb0cc9a1f4bd8da8f45c25ce77a570f75f",
+          "adaptive_counter.py": "b8494f70dbd2b7df8fd983d754c896abe4a1f3556b067f62ce817554e95a45de",
+          "anti_maniac.py": "1072cadeab96caa1c38339ab8eeabaf8e8bbc418fcc29bc17ef2991f6718a9d6",
+          "baseline_random.py": "307dd163aac1efd6e0a0c86f8497b8522b1393b1a59b94a1bec0e7d24dc49f59",
+          "bluff_heavy.py": "c10c89396bb8c216c40f6f0f5e3ef844c95b33b328c8e06fcef1c86526c5085e",
+          "calling_station.py": "22e570549318680466864dd7a823268bd4607ee8cb644df9b996a770a0a2af36",
+          "check_fold.py": "e9e54c86d4e632b0253395b3fd89c6cdf88762e21a3a8aae3ce661606564cc54",
+          "common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+          "crashy.py": "c1aba3cf642e3aeef2292974047d70b2df05cb159747990101edb075180513af",
+          "erratic.py": "196b6aafb8bcee73ca0a6728a93305855751607dbaeea124ebfb0517212de7e7",
+          "gto_ish.py": "be9b7a7df7061fccccfb5d60eeea3ec650ec9d5b3dad80c6ea87c205b2fdd738",
+          "loose_passive.py": "55ff8278f17338385c12094dca9fbb9a48f085e222c9276e3d33341a5f8a6d1c",
+          "nit_folder.py": "43f9d840f0c3823f4ede2e0fa3690777aee1437377adb06620eb22b7ac157b40",
+          "pot_maniac.py": "1320c39ce823859a307bf716f4cbf12d279df2adda6661fa3aaa39a823818bc7",
+          "pot_odds_bot.py": "d21459fb28d5327d43a37056cfa7b0b546640587b78a116b53b9db65f8e4bffa",
+          "slow_starter.py": "413481c225799c553f465e22d8ba959e2dbcf366ec2c573b6247ff8d02678239",
+          "slow_tell.py": "2027fc5bed86438ef598f360680e287ef9f70d4ed58902b3632d91c589275cf0",
+          "styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+          "tight_aggressive.py": "0af521b1cb7cbf5a59d19465dfa011ab54f4268d847c66af38c4e25298bf1a5b"
+        },
+        "challenger_source_sha256": {
+          "agent.py": "bcfdc5e7b1c6544f133c24155cbac006095c9acf82021cb6956deaa22514f46f",
+          "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+          "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+          "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+          "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+          "bot/gears.py": "cb222eb5061a932a32f028b8dc81e70abc80a9acf0489aeaff170729408cf486",
+          "bot/policy.py": "d6bc07eb672a273ba5b330da66690a9b46fa28f5dacaee109ccdf30611e1e3bf",
+          "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+          "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+          "bot/governor.py": "33f5c891f8b33fc5f299ef3795d7af3137379de404660e91cfec4773ef83898c",
+          "bot/timing.py": "7efdde536abbcbee8ec38531cfe7b1928ba307fb4bdb61b074dd76d8cc827ba6",
+          "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+          "bot/fallback.py": "3db8af3367e2baf62a5eb8a25f01c66f08eef63b6de2217d747bcbcffa653e20"
+        }
+      },
+      "complete": true,
+      "summary": {
+        "deals": 12600,
+        "mean_bb_per_deal": 2.461904761904762,
+        "ci": [
+          2.1599290042050616,
+          2.7638805196044625
+        ],
+        "tournament_points": 34.5,
+        "completed_matches": 42,
+        "requested_matches": 42,
+        "worst_matchup": "slow_tell",
+        "opponents": {
+          "anti_maniac": {
+            "deals": 900,
+            "mean_bb_per_deal": -0.044444444444444446,
+            "ci": [
+              -1.1918453825340125,
+              1.1029564936451235
+            ],
+            "points": 1.5,
+            "matches": 3
+          },
+          "baseline_random": {
+            "deals": 900,
+            "mean_bb_per_deal": 7.762222222222222,
+            "ci": [
+              6.365966283720336,
+              9.158478160724108
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "bluff_heavy": {
+            "deals": 900,
+            "mean_bb_per_deal": 7.713888888888889,
+            "ci": [
+              6.31616136874751,
+              9.111616409030267
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "calling_station": {
+            "deals": 900,
+            "mean_bb_per_deal": 5.1722222222222225,
+            "ci": [
+              3.5309680881394008,
+              6.813476356305044
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "check_fold": {
+            "deals": 900,
+            "mean_bb_per_deal": 1.5,
+            "ci": [
+              1.5,
+              1.5
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "crashy": {
+            "deals": 900,
+            "mean_bb_per_deal": -0.145,
+            "ci": [
+              -0.9400497154802836,
+              0.6500497154802836
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "loose_passive": {
+            "deals": 900,
+            "mean_bb_per_deal": 3.343888888888889,
+            "ci": [
+              2.1981628157673407,
+              4.489614962010437
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "nit_folder": {
+            "deals": 900,
+            "mean_bb_per_deal": 1.3755555555555556,
+            "ci": [
+              1.1956330663292523,
+              1.555478044781859
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "pot_maniac": {
+            "deals": 900,
+            "mean_bb_per_deal": 6.752222222222223,
+            "ci": [
+              5.2251774749170945,
+              8.27926696952735
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "pot_odds_bot": {
+            "deals": 900,
+            "mean_bb_per_deal": -0.8566666666666667,
+            "ci": [
+              -2.188584979221438,
+              0.4752516458881044
+            ],
+            "points": 1.5,
+            "matches": 3
+          },
+          "slow_starter": {
+            "deals": 900,
+            "mean_bb_per_deal": -0.06944444444444445,
+            "ci": [
+              -0.9601962734621523,
+              0.8213073845732635
+            ],
+            "points": 1.5,
+            "matches": 3
+          },
+          "slow_tell": {
+            "deals": 900,
+            "mean_bb_per_deal": -0.9605555555555556,
+            "ci": [
+              -2.162911844482961,
+              0.24180073337185015
+            ],
+            "points": 1.5,
+            "matches": 3
+          },
+          "tight_aggressive": {
+            "deals": 900,
+            "mean_bb_per_deal": 2.9227777777777777,
+            "ci": [
+              1.8794405907161829,
+              3.9661149648393725
+            ],
+            "points": 3.0,
+            "matches": 3
+          },
+          "v1": {
+            "deals": 900,
+            "mean_bb_per_deal": 0.0,
+            "ci": [
+              0.0,
+              0.0
+            ],
+            "points": 1.5,
+            "matches": 3
+          }
+        },
+        "safety_violations": [],
+        "expected_fault_matches": 3
+      },
+      "our_errors": 0,
+      "our_forfeited_halves": 0,
+      "opponent_forfeited_halves": 6,
+      "max_our_think_seconds": 0.454806,
+      "max_either_think_seconds": 1.308869,
+      "diagnostic_summary": {
+        "anti_maniac": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "baseline_random": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "bluff_heavy": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "calling_station": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "check_fold": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 6,
+          "safety_errors": 0
+        },
+        "crashy": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 6,
+          "safety_errors": 0
+        },
+        "loose_passive": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "nit_folder": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 6,
+          "safety_errors": 0
+        },
+        "pot_maniac": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "pot_odds_bot": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "slow_starter": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 6,
+          "safety_errors": 0
+        },
+        "slow_tell": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "tight_aggressive": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 6,
+          "safety_errors": 0
+        },
+        "v1": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        }
+      }
+    },
+    "full": {
+      "path": "league/results/20261108T054350682648Z_baseline-v1-full.json",
+      "sha256": "80b9fcd31529c5c14e598b992296040332701537a4d77998b139b7fc39a944a4",
+      "metadata": {
+        "timestamp": "20261108T054350682648Z",
+        "label": "baseline-v1-full",
+        "challenger": "v1",
+        "commit": "486507685c326ee891397c03adb2af8321fbc201",
+        "group": "training",
+        "milestone": null,
+        "opponents": [
+          "baseline_random",
+          "calling_station",
+          "nit_folder",
+          "pot_maniac",
+          "check_fold",
+          "slow_tell",
+          "pot_odds_bot",
+          "anti_maniac",
+          "tight_aggressive",
+          "loose_passive",
+          "bluff_heavy",
+          "slow_starter",
+          "crashy",
+          "v1"
+        ],
+        "seeds": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ],
+        "deals": 1000,
+        "jobs": 2,
+        "bot_seed": "7",
+        "head_to_head": null,
+        "log_directory": "/tmp/league-baseline-v1-full-hiicn3q5",
+        "ci_method": "pooled duplicate-pair returns, normal 95% CI",
+        "config": {
+          "schema_version": 1,
+          "training": {
+            "opponents": [
+              "baseline_random",
+              "calling_station",
+              "nit_folder",
+              "pot_maniac",
+              "check_fold",
+              "slow_tell",
+              "pot_odds_bot",
+              "anti_maniac",
+              "tight_aggressive",
+              "loose_passive",
+              "bluff_heavy",
+              "slow_starter",
+              "crashy"
+            ],
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "holdout": {
+            "opponents": [
+              "gto_ish",
+              "adaptive_counter",
+              "erratic"
+            ],
+            "seeds": [
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110
+            ],
+            "requires_milestone": true
+          },
+          "champions": {
+            "include_all": true,
+            "group": "training"
+          },
+          "quick": {
+            "deals": 300,
+            "seed_count": 3
+          },
+          "full": {
+            "deals": 1000
+          },
+          "safety": {
+            "max_thinking_seconds": 4.0,
+            "expected_fault_opponents": [
+              "crashy"
+            ]
+          },
+          "opponents": {
+            "baseline_random": {
+              "script": "league/opponents/baseline_random.py"
+            },
+            "calling_station": {
+              "script": "league/opponents/calling_station.py"
+            },
+            "nit_folder": {
+              "script": "league/opponents/nit_folder.py"
+            },
+            "pot_maniac": {
+              "script": "league/opponents/pot_maniac.py"
+            },
+            "check_fold": {
+              "script": "league/opponents/check_fold.py"
+            },
+            "slow_tell": {
+              "script": "league/opponents/slow_tell.py"
+            },
+            "pot_odds_bot": {
+              "script": "league/opponents/pot_odds_bot.py"
+            },
+            "anti_maniac": {
+              "script": "league/opponents/anti_maniac.py"
+            },
+            "adaptive_counter": {
+              "script": "league/opponents/adaptive_counter.py"
+            },
+            "gto_ish": {
+              "script": "league/opponents/gto_ish.py"
+            },
+            "tight_aggressive": {
+              "script": "league/opponents/tight_aggressive.py"
+            },
+            "loose_passive": {
+              "script": "league/opponents/loose_passive.py"
+            },
+            "bluff_heavy": {
+              "script": "league/opponents/bluff_heavy.py"
+            },
+            "erratic": {
+              "script": "league/opponents/erratic.py"
+            },
+            "slow_starter": {
+              "script": "league/opponents/slow_starter.py"
+            },
+            "crashy": {
+              "script": "league/opponents/crashy.py"
+            }
+          }
+        },
+        "opponent_source_sha256": {
+          "__init__.py": "626d17e68d55af5d1f3415d089b8a9fb0cc9a1f4bd8da8f45c25ce77a570f75f",
+          "adaptive_counter.py": "b8494f70dbd2b7df8fd983d754c896abe4a1f3556b067f62ce817554e95a45de",
+          "anti_maniac.py": "1072cadeab96caa1c38339ab8eeabaf8e8bbc418fcc29bc17ef2991f6718a9d6",
+          "baseline_random.py": "307dd163aac1efd6e0a0c86f8497b8522b1393b1a59b94a1bec0e7d24dc49f59",
+          "bluff_heavy.py": "c10c89396bb8c216c40f6f0f5e3ef844c95b33b328c8e06fcef1c86526c5085e",
+          "calling_station.py": "22e570549318680466864dd7a823268bd4607ee8cb644df9b996a770a0a2af36",
+          "check_fold.py": "e9e54c86d4e632b0253395b3fd89c6cdf88762e21a3a8aae3ce661606564cc54",
+          "common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+          "crashy.py": "c1aba3cf642e3aeef2292974047d70b2df05cb159747990101edb075180513af",
+          "erratic.py": "196b6aafb8bcee73ca0a6728a93305855751607dbaeea124ebfb0517212de7e7",
+          "gto_ish.py": "be9b7a7df7061fccccfb5d60eeea3ec650ec9d5b3dad80c6ea87c205b2fdd738",
+          "loose_passive.py": "55ff8278f17338385c12094dca9fbb9a48f085e222c9276e3d33341a5f8a6d1c",
+          "nit_folder.py": "43f9d840f0c3823f4ede2e0fa3690777aee1437377adb06620eb22b7ac157b40",
+          "pot_maniac.py": "1320c39ce823859a307bf716f4cbf12d279df2adda6661fa3aaa39a823818bc7",
+          "pot_odds_bot.py": "d21459fb28d5327d43a37056cfa7b0b546640587b78a116b53b9db65f8e4bffa",
+          "slow_starter.py": "413481c225799c553f465e22d8ba959e2dbcf366ec2c573b6247ff8d02678239",
+          "slow_tell.py": "2027fc5bed86438ef598f360680e287ef9f70d4ed58902b3632d91c589275cf0",
+          "styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+          "tight_aggressive.py": "0af521b1cb7cbf5a59d19465dfa011ab54f4268d847c66af38c4e25298bf1a5b"
+        },
+        "challenger_source_sha256": {
+          "agent.py": "bcfdc5e7b1c6544f133c24155cbac006095c9acf82021cb6956deaa22514f46f",
+          "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+          "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+          "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+          "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+          "bot/gears.py": "cb222eb5061a932a32f028b8dc81e70abc80a9acf0489aeaff170729408cf486",
+          "bot/policy.py": "d6bc07eb672a273ba5b330da66690a9b46fa28f5dacaee109ccdf30611e1e3bf",
+          "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+          "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+          "bot/governor.py": "33f5c891f8b33fc5f299ef3795d7af3137379de404660e91cfec4773ef83898c",
+          "bot/timing.py": "7efdde536abbcbee8ec38531cfe7b1928ba307fb4bdb61b074dd76d8cc827ba6",
+          "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+          "bot/fallback.py": "3db8af3367e2baf62a5eb8a25f01c66f08eef63b6de2217d747bcbcffa653e20"
+        }
+      },
+      "complete": true,
+      "summary": {
+        "deals": 280000,
+        "mean_bb_per_deal": 2.7802875,
+        "ci": [
+          2.7191118008977706,
+          2.8414631991022294
+        ],
+        "tournament_points": 242.5,
+        "completed_matches": 280,
+        "requested_matches": 280,
+        "worst_matchup": "v1",
+        "opponents": {
+          "anti_maniac": {
+            "deals": 20000,
+            "mean_bb_per_deal": 0.9595,
+            "ci": [
+              0.7159409757888374,
+              1.2030590242111627
+            ],
+            "points": 15.0,
+            "matches": 20
+          },
+          "baseline_random": {
+            "deals": 20000,
+            "mean_bb_per_deal": 6.78755,
+            "ci": [
+              6.498923353770368,
+              7.076176646229633
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "bluff_heavy": {
+            "deals": 20000,
+            "mean_bb_per_deal": 4.953975,
+            "ci": [
+              4.6434408345765945,
+              5.264509165423405
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "calling_station": {
+            "deals": 20000,
+            "mean_bb_per_deal": 7.984775,
+            "ci": [
+              7.713404240541302,
+              8.256145759458697
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "check_fold": {
+            "deals": 20000,
+            "mean_bb_per_deal": 1.5,
+            "ci": [
+              1.5,
+              1.5
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "crashy": {
+            "deals": 20000,
+            "mean_bb_per_deal": 1.108475,
+            "ci": [
+              0.9396741104580624,
+              1.2772758895419378
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "loose_passive": {
+            "deals": 20000,
+            "mean_bb_per_deal": 4.6549,
+            "ci": [
+              4.4433339182503335,
+              4.866466081749666
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "nit_folder": {
+            "deals": 20000,
+            "mean_bb_per_deal": 1.330625,
+            "ci": [
+              1.2835414271734795,
+              1.3777085728265204
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "pot_maniac": {
+            "deals": 20000,
+            "mean_bb_per_deal": 6.0006,
+            "ci": [
+              5.649209574253344,
+              6.351990425746656
+            ],
+            "points": 20.0,
+            "matches": 20
+          },
+          "pot_odds_bot": {
+            "deals": 20000,
+            "mean_bb_per_deal": 0.7658,
+            "ci": [
+              0.5206740861172944,
+              1.0109259138827058
+            ],
+            "points": 11.5,
+            "matches": 20
+          },
+          "slow_starter": {
+            "deals": 20000,
+            "mean_bb_per_deal": 0.97605,
+            "ci": [
+              0.7762776838464677,
+              1.1758223161535322
+            ],
+            "points": 16.5,
+            "matches": 20
+          },
+          "slow_tell": {
+            "deals": 20000,
+            "mean_bb_per_deal": 0.1209,
+            "ci": [
+              -0.11628613962113514,
+              0.3580861396211351
+            ],
+            "points": 10.5,
+            "matches": 20
+          },
+          "tight_aggressive": {
+            "deals": 20000,
+            "mean_bb_per_deal": 1.789275,
+            "ci": [
+              1.576621343439478,
+              2.001928656560522
+            ],
+            "points": 19.0,
+            "matches": 20
+          },
+          "v1": {
+            "deals": 20000,
+            "mean_bb_per_deal": -0.0084,
+            "ci": [
+              -0.05569149723915236,
+              0.03889149723915236
+            ],
+            "points": 10.0,
+            "matches": 20
+          }
+        },
+        "safety_violations": [],
+        "expected_fault_matches": 20
+      },
+      "our_errors": 0,
+      "our_forfeited_halves": 0,
+      "opponent_forfeited_halves": 40,
+      "max_our_think_seconds": 2.04624,
+      "max_either_think_seconds": 2.04624,
+      "diagnostic_summary": {
+        "anti_maniac": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 1,
+          "safety_errors": 0
+        },
+        "baseline_random": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "bluff_heavy": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "calling_station": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "check_fold": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 40,
+          "safety_errors": 0
+        },
+        "crashy": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 40,
+          "safety_errors": 0
+        },
+        "loose_passive": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "nit_folder": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 40,
+          "safety_errors": 0
+        },
+        "pot_maniac": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "pot_odds_bot": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "slow_starter": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 40,
+          "safety_errors": 0
+        },
+        "slow_tell": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        },
+        "tight_aggressive": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 40,
+          "safety_errors": 0
+        },
+        "v1": {
+          "halves": 40,
+          "gates": {
+            "closed": 40
+          },
+          "halves_exploiting_checkfold": 2,
+          "safety_errors": 0
+        }
+      }
+    },
+    "h2h": {
+      "path": "league/results/20261108T080112639677Z_baseline-v1-h2h.json",
+      "sha256": "79a78a34c2e86c7acb188fb228f37a940a1977ef0b7729237545323854e82d01",
+      "metadata": {
+        "timestamp": "20261108T080112639677Z",
+        "label": "baseline-v1-h2h",
+        "challenger": "v1",
+        "commit": "486507685c326ee891397c03adb2af8321fbc201",
+        "group": "training",
+        "milestone": null,
+        "opponents": [
+          "v1"
+        ],
+        "seeds": [
+          "1",
+          "2",
+          "3"
+        ],
+        "deals": 300,
+        "jobs": 2,
+        "bot_seed": "7",
+        "head_to_head": "v1",
+        "log_directory": "/tmp/league-baseline-v1-h2h-qm7r4cs_",
+        "ci_method": "pooled duplicate-pair returns, normal 95% CI",
+        "config": {
+          "schema_version": 1,
+          "training": {
+            "opponents": [
+              "baseline_random",
+              "calling_station",
+              "nit_folder",
+              "pot_maniac",
+              "check_fold",
+              "slow_tell",
+              "pot_odds_bot",
+              "anti_maniac",
+              "tight_aggressive",
+              "loose_passive",
+              "bluff_heavy",
+              "slow_starter",
+              "crashy"
+            ],
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "holdout": {
+            "opponents": [
+              "gto_ish",
+              "adaptive_counter",
+              "erratic"
+            ],
+            "seeds": [
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110
+            ],
+            "requires_milestone": true
+          },
+          "champions": {
+            "include_all": true,
+            "group": "training"
+          },
+          "quick": {
+            "deals": 300,
+            "seed_count": 3
+          },
+          "full": {
+            "deals": 1000
+          },
+          "safety": {
+            "max_thinking_seconds": 4.0,
+            "expected_fault_opponents": [
+              "crashy"
+            ]
+          },
+          "opponents": {
+            "baseline_random": {
+              "script": "league/opponents/baseline_random.py"
+            },
+            "calling_station": {
+              "script": "league/opponents/calling_station.py"
+            },
+            "nit_folder": {
+              "script": "league/opponents/nit_folder.py"
+            },
+            "pot_maniac": {
+              "script": "league/opponents/pot_maniac.py"
+            },
+            "check_fold": {
+              "script": "league/opponents/check_fold.py"
+            },
+            "slow_tell": {
+              "script": "league/opponents/slow_tell.py"
+            },
+            "pot_odds_bot": {
+              "script": "league/opponents/pot_odds_bot.py"
+            },
+            "anti_maniac": {
+              "script": "league/opponents/anti_maniac.py"
+            },
+            "adaptive_counter": {
+              "script": "league/opponents/adaptive_counter.py"
+            },
+            "gto_ish": {
+              "script": "league/opponents/gto_ish.py"
+            },
+            "tight_aggressive": {
+              "script": "league/opponents/tight_aggressive.py"
+            },
+            "loose_passive": {
+              "script": "league/opponents/loose_passive.py"
+            },
+            "bluff_heavy": {
+              "script": "league/opponents/bluff_heavy.py"
+            },
+            "erratic": {
+              "script": "league/opponents/erratic.py"
+            },
+            "slow_starter": {
+              "script": "league/opponents/slow_starter.py"
+            },
+            "crashy": {
+              "script": "league/opponents/crashy.py"
+            }
+          }
+        },
+        "opponent_source_sha256": {
+          "__init__.py": "626d17e68d55af5d1f3415d089b8a9fb0cc9a1f4bd8da8f45c25ce77a570f75f",
+          "adaptive_counter.py": "b8494f70dbd2b7df8fd983d754c896abe4a1f3556b067f62ce817554e95a45de",
+          "anti_maniac.py": "1072cadeab96caa1c38339ab8eeabaf8e8bbc418fcc29bc17ef2991f6718a9d6",
+          "baseline_random.py": "307dd163aac1efd6e0a0c86f8497b8522b1393b1a59b94a1bec0e7d24dc49f59",
+          "bluff_heavy.py": "c10c89396bb8c216c40f6f0f5e3ef844c95b33b328c8e06fcef1c86526c5085e",
+          "calling_station.py": "22e570549318680466864dd7a823268bd4607ee8cb644df9b996a770a0a2af36",
+          "check_fold.py": "e9e54c86d4e632b0253395b3fd89c6cdf88762e21a3a8aae3ce661606564cc54",
+          "common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+          "crashy.py": "c1aba3cf642e3aeef2292974047d70b2df05cb159747990101edb075180513af",
+          "erratic.py": "196b6aafb8bcee73ca0a6728a93305855751607dbaeea124ebfb0517212de7e7",
+          "gto_ish.py": "be9b7a7df7061fccccfb5d60eeea3ec650ec9d5b3dad80c6ea87c205b2fdd738",
+          "loose_passive.py": "55ff8278f17338385c12094dca9fbb9a48f085e222c9276e3d33341a5f8a6d1c",
+          "nit_folder.py": "43f9d840f0c3823f4ede2e0fa3690777aee1437377adb06620eb22b7ac157b40",
+          "pot_maniac.py": "1320c39ce823859a307bf716f4cbf12d279df2adda6661fa3aaa39a823818bc7",
+          "pot_odds_bot.py": "d21459fb28d5327d43a37056cfa7b0b546640587b78a116b53b9db65f8e4bffa",
+          "slow_starter.py": "413481c225799c553f465e22d8ba959e2dbcf366ec2c573b6247ff8d02678239",
+          "slow_tell.py": "2027fc5bed86438ef598f360680e287ef9f70d4ed58902b3632d91c589275cf0",
+          "styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+          "tight_aggressive.py": "0af521b1cb7cbf5a59d19465dfa011ab54f4268d847c66af38c4e25298bf1a5b"
+        },
+        "challenger_source_sha256": {
+          "agent.py": "bcfdc5e7b1c6544f133c24155cbac006095c9acf82021cb6956deaa22514f46f",
+          "game.py": "bc00e3c2d1bf64cbd36bf5553dae218767f11b20f388e5c417d989919877f2db",
+          "evaluator.py": "e2a151a4c41828a035030f490c91b81015d04bc209abfb860ca3d0dce649e0b4",
+          "bot/preflop.py": "44e2684033f67e06eefaefcbfc6465eab06e7fadeb7bdf147b6f0eae6e1a6d30",
+          "bot/equity.py": "dee0b6cc9a281e0a2e85a10c616296f2c5dfcb42569fdd38e0654d759805e359",
+          "bot/gears.py": "cb222eb5061a932a32f028b8dc81e70abc80a9acf0489aeaff170729408cf486",
+          "bot/policy.py": "d6bc07eb672a273ba5b330da66690a9b46fa28f5dacaee109ccdf30611e1e3bf",
+          "bot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bot/strategy.py": "9634ec5d255b2709e920999fe9662339a192438d9b625aa201cca9ba3d69eec9",
+          "bot/opponent.py": "125b31c32622035dfc0d8ad2751259bd76de35b572bbf6d47ee5ad21b103af92",
+          "bot/governor.py": "33f5c891f8b33fc5f299ef3795d7af3137379de404660e91cfec4773ef83898c",
+          "bot/timing.py": "7efdde536abbcbee8ec38531cfe7b1928ba307fb4bdb61b074dd76d8cc827ba6",
+          "bot/safety.py": "9fd534a63a2316e27d6d987f4f83256dc1e9f7b239625c490ae281ae21254001",
+          "bot/fallback.py": "3db8af3367e2baf62a5eb8a25f01c66f08eef63b6de2217d747bcbcffa653e20"
+        }
+      },
+      "complete": true,
+      "summary": {
+        "deals": 900,
+        "mean_bb_per_deal": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "tournament_points": 1.5,
+        "completed_matches": 3,
+        "requested_matches": 3,
+        "worst_matchup": "v1",
+        "opponents": {
+          "v1": {
+            "deals": 900,
+            "mean_bb_per_deal": 0.0,
+            "ci": [
+              0.0,
+              0.0
+            ],
+            "points": 1.5,
+            "matches": 3
+          }
+        },
+        "safety_violations": [],
+        "expected_fault_matches": 0
+      },
+      "our_errors": 0,
+      "our_forfeited_halves": 0,
+      "opponent_forfeited_halves": 0,
+      "max_our_think_seconds": 0.35221,
+      "max_either_think_seconds": 0.35221,
+      "diagnostic_summary": {
+        "v1": {
+          "halves": 6,
+          "gates": {
+            "pending": 6
+          },
+          "halves_exploiting_checkfold": 0,
+          "safety_errors": 0
+        }
+      }
+    }
+  },
+  "fast_tests": {
+    "passed": 167,
+    "slow_deselected": 2,
+    "seconds": 16.382,
+    "properties": {
+      "seconds": "0.613155",
+      "p50_ms": "0.7779",
+      "p99_ms": "1.1125",
+      "max_ms": "1.3776",
+      "MANIAC_raise_rate": "0.966",
+      "MANIAC_low_equity_raise_rate": "0.982",
+      "AGGRO_raise_rate": "0.47175",
+      "AGGRO_low_equity_raise_rate": "0.13125",
+      "VALUE_raise_rate": "0.35825",
+      "VALUE_low_equity_raise_rate": "0.00675",
+      "TRAP_raise_rate": "0.139",
+      "TRAP_low_equity_raise_rate": "0.023",
+      "early_probe_ms": "0.6792710191803053",
+      "late_probe_ms": "0.714103996870108",
+      "final_state_bytes": "81762",
+      "timing_p50_us": "1.541",
+      "timing_p99_us": "2.083",
+      "timing_clean_and_label_p99_us": "10.290968930348754"
+    }
+  },
+  "timing_profile": [
+    {
+      "enabled": false,
+      "hands": 1000,
+      "decisions": 3585,
+      "thinking_seconds": 1.7670012620510533,
+      "decision_p50_ms": 0.6465000042226166,
+      "decision_p99_ms": 1.033375010592863,
+      "module_mean_us": 0.5871229210798337,
+      "module_p50_us": 0.5829497240483761,
+      "module_p99_us": 1.0849907994270325,
+      "label_callback_p99_us": 0.33300602808594704,
+      "gate": "pending",
+      "gate_reason": "learning",
+      "gate_hand": null,
+      "labelled_hands": 0,
+      "gaps": {
+        "baseline": 0,
+        "clean": 0,
+        "multiple": 0,
+        "discarded": 0
+      },
+      "baseline_same_hand_seconds": 0.0,
+      "baseline_cross_hand_seconds": 0.0,
+      "bank_estimate_seconds": 0.0,
+      "nudged_decisions": 0,
+      "lowered_k_decisions": 0,
+      "safety_errors": 0,
+      "action_hash": "05e9f87cc515ca3141f16a77d061fd689541622f62ee20475c2af76df72f7a15",
+      "governor_reductions": 0
+    },
+    {
+      "enabled": true,
+      "hands": 1000,
+      "decisions": 3585,
+      "thinking_seconds": 1.7575557981035672,
+      "decision_p50_ms": 0.6508329825010151,
+      "decision_p99_ms": 0.951208989135921,
+      "module_mean_us": 4.067903099129577,
+      "module_p50_us": 3.374036168679595,
+      "module_p99_us": 9.37501317821443,
+      "label_callback_p99_us": 2.6250199880450964,
+      "gate": "closed",
+      "gate_reason": "no confirmed signal",
+      "gate_hand": 336,
+      "labelled_hands": 378,
+      "gaps": {
+        "baseline": 751,
+        "clean": 2559,
+        "multiple": 274,
+        "discarded": 0
+      },
+      "baseline_same_hand_seconds": 8.417002391070127e-06,
+      "baseline_cross_hand_seconds": 2.156250411644578e-05,
+      "bank_estimate_seconds": 0.028917420759348358,
+      "nudged_decisions": 0,
+      "lowered_k_decisions": 0,
+      "safety_errors": 0,
+      "action_hash": "05e9f87cc515ca3141f16a77d061fd689541622f62ee20475c2af76df72f7a15",
+      "governor_reductions": 0
+    }
+  ],
+  "random_200_regression": {
+    "verdict": "AGENT1_WIN",
+    "mean_bb_per_deal": 6.4525,
+    "ci": [
+      3.4461057604552527,
+      9.458894239544748
+    ],
+    "agent_stats": {
+      "agent1": [
+        {
+          "calls": 658,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.040548,
+          "wall_seconds": 0.488638
+        },
+        {
+          "calls": 617,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.037004,
+          "wall_seconds": 0.450873
+        }
+      ],
+      "agent2": [
+        {
+          "calls": 606,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.000208,
+          "wall_seconds": 0.136603
+        },
+        {
+          "calls": 571,
+          "skipped_calls": 0,
+          "timed_out": false,
+          "errors": 0,
+          "forfeited": false,
+          "error_messages": [],
+          "time_seconds": 0.0,
+          "wall_seconds": 0.130429
+        }
+      ]
+    }
+  }
+}
