@@ -7,3 +7,7 @@ htmlcov/
 .DS_Store
 .hypothesis/
 league/results/
+league/opponents/_search/
+league/.config.lock
+league/STOP
+league/*.lock

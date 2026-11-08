@@ -23,6 +23,7 @@ def main():
     parser.add_argument("version")
     parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", "5020")))
     parser.add_argument("--diagnostics", action="store_true", help="test-only stderr observer")
+    parser.add_argument("--oracle-target", action="store_true", help="test-only explicit oracle observer channel")
     parser.add_argument("--inspect", action="store_true", help="print isolated runtime import paths and exit")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
@@ -34,9 +35,9 @@ def main():
     if args.inspect:
         code = "import agent,sys,json; print(json.dumps({n:m.__file__ for n,m in sys.modules.items() if n in ('agent','game','evaluator','bot') or n.startswith('bot.')}))"
         command = [sys.executable, "-B", "-c", code]
-    elif args.diagnostics:
+    elif args.diagnostics or args.oracle_target:
         env["BOT_SOURCE_ROOT"] = str(path)
-        command = [sys.executable, "-B", str(ROOT / "tools/serve_agent.py")]
+        command = [sys.executable, "-B", str(ROOT / "tools" / ("serve_oracle_target.py" if args.oracle_target else "serve_agent.py"))]
     else:
         command = [sys.executable, "-B", str(path / "agent.py")]
     os.execve(sys.executable, command, env)

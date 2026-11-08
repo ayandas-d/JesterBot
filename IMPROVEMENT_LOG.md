@@ -297,3 +297,37 @@ time per half. Intentional opponent faults are reported separately.
 - Next idea: reduce timing instrumentation cost before another feature
   promotion attempt. First complete the user's independently requested
   expanded league and continuous runner around frozen v2.
+
+## Infrastructure checkpoint (2026-11-08) — STOPPED AT USER REQUEST
+
+- Champion / commit: v2, `c81268ec9317ed64f2728e3f3070a004ab16a443`.
+  Live agent.py and bot/ remain byte-identical to this verified snapshot.
+- Added: 62 training opponents including champions, 12 reserved holdouts,
+  five separate test-only oracle opponents; tier scoring, source hashes,
+  immutable evolved adversaries, caching, sequential screening, timing
+  telemetry, and continuous-runner infrastructure. No runtime dependency added.
+- Tests: 296 fast tests passed in 36.75 s, including test_agent.py. Three slow
+  integration tests remain excluded by default. All declared opponents passed
+  HTTP/source-manifest smoke tests; copied-judge scoring and real-judge byte
+  integrity are tested.
+- Search: six random candidates, one six-child genetic generation, then
+  1,000-deal confirmation on three fresh training seeds. Published permanent
+  entries evolved_e0001/e0002 (training), evolved_e0003 (reserved holdout).
+- Expanded baseline: deliberately stopped at the user's wrap-up request,
+  464/1,240 completed matches, zero safety violations, maximum Jester charged
+  half 3.629846 s. This is a PARTIAL run, not an accepted expanded baseline.
+  Raw evidence: league/results/20261108T165209985078Z_expanded-training-baseline.json.
+- Hard design pilot: eight 300-deal matches across four counters, aggregate
+  Jester -0.790833 bb/deal; no safety issues. This does not establish the full
+  Tier H strength criterion. Five oracle variants passed 20-deal smoke tests;
+  their full 1,000-deal guardrail remains pending. Holdout remains unscored.
+- Continuous runner: source, restart/seed/alert/STOP/rotation unit tests are
+  implemented. Two live cycles and a live STOP verification have NOT run.
+- Raw historical JSON was compressed losslessly, with byte verification and
+  transparent archive readers; no hall-of-fame source or champion was removed.
+- Decision: commit the tested infrastructure checkpoint without changing or
+  promoting the bot. No new champion tagged. The latest user instruction is
+  to stop Devpost work and commit bot-related changes on main.
+- Resume: BOT_SEED=7 .venv/bin/python -B tools/league.py --challenger v2 --full --cache --jobs 4 --label expanded-training-resume
+  Then complete full Hard/holdout/oracle validation before claiming Part 2
+  done; complete live continuous validation before claiming Part 3 done.

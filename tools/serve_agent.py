@@ -4,11 +4,12 @@ Does not inspect the opponent, judge state or unrevealed cards. Run only for
 tests; tournament agent.py does not import this observer.
 """
 
-from collections import Counter
+from collections import Counter, deque
 import json
 import os
 from pathlib import Path
 import sys
+from time import perf_counter
 
 sys.path.insert(0, os.environ.get("BOT_SOURCE_ROOT", str(Path(__file__).resolve().parents[1])))
 import agent
@@ -18,6 +19,7 @@ original_new_half = agent.new_half
 original_choose = agent.choose_action
 original_end = agent.on_hand_end
 diagnostics = {}
+decision_seconds = deque(maxlen=32768)
 
 
 def new_half(config, memory):
@@ -48,11 +50,14 @@ def new_half(config, memory):
                              for street in range(4) for action in range(4) for cross in (False, True)}
         timing._gate = forced_gate
     diagnostics.clear()
+    decision_seconds.clear()
     diagnostics.update(exploit_decisions=0, exploit_raises=0, gear_decisions=Counter())
 
 
 def choose(obs, memory):
+    started = perf_counter()
     action = original_choose(obs, memory)
+    decision_seconds.append(perf_counter()-started)
     state = memory["bot"]
     diagnostics["gear_decisions"][state.gear] += 1
     if state.opponent.exploit_checkfold:
@@ -75,6 +80,8 @@ def end(result, memory):
             "safety_errors": memory["safety_errors"],
             "governor_seconds": state.governor.total_seconds,
             "governor_reductions": state.governor.reductions,
+            "decision_p99_ms": (sorted(decision_seconds)[min(len(decision_seconds)-1, int(len(decision_seconds)*.99))]*1000
+                                if state.hands_played == state.config.num_hands and decision_seconds else None),
             "gate": timing.gate, "gate_hand": timing.gate_hand, "gate_reason": timing.gate_reason,
             "timing_labels": len(timing.labelled_hands), "timing_gaps": timing.gap_counts,
             "nudges": timing.nudged_decisions, "lowered_k": timing.lowered_k_decisions,

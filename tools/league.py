@@ -32,6 +32,8 @@ sys.path.insert(0, str(ROOT))
 from tools.run_matches import processes, read_diagnostics
 from tools.run_snapshot import resolve_snapshot
 from game import AgentConfig
+from tools.league_features import tier_of, tier_summary, cache_key, decisive
+from tools.result_io import read_result
 
 
 def load_config(path=None):
@@ -56,15 +58,19 @@ def runtime_hashes(source):
     return {str(p.relative_to(source)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
-def command(name, config):
+def command(name, config, oracle_target=False):
     if name == "live":
-        return [sys.executable, "-B", str(ROOT / "tools/serve_agent.py")]
+        return [sys.executable, "-B", str(ROOT / "tools" / ("serve_oracle_target.py" if oracle_target else "serve_agent.py"))]
     if re.fullmatch(r"v[1-9]\d*", name):
         resolve_snapshot(name)
-        return [sys.executable, "-B", str(ROOT / "tools/run_snapshot.py"), name, "--diagnostics"]
+        return [sys.executable, "-B", str(ROOT / "tools/run_snapshot.py"), name,
+                "--oracle-target" if oracle_target else "--diagnostics"]
     script = (ROOT / config["opponents"][name]["script"]).resolve()
     if not script.is_relative_to(ROOT / "league/opponents") or not script.is_file():
         raise ValueError(f"invalid opponent script: {name}")
+    if config["opponents"][name].get("evolved"):
+        from tools.evolve_adversary import verify_frozen
+        verify_frozen(script.parent)
     return [sys.executable, "-B", str(script)]
 
 
@@ -88,7 +94,7 @@ def violations(report, diagnostics, opponent, config):
             # Four seconds is Jester's submission headroom requirement.
             # Deliberate-delay controls must fit their own tournament bank.
             limit = (config["safety"]["max_thinking_seconds"] if player == "agent1"
-                     else AgentConfig().time_bank_seconds)
+                     else config.get("opponents", {}).get(opponent, {}).get("time_bank_seconds", AgentConfig().time_bank_seconds))
             if half["time_seconds"] > limit:
                 issues.append(f"{player}/half{number}/think={half['time_seconds']:.3f}s")
     finals = [d for d in diagnostics if d["final"]]
@@ -96,6 +102,8 @@ def violations(report, diagnostics, opponent, config):
         issues.append("challenger/missing half diagnostics")
     if any(d["safety_errors"] for d in finals):
         issues.append("challenger/internal safe fallback")
+    if any(d.get("decision_p99_ms", 0) is not None and d.get("decision_p99_ms", 0) >= 20 for d in finals):
+        issues.append("challenger/decision p99 >=20ms")
     return issues, expected
 
 
@@ -142,10 +150,36 @@ def timing_audits(log, report, prefix="TIMING_AUDIT "):
 
 
 def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=False, timeout=180,
-            bot_seed="7", timing_reference=False, timing_mode="configured", force_fake_gate=False):
+            bot_seed="7", timing_reference=False, timing_mode="configured", force_fake_gate=False,
+            use_cache=False, evaluation_jobs=1, alert_context=None):
+    started = monotonic()
     directory.mkdir(parents=True, exist_ok=True)
     source = ROOT if challenger == "live" else resolve_snapshot(challenger)
     initial_runtime = runtime_hashes(source)
+    tier = tier_of(opponent, config)
+    script = ROOT / config.get("opponents", {}).get(opponent, {}).get("script", "agent.py")
+    opponent_paths = ([resolve_snapshot(opponent) / p for p in runtime_hashes(resolve_snapshot(opponent))]
+                      if re.fullmatch(r"v[1-9]\d*", opponent) else
+                      [script, *(ROOT / "league/opponents").glob("*.py"), *script.parent.glob("*.json")])
+    if script.parent != ROOT / "league/opponents":
+        opponent_paths += list(script.parent.glob("*.py"))
+    opponent_sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+                        for p in opponent_paths if p.is_file()}
+    rules = ROOT / "tools/oracle_judge/engine.py" if tier == "C" else ROOT / "judge_engine.py"
+    identity = dict(challenger=initial_runtime, opponent=opponent_sources,
+                    config={"opponent": config.get("opponents", {}).get(opponent), "safety": config["safety"], "tier": tier},
+                    rules=hashlib.sha256(rules.read_bytes()).hexdigest(),
+                    seed=str(seed), deals=deals, bot_seed=bot_seed, mode=timing_mode,
+                    force_fake_gate=force_fake_gate, logs=logs, timing_reference=timing_reference,
+                    diagnostic=os.environ.get("JESTER_DIAG") == "1", jobs=evaluation_jobs,
+                    observer=hashlib.sha256((ROOT / "tools/serve_agent.py").read_bytes()).hexdigest(),
+                    python=sys.version, oracle_adapter=(hashlib.sha256((ROOT / "tools/serve_oracle_target.py").read_bytes()).hexdigest()
+                                                        if tier == "C" else None))
+    cached = ROOT / "league/results/cache" / (cache_key(identity) + ".json")
+    if use_cache and (cached.exists() or cached.with_suffix(".json.gz").exists()):
+        row = read_result(cached)
+        row.update(cache_hit=True, wall_seconds=monotonic()-started)
+        return row
     sockets, handles = [socket.socket(), socket.socket()], []
     try:
         if stop.is_set():
@@ -162,6 +196,9 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
                            PYTHONDONTWRITEBYTECODE="1")
                 env.pop("PYTHONPATH", None)
                 env.pop("BOT_SOURCE_ROOT", None)
+                env.pop("ORACLE_STATE_PATH", None)
+                if tier == "C":
+                    env["ORACLE_STATE_PATH"] = str(directory / "target-state.json")
                 if i == 0:
                     env["JESTER_TIMING_MODE"] = timing_mode
                     if force_fake_gate:
@@ -171,20 +208,28 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
                 else:
                     env.pop("JESTER_TIMING_MODE", None)
                     env.pop("JESTER_FORCE_FAKE_GATE", None)
-                process = subprocess.Popen(command(name, config), cwd=ROOT, env=env,
+                process = subprocess.Popen(command(name, config, oracle_target=(tier == "C" and i == 0)), cwd=ROOT, env=env,
                                            stdout=handle, stderr=subprocess.STDOUT)
                 owned.append(process)
                 ready(process, ports[i], stop)
             handle = (directory / "judge.log").open("w")
             handles.append(handle)
             output = directory / "match.json"
-            judge_script = ROOT / "tools/judge_timing_audit.py" if timing_reference else ROOT / "judge_engine.py"
+            judge_script = rules if tier == "C" else ROOT / "tools/judge_timing_audit.py" if timing_reference else rules
             args = [sys.executable, "-B", str(judge_script), "--agent1", str(ports[0]),
                     "--agent2", str(ports[1]), "--seed", str(seed), "--deals", str(deals), "--json", str(output)]
             if logs:
                 args.append("--logs")
+            if tier == "C":
+                args += ["--oracle-kind", opponent]
+            judge_env = dict(os.environ, AGENT1_TOKEN="", AGENT2_TOKEN="", PYTHONDONTWRITEBYTECODE="1")
+            if alert_context:
+                judge_env.update(LEAGUE_ALERT_PATH=str(alert_context["path"]),
+                                 LEAGUE_ALERT_CONTEXT=alert_context["context"])
+            if tier == "C":
+                judge_env["ORACLE_STATE_PATH"] = str(directory / "target-state.json")
             process = subprocess.Popen(args, cwd=ROOT, stdout=handle, stderr=subprocess.STDOUT,
-                                       env=dict(os.environ, AGENT1_TOKEN="", AGENT2_TOKEN="", PYTHONDONTWRITEBYTECODE="1"))
+                                       env=judge_env)
             owned.append(process)
             deadline = monotonic() + timeout
             while process.poll() is None:
@@ -197,12 +242,14 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
         for handle in handles:
             handle.flush()
         report = json.loads(output.read_text())
+        if report["match_seed"] != str(seed) or report["num_deals"] != deals:
+            raise ValueError("Judge result seed/deal count does not match this isolated match")
         diagnostics = read_diagnostics(directory / "agent1.log")
         issues, expected = violations(report, diagnostics, opponent, config)
         if runtime_hashes(source) != initial_runtime:
             issues.append("challenger runtime source changed during match")
         times = [h["time_seconds"] for h in report["agent_stats"]["agent1"]]
-        return {"opponent": opponent, "seed": seed, "verdict": report["verdict"],
+        row = {"opponent": opponent, "seed": seed, "tier": tier, "verdict": report["verdict"],
                 "points": report["points"]["agent1"], "bb_per_deal": report["mean_bb_per_deal"], "ci": report["ci"],
                 "runtime_source_sha256": initial_runtime,
                 "our_errors": [h["errors"] for h in report["agent_stats"]["agent1"]],
@@ -212,7 +259,15 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
                 "timing_audit": timing_audits(directory / "agent1.log", report),
                 "timing_diagnostics": timing_audits(directory / "agent1.log", report, "JESTER_TIMING "),
                 "diagnostics": [d for d in diagnostics if d["final"]],
-                "raw": report, "log_directory": str(directory)}
+                "raw": report, "log_directory": str(directory),
+                "wall_seconds": monotonic()-started, "cache_hit": False,
+                "opponent_source_sha256": opponent_sources}
+        if use_cache and not issues:
+            cached.parent.mkdir(parents=True, exist_ok=True)
+            temporary = cached.with_suffix(f".{os.getpid()}.tmp")
+            temporary.write_text(json.dumps(row))
+            temporary.replace(cached)
+        return row
     finally:
         for handle in handles:
             handle.close()
@@ -222,19 +277,24 @@ def run_one(challenger, opponent, seed, deals, directory, config, stop, logs=Fal
 
 def summarize(rows):
     completed = [row for row in rows if "raw" in row]
-    values = [value for row in completed for value in row["raw"]["paired_bb"]]
+    fair = [row for row in completed if row.get("tier", "F") != "C"]
+    values = [value for row in fair for value in row["raw"]["paired_bb"]]
     per_opponent = {}
     for name in sorted({row["opponent"] for row in completed}):
         subset = [row for row in completed if row["opponent"] == name]
         per_opponent[name] = {**interval([v for row in subset for v in row["raw"]["paired_bb"]]),
-                              "points": sum(row["points"] for row in subset), "matches": len(subset)}
-    worst = min(per_opponent, key=lambda name: per_opponent[name]["mean_bb_per_deal"]) if per_opponent else None
+                              "points": (sum(row["points"] for row in subset) if subset[0].get("tier", "F") != "C" else None),
+                              "tier": subset[0].get("tier", "F"), "matches": len(subset)}
+    fair_names = {row["opponent"] for row in fair}
+    worst = min(fair_names, key=lambda name: per_opponent[name]["mean_bb_per_deal"]) if fair_names else None
     issues = [{"opponent": row["opponent"], "seed": row["seed"], "issues": row["safety_violations"]}
               for row in rows if row["safety_violations"]]
-    return {**interval(values), "tournament_points": sum(row["points"] for row in completed),
+    return {**interval(values), "tournament_points": sum(row["points"] for row in fair),
             "completed_matches": len(completed), "requested_matches": len(rows),
             "worst_matchup": worst, "opponents": per_opponent, "safety_violations": issues,
-            "expected_fault_matches": sum(bool(row.get("expected_opponent_faults")) for row in rows)}
+            "expected_fault_matches": sum(bool(row.get("expected_opponent_faults")) for row in rows),
+            "tiers": tier_summary(completed)["tiers"],
+            "cache_hits": sum(row.get("cache_hit", False) for row in rows)}
 
 
 def append_history(path, record):
@@ -268,21 +328,35 @@ def plan(args, config):
         opponents = [args.head_to_head]
     elif not args.opponents and group == "training" and config["champions"]["include_all"]:
         opponents += champions()
+    tier = getattr(args, "tier", None)
+    if tier == "C":
+        if group == "holdout":
+            raise ValueError("cheaters are separate from holdout and fair scores")
+        opponents = args.opponents or [name for name in config["opponents"] if tier_of(name, config) == "C"]
+    elif tier:
+        opponents = [name for name in opponents if tier_of(name, config) == tier]
+    if any(tier_of(name, config) == "C" for name in opponents) and tier != "C":
+        raise ValueError("cheaters require explicit --tier C and the oracle judge")
+    if getattr(args, "screen", False):
+        if group != "training" or tier == "C" or args.opponents or args.seeds or args.deals or args.head_to_head:
+            raise ValueError("--screen uses the configured fair training screening plan")
+        allowed = set(config["screening"]["opponents"])
+        opponents = [name for name in opponents if name in allowed]
     historical = config.get("holdout_history", [])
     protected_names = set(config["holdout"]["opponents"]).union(*(set(v["opponents"]) for v in historical))
     protected_seeds = set(map(str, config["holdout"]["seeds"])).union(*(set(map(str, v["seeds"])) for v in historical))
     if set(opponents) & protected_names and not args.milestone:
         raise ValueError("holdout opponents require an explicit milestone, even with --opponents")
-    seeds = args.seeds or list(config[group]["seeds"])
+    seeds = args.seeds or list(config["cheaters"]["seeds"] if tier == "C" else config[group]["seeds"])
     if set(map(str, seeds)) & protected_seeds and not args.milestone:
         raise ValueError("holdout seeds require an explicit milestone")
-    if args.quick:
+    if args.quick or getattr(args, "screen", False):
         seeds = seeds[:config["quick"]["seed_count"]]
     if len(set(map(str, seeds))) != len(seeds):
         raise ValueError("duplicate seeds would double-count deals in the combined CI")
     if not opponents or not seeds or len(set(opponents)) != len(opponents):
         raise ValueError("select nonempty, distinct opponents and nonempty seeds")
-    deals = config["quick"]["deals"] if args.quick else args.deals or config["full"]["deals"]
+    deals = config["quick"]["deals"] if args.quick or getattr(args, "screen", False) else args.deals or config["full"]["deals"]
     if deals < 1 or args.jobs < 1:
         raise ValueError("deals and jobs must be positive")
     for name in [args.challenger, *opponents]:
@@ -301,12 +375,19 @@ def row_text(row):
 
 
 def main(argv=None):
+    run_started = monotonic()
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--quick", action="store_true")
     mode.add_argument("--full", action="store_true", help="default: 1,000 deals, all seeds in the selected group")
+    mode.add_argument("--screen", action="store_true", help="configured subset, 300 deals, three training seeds")
     parser.add_argument("--group", choices=("training", "holdout"), default="training")
     parser.add_argument("--milestone")
+    parser.add_argument("--config", type=Path, help="explicit frozen evaluation config")
+    parser.add_argument("--tier", choices=("F", "H", "C"))
+    parser.add_argument("--cache", action="store_true", help="reuse exact source/rules/seed/deal/compute-matched records")
+    parser.add_argument("--sequential", action="store_true", help="planned-look adjusted H2H stopping")
+    parser.add_argument("--minimum-seeds", type=int, default=20)
     parser.add_argument("--challenger", default="live", help="live or a champion version")
     parser.add_argument("--head-to-head", metavar="CHAMPION")
     parser.add_argument("--opponents", nargs="+")
@@ -321,7 +402,12 @@ def main(argv=None):
     parser.add_argument("--timing-mode", choices=("configured", "enabled", "disabled", "observe"), default="configured")
     parser.add_argument("--force-fake-gate", action="store_true", help="adversarial TEST ONLY: force an invalid timing model")
     args = parser.parse_args(argv)
-    config = load_config()
+    config = load_config(args.config)
+    args.jobs = min(args.jobs, max(1, (os.cpu_count() or 1)//2))
+    if args.sequential and not args.head_to_head:
+        parser.error("--sequential requires --head-to-head")
+    if args.minimum_seeds < 1:
+        parser.error("--minimum-seeds must be positive")
     try:
         opponents, seeds, deals = plan(args, config)
     except (ValueError, KeyError, FileNotFoundError) as exc:
@@ -345,11 +431,14 @@ def main(argv=None):
     metadata["timing_reference"] = args.timing_reference
     metadata["timing_mode"] = args.timing_mode
     metadata["force_fake_gate"] = args.force_fake_gate
+    metadata.update(tier=args.tier, screening=args.screen, cache=args.cache,
+                    sequential=args.sequential, minimum_seeds=args.minimum_seeds,
+                    sequential_method="Bonferroni planned-look normal approximation; independent duplicate deals assumed")
     metadata["observer_source_sha256"] = {
         name: hashlib.sha256((ROOT / "tools" / name).read_bytes()).hexdigest()
         for name in ("serve_agent.py", "timing_probe.py", "judge_timing_audit.py")}
     metadata["opponent_source_sha256"] = {
-        p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "league/opponents").glob("*.py"))}
+        str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "league/opponents").rglob("*.py"))}
     source = ROOT if args.challenger == "live" else resolve_snapshot(args.challenger)
     metadata["challenger_source_sha256"] = runtime_hashes(source)
     stop, rows = Event(), []
@@ -360,14 +449,22 @@ def main(argv=None):
     executor = ThreadPoolExecutor(max_workers=args.jobs)
     interrupted = False
     futures = {}
+    stopping_reason = None
     try:
         for name in opponents:
             for index, seed in enumerate(seeds):
                 future = executor.submit(run_one, args.challenger, name, seed, deals,
                                          log_root / f"{name}-{index}", config, stop, args.logs, args.timeout, args.bot_seed,
-                                         args.timing_reference, args.timing_mode, args.force_fake_gate)
+                                         args.timing_reference, args.timing_mode, args.force_fake_gate,
+                                         args.cache, args.jobs)
                 futures[future] = (name, seed)
-        for future in as_completed(futures):
+        # Sequential mode consumes seeds in declaration order. Futures after a
+        # decisive boundary are cancelled if still queued; already running
+        # matches finish and are included, never fabricated as safety faults.
+        order = list(futures) if args.sequential else as_completed(futures)
+        for future in order:
+            if future.cancelled():
+                continue
             name, seed = futures[future]
             try:
                 row = future.result()
@@ -376,6 +473,13 @@ def main(argv=None):
             rows.append(row)
             print(f"[{len(rows)}/{len(futures)}] {row_text(row)}", flush=True)
             destination.write_text(json.dumps({"metadata": metadata, "complete": False, "matches": rows}, indent=2) + "\n")
+            if args.sequential and stopping_reason is None:
+                values = [v for r in rows if "raw" in r for v in r["raw"]["paired_bb"]]
+                stopping_reason = decisive(values, len(rows), args.minimum_seeds,
+                                           max(1, len(seeds)-args.minimum_seeds+1))
+                if stopping_reason:
+                    for queued in futures:
+                        queued.cancel()
     except BaseException:
         interrupted = True
         stop.set()
@@ -386,7 +490,10 @@ def main(argv=None):
         executor.shutdown(wait=True, cancel_futures=True)
         summary = summarize(rows)
         summary["requested_matches"] = len(futures)
-        complete = summary["completed_matches"] == len(futures) and not interrupted
+        complete = (summary["completed_matches"] == len(futures) or
+                    bool(stopping_reason) and all("raw" in row for row in rows)) and not interrupted
+        metadata["stopping_reason"] = stopping_reason
+        summary["wall_seconds"] = monotonic()-run_started
         document = {"metadata": metadata, "complete": complete, "summary": summary, "matches": rows}
         destination.write_text(json.dumps(document, indent=2) + "\n")
         append_history(ROOT / "league/history.csv", {

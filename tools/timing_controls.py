@@ -18,6 +18,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.league import interval, violations
+from tools.result_io import read_result
 
 GROUPS = {
     "positive": (["strong_tell"], list(range(1, 21))),
@@ -138,7 +139,7 @@ def main():
     signal.signal(signal.SIGTERM, interrupted)
     if args.assess:
         kind, path = args.assess
-        print(json.dumps(assess(kind, json.loads(Path(path).read_text())), indent=2))
+        print(json.dumps(assess(kind, read_result(path)), indent=2))
     elif args.run:
         for kind in args.run:
             path, report = run_control(kind, args.jobs)

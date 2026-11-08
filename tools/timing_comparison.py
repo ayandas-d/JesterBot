@@ -12,6 +12,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tools.league import interval, summarize, violations
+from tools.result_io import read_result
 
 
 def checked_rows(document):
@@ -77,7 +78,7 @@ def main():
     parser.add_argument("after", type=Path)
     parser.add_argument("--json", type=Path)
     args = parser.parse_args()
-    result = compare(json.loads(args.before.read_text()), json.loads(args.after.read_text()))
+    result = compare(read_result(args.before), read_result(args.after))
     result["inputs"] = {"before": str(args.before), "after": str(args.after)}
     output = json.dumps(result, indent=2) + "\n"
     if args.json:

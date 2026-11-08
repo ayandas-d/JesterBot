@@ -9,12 +9,19 @@ ROOT = Path(__file__).resolve().parents[2]
 
 @pytest.mark.slow
 def test_full_training_league():
-    subprocess.run([sys.executable, "tools/league.py", "--full", "--label", "pytest-full"],
+    subprocess.run([sys.executable, "tools/league.py", "--full", "--cache", "--jobs", "2", "--label", "pytest-full"],
                    cwd=ROOT, check=True, timeout=14_400)
 
 
 @pytest.mark.slow
 def test_explicit_milestone_holdout_league():
     subprocess.run([sys.executable, "tools/league.py", "--full", "--group", "holdout",
-                    "--milestone", "pytest-holdout", "--label", "pytest-holdout"],
+                    "--milestone", "pytest-holdout", "--cache", "--jobs", "2", "--label", "pytest-holdout"],
                    cwd=ROOT, check=True, timeout=7200)
+
+
+@pytest.mark.slow
+def test_explicit_oracle_guardrail_is_scored_separately():
+    subprocess.run([sys.executable,"tools/league.py","--full","--tier","C","--cache",
+                    "--jobs","1","--timeout","600","--label","pytest-oracle"],
+                   cwd=ROOT,check=True,timeout=7200)

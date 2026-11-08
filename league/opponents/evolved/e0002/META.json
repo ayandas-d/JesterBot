@@ -1,0 +1,40 @@
+{
+  "target_champion": "v2",
+  "target_commit": "c81268ec9317ed64f2728e3f3070a004ab16a443",
+  "confirmation": {
+    "path": "league/results/20261108T164337035778Z_evolution-20261108T163923020588-confirm.json",
+    "deals": 3000,
+    "mean_bb_per_deal": -0.23466666666666666,
+    "ci": [
+      -0.8148064793362026,
+      0.34547314600286927
+    ],
+    "points": 1.0,
+    "tier": "H",
+    "matches": 3
+  },
+  "reserved_holdout": false,
+  "parameters": {
+    "preflop_floor": 0.22474,
+    "call_floor": 0.41283,
+    "call_margin": 0.10003,
+    "raise_threshold": 0.69397,
+    "raise_frequency": 0.84838,
+    "bluff": 0.12614,
+    "pot_fraction": 0.28566,
+    "reraise_threshold": 0.59179,
+    "range_bias": 0.65681,
+    "idea": "range_reader",
+    "seed": 626836,
+    "samples": 80,
+    "preflop_samples": 24,
+    "bait_length": 23,
+    "switch_every": 71
+  },
+  "created_at": "2026-11-08T16:47:05.908001+00:00",
+  "source_sha256": {
+    "server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+    "agent.py": "ea8beff9db89b092258fda750ac59943bdd85b334d9d33044ca060e62feb046b",
+    "family.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869"
+  }
+}

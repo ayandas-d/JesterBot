@@ -13,14 +13,33 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import judge_engine as judge
 from game import AgentConfig
+from tools.league_alerts import alert
 
 
 class ObservedHandle(judge.HttpAgentHandle):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, role=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.prefixes = []
+        self.role, self.half_number = role, 0
+
+    def _post(self, *args, **kwargs):
+        try:
+            return super()._post(*args, **kwargs)
+        finally:
+            if self.role == "agent1" and os.environ.get("LEAGUE_ALERT_PATH"):
+                stats = self.stats
+                if stats.errors or stats.forfeited or stats.timed_out or stats.time_seconds > 4:
+                    context = os.environ.get("LEAGUE_ALERT_CONTEXT", "observed match")
+                    message = (f"{context}/half{self.half_number}: errors={stats.errors}, "
+                               f"forfeit={stats.forfeited}, timeout={stats.timed_out}, charged={stats.time_seconds:.6f}s")
+                    try:
+                        alert(f"{context}/half{self.half_number}/safety", "SAFETY", message,
+                              Path(os.environ["LEAGUE_ALERT_PATH"]))
+                    except OSError as exc:
+                        print(f"ALERT_WRITER_ERROR {exc}", file=sys.stderr, flush=True)
 
     def start_half(self):
+        self.half_number += 1
         super().start_half()
         self.prefixes.append({})
 
@@ -40,8 +59,8 @@ def main():
     if args.half or args.deals < 1:
         raise SystemExit("Timing audit requires a duplicate match with positive deal count")
     config = AgentConfig(num_hands=args.deals)
-    handles = [ObservedHandle(judge.bot_url(address), config, os.environ.get(token))
-               for address, token in ((args.agent1, "AGENT1_TOKEN"), (args.agent2, "AGENT2_TOKEN"))]
+    handles = [ObservedHandle(judge.bot_url(address), config, os.environ.get(token), role=role)
+               for role,address,token in (("agent1",args.agent1,"AGENT1_TOKEN"),("agent2",args.agent2,"AGENT2_TOKEN"))]
     try:
         if not all(h.wait_healthy(judge.STARTUP_TIMEOUT_SECONDS) for h in handles):
             raise RuntimeError("audit server did not become healthy")

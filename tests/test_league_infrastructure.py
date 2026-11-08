@@ -40,7 +40,7 @@ def test_holdout_names_and_seeds_are_disjoint_and_cannot_be_used_accidentally():
         with pytest.raises(ValueError):
             league.plan(args, config)
     names, seeds, deals = league.plan(options(group="holdout", milestone="release-review", full=True), config)
-    assert names == config["holdout"]["opponents"] and len(seeds) == 10 and deals == 1000
+    assert names == config["holdout"]["opponents"] and seeds == list(map(str, config["holdout"]["seeds"])) and deals == 1000
 
 
 def test_champions_are_discovered_dynamically_and_head_to_head_pools_deals():

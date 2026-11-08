@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "training": {
     "opponents": [
       "baseline_random",
@@ -14,7 +14,54 @@
       "loose_passive",
       "bluff_heavy",
       "slow_starter",
-      "crashy"
+      "crashy",
+      "station_wide",
+      "station_selective",
+      "station_value",
+      "nit_52",
+      "nit_58",
+      "nit_64",
+      "tag_halfpot",
+      "tag_value",
+      "tag_pressure",
+      "lag_halfpot",
+      "lag_pot",
+      "lag_position",
+      "maniac_selective",
+      "maniac_halfpot",
+      "maniac_value",
+      "odds_tight",
+      "odds_wide",
+      "odds_balanced",
+      "equity_conservative",
+      "equity_semibluff",
+      "equity_rangewise",
+      "mixed_street",
+      "mixed_cycle",
+      "folder_lock_1",
+      "folder_lock_2",
+      "folder_lock_3",
+      "folder_lock_4",
+      "folder_lock_5",
+      "folder_lock_6",
+      "value_trap_1",
+      "value_trap_2",
+      "value_trap_3",
+      "value_trap_4",
+      "reraise_bait_1",
+      "reraise_bait_2",
+      "reraise_bait_3",
+      "detector_bait_1",
+      "detector_bait_2",
+      "detector_bait_3",
+      "gear_cycle_1",
+      "gear_cycle_2",
+      "gear_cycle_3",
+      "range_counter",
+      "river_pressure",
+      "pot_value_counter",
+      "evolved_e0001",
+      "evolved_e0002"
     ],
     "seeds": [
       1,
@@ -40,29 +87,49 @@
     ]
   },
   "holdout": {
-    "generation": 2,
+    "generation": 3,
     "opponents": [
-      "holdout_sentinel_a",
-      "adaptive_counter",
-      "erratic"
+      "holdout3_station",
+      "holdout3_nit",
+      "holdout3_tag",
+      "holdout3_lag",
+      "holdout3_odds",
+      "holdout3_equity",
+      "holdout3_cycle",
+      "holdout3_folder",
+      "holdout3_trap",
+      "holdout3_reraiser",
+      "holdout3_blocker_counter",
+      "evolved_e0003"
     ],
     "seeds": [
-      201,
-      202,
-      203,
-      204,
-      205,
-      206,
-      207,
-      208,
-      209,
-      210
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420
     ],
     "requires_milestone": true
   },
   "champions": {
     "include_all": true,
-    "group": "training"
+    "group": "training",
+    "tier": "H"
   },
   "quick": {
     "deals": 300,
@@ -79,70 +146,1176 @@
   },
   "opponents": {
     "baseline_random": {
-      "script": "league/opponents/baseline_random.py"
+      "script": "league/opponents/baseline_random.py",
+      "tier": "F",
+      "source_sha256": "307dd163aac1efd6e0a0c86f8497b8522b1393b1a59b94a1bec0e7d24dc49f59",
+      "source_files": {
+        "league/opponents/baseline_random.py": "307dd163aac1efd6e0a0c86f8497b8522b1393b1a59b94a1bec0e7d24dc49f59",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "calling_station": {
-      "script": "league/opponents/calling_station.py"
+      "script": "league/opponents/calling_station.py",
+      "tier": "F",
+      "source_sha256": "22e570549318680466864dd7a823268bd4607ee8cb644df9b996a770a0a2af36",
+      "source_files": {
+        "league/opponents/calling_station.py": "22e570549318680466864dd7a823268bd4607ee8cb644df9b996a770a0a2af36",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "nit_folder": {
-      "script": "league/opponents/nit_folder.py"
+      "script": "league/opponents/nit_folder.py",
+      "tier": "F",
+      "source_sha256": "43f9d840f0c3823f4ede2e0fa3690777aee1437377adb06620eb22b7ac157b40",
+      "source_files": {
+        "league/opponents/nit_folder.py": "43f9d840f0c3823f4ede2e0fa3690777aee1437377adb06620eb22b7ac157b40",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "pot_maniac": {
-      "script": "league/opponents/pot_maniac.py"
+      "script": "league/opponents/pot_maniac.py",
+      "tier": "F",
+      "source_sha256": "1320c39ce823859a307bf716f4cbf12d279df2adda6661fa3aaa39a823818bc7",
+      "source_files": {
+        "league/opponents/pot_maniac.py": "1320c39ce823859a307bf716f4cbf12d279df2adda6661fa3aaa39a823818bc7",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "check_fold": {
-      "script": "league/opponents/check_fold.py"
+      "script": "league/opponents/check_fold.py",
+      "tier": "F",
+      "source_sha256": "e9e54c86d4e632b0253395b3fd89c6cdf88762e21a3a8aae3ce661606564cc54",
+      "source_files": {
+        "league/opponents/check_fold.py": "e9e54c86d4e632b0253395b3fd89c6cdf88762e21a3a8aae3ce661606564cc54",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "slow_tell": {
-      "script": "league/opponents/slow_tell.py"
+      "script": "league/opponents/slow_tell.py",
+      "tier": "F",
+      "source_sha256": "2027fc5bed86438ef598f360680e287ef9f70d4ed58902b3632d91c589275cf0",
+      "source_files": {
+        "league/opponents/slow_tell.py": "2027fc5bed86438ef598f360680e287ef9f70d4ed58902b3632d91c589275cf0",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "pot_odds_bot": {
-      "script": "league/opponents/pot_odds_bot.py"
+      "script": "league/opponents/pot_odds_bot.py",
+      "tier": "F",
+      "source_sha256": "d21459fb28d5327d43a37056cfa7b0b546640587b78a116b53b9db65f8e4bffa",
+      "source_files": {
+        "league/opponents/pot_odds_bot.py": "d21459fb28d5327d43a37056cfa7b0b546640587b78a116b53b9db65f8e4bffa",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "anti_maniac": {
-      "script": "league/opponents/anti_maniac.py"
+      "script": "league/opponents/anti_maniac.py",
+      "tier": "F",
+      "source_sha256": "1072cadeab96caa1c38339ab8eeabaf8e8bbc418fcc29bc17ef2991f6718a9d6",
+      "source_files": {
+        "league/opponents/anti_maniac.py": "1072cadeab96caa1c38339ab8eeabaf8e8bbc418fcc29bc17ef2991f6718a9d6",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "adaptive_counter": {
-      "script": "league/opponents/adaptive_counter.py"
+      "script": "league/opponents/adaptive_counter.py",
+      "source_sha256": "b8494f70dbd2b7df8fd983d754c896abe4a1f3556b067f62ce817554e95a45de",
+      "source_files": {
+        "league/opponents/adaptive_counter.py": "b8494f70dbd2b7df8fd983d754c896abe4a1f3556b067f62ce817554e95a45de",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "gto_ish": {
-      "script": "league/opponents/gto_ish.py"
+      "script": "league/opponents/gto_ish.py",
+      "source_sha256": "be9b7a7df7061fccccfb5d60eeea3ec650ec9d5b3dad80c6ea87c205b2fdd738",
+      "source_files": {
+        "league/opponents/gto_ish.py": "be9b7a7df7061fccccfb5d60eeea3ec650ec9d5b3dad80c6ea87c205b2fdd738",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "tight_aggressive": {
-      "script": "league/opponents/tight_aggressive.py"
+      "script": "league/opponents/tight_aggressive.py",
+      "tier": "F",
+      "source_sha256": "0af521b1cb7cbf5a59d19465dfa011ab54f4268d847c66af38c4e25298bf1a5b",
+      "source_files": {
+        "league/opponents/tight_aggressive.py": "0af521b1cb7cbf5a59d19465dfa011ab54f4268d847c66af38c4e25298bf1a5b",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "loose_passive": {
-      "script": "league/opponents/loose_passive.py"
+      "script": "league/opponents/loose_passive.py",
+      "tier": "F",
+      "source_sha256": "55ff8278f17338385c12094dca9fbb9a48f085e222c9276e3d33341a5f8a6d1c",
+      "source_files": {
+        "league/opponents/loose_passive.py": "55ff8278f17338385c12094dca9fbb9a48f085e222c9276e3d33341a5f8a6d1c",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "bluff_heavy": {
-      "script": "league/opponents/bluff_heavy.py"
+      "script": "league/opponents/bluff_heavy.py",
+      "tier": "F",
+      "source_sha256": "c10c89396bb8c216c40f6f0f5e3ef844c95b33b328c8e06fcef1c86526c5085e",
+      "source_files": {
+        "league/opponents/bluff_heavy.py": "c10c89396bb8c216c40f6f0f5e3ef844c95b33b328c8e06fcef1c86526c5085e",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "erratic": {
-      "script": "league/opponents/erratic.py"
+      "script": "league/opponents/erratic.py",
+      "source_sha256": "196b6aafb8bcee73ca0a6728a93305855751607dbaeea124ebfb0517212de7e7",
+      "source_files": {
+        "league/opponents/erratic.py": "196b6aafb8bcee73ca0a6728a93305855751607dbaeea124ebfb0517212de7e7",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "slow_starter": {
-      "script": "league/opponents/slow_starter.py"
+      "script": "league/opponents/slow_starter.py",
+      "tier": "F",
+      "source_sha256": "413481c225799c553f465e22d8ba959e2dbcf366ec2c573b6247ff8d02678239",
+      "source_files": {
+        "league/opponents/slow_starter.py": "413481c225799c553f465e22d8ba959e2dbcf366ec2c573b6247ff8d02678239",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "crashy": {
-      "script": "league/opponents/crashy.py"
+      "script": "league/opponents/crashy.py",
+      "tier": "F",
+      "source_sha256": "c1aba3cf642e3aeef2292974047d70b2df05cb159747990101edb075180513af",
+      "source_files": {
+        "league/opponents/crashy.py": "c1aba3cf642e3aeef2292974047d70b2df05cb159747990101edb075180513af",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "strong_tell": {
-      "script": "league/opponents/strong_tell.py"
+      "script": "league/opponents/strong_tell.py",
+      "source_sha256": "bc6e7fe9c4061286222e024cdda921316f78ed8423871f9ba798d79d5ca80719",
+      "source_files": {
+        "league/opponents/strong_tell.py": "bc6e7fe9c4061286222e024cdda921316f78ed8423871f9ba798d79d5ca80719",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "known_thinker": {
-      "script": "league/opponents/known_thinker.py"
+      "script": "league/opponents/known_thinker.py",
+      "source_sha256": "d33a5e83f4a6c1407f75376932b24117f6223c424a768a986b8ecc79b3f9eef4",
+      "source_files": {
+        "league/opponents/known_thinker.py": "d33a5e83f4a6c1407f75376932b24117f6223c424a768a986b8ecc79b3f9eef4",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "variable_thinker": {
-      "script": "league/opponents/variable_thinker.py"
+      "script": "league/opponents/variable_thinker.py",
+      "source_sha256": "ed808485382f0784b57f93ccb4c066341a07528a9c6ab7eb7af141312d570eee",
+      "source_files": {
+        "league/opponents/variable_thinker.py": "ed808485382f0784b57f93ccb4c066341a07528a9c6ab7eb7af141312d570eee",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "fake_tell": {
-      "script": "league/opponents/fake_tell.py"
+      "script": "league/opponents/fake_tell.py",
+      "source_sha256": "7d8b44712ecc5058510b67366e556136b2f821de4761b096e09b3e2cbbead41b",
+      "source_files": {
+        "league/opponents/fake_tell.py": "7d8b44712ecc5058510b67366e556136b2f821de4761b096e09b3e2cbbead41b",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "holdout_sentinel_a": {
-      "script": "league/opponents/holdout_sentinel_a.py"
+      "script": "league/opponents/holdout_sentinel_a.py",
+      "source_sha256": "3ed00d38fd57d2320aaac60ecce2d822b4ea5ab1b1962891af1f3fbd56919b0c",
+      "source_files": {
+        "league/opponents/holdout_sentinel_a.py": "3ed00d38fd57d2320aaac60ecce2d822b4ea5ab1b1962891af1f3fbd56919b0c",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
     },
     "holdout_sentinel_b": {
-      "script": "league/opponents/holdout_sentinel_b.py"
+      "script": "league/opponents/holdout_sentinel_b.py",
+      "source_sha256": "86766e5ebb335983abc96246258d76d301f0a6922c3f92ecd7aef22078b05dc4",
+      "source_files": {
+        "league/opponents/holdout_sentinel_b.py": "86766e5ebb335983abc96246258d76d301f0a6922c3f92ecd7aef22078b05dc4",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "station_wide": {
+      "script": "league/opponents/station_wide.py",
+      "tier": "F",
+      "idea": "F tier station_wide: balanced with fixed declared thresholds.",
+      "source_sha256": "1e8815b748c63f82c675bba0a943b9fa536d8110d115e66b042d1120735f7d6c",
+      "source_files": {
+        "league/opponents/station_wide.py": "1e8815b748c63f82c675bba0a943b9fa536d8110d115e66b042d1120735f7d6c",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "station_selective": {
+      "script": "league/opponents/station_selective.py",
+      "tier": "F",
+      "idea": "F tier station_selective: balanced with fixed declared thresholds.",
+      "source_sha256": "b9720c330ee22be0a11b7b7e5b95d91d961846ba1500e095108b6867b2ba8157",
+      "source_files": {
+        "league/opponents/station_selective.py": "b9720c330ee22be0a11b7b7e5b95d91d961846ba1500e095108b6867b2ba8157",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "station_value": {
+      "script": "league/opponents/station_value.py",
+      "tier": "F",
+      "idea": "F tier station_value: balanced with fixed declared thresholds.",
+      "source_sha256": "afc39feb6b44e4d727e43048eb274eb7a4a7666ab4e0d5905ac84d2662c5ca77",
+      "source_files": {
+        "league/opponents/station_value.py": "afc39feb6b44e4d727e43048eb274eb7a4a7666ab4e0d5905ac84d2662c5ca77",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "nit_52": {
+      "script": "league/opponents/nit_52.py",
+      "tier": "F",
+      "idea": "F tier nit_52: balanced with fixed declared thresholds.",
+      "source_sha256": "40d4e8bf0916d27781df9cd00642f33ccdf7048b8ab1e4888f8b15f7b90ddb20",
+      "source_files": {
+        "league/opponents/nit_52.py": "40d4e8bf0916d27781df9cd00642f33ccdf7048b8ab1e4888f8b15f7b90ddb20",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "nit_58": {
+      "script": "league/opponents/nit_58.py",
+      "tier": "F",
+      "idea": "F tier nit_58: balanced with fixed declared thresholds.",
+      "source_sha256": "77a488e65df3718296009db0063da13befd8ba9e0d67bee02daaf5e6029023ab",
+      "source_files": {
+        "league/opponents/nit_58.py": "77a488e65df3718296009db0063da13befd8ba9e0d67bee02daaf5e6029023ab",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "nit_64": {
+      "script": "league/opponents/nit_64.py",
+      "tier": "F",
+      "idea": "F tier nit_64: balanced with fixed declared thresholds.",
+      "source_sha256": "e56e1ecc7b3860bd0f380b9874a1297a61f2750265916b5efa3c2f3159010ba2",
+      "source_files": {
+        "league/opponents/nit_64.py": "e56e1ecc7b3860bd0f380b9874a1297a61f2750265916b5efa3c2f3159010ba2",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "tag_halfpot": {
+      "script": "league/opponents/tag_halfpot.py",
+      "tier": "F",
+      "idea": "F tier tag_halfpot: balanced with fixed declared thresholds.",
+      "source_sha256": "6d575dfa94368edaaaccab68288697ddd1c32e19b5b9c71f18f0ffced93e1f1f",
+      "source_files": {
+        "league/opponents/tag_halfpot.py": "6d575dfa94368edaaaccab68288697ddd1c32e19b5b9c71f18f0ffced93e1f1f",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "tag_value": {
+      "script": "league/opponents/tag_value.py",
+      "tier": "F",
+      "idea": "F tier tag_value: balanced with fixed declared thresholds.",
+      "source_sha256": "3afd25d8517f6ae87a8530ce3c666accaae2e7fea5920d8258c17f177f26e55b",
+      "source_files": {
+        "league/opponents/tag_value.py": "3afd25d8517f6ae87a8530ce3c666accaae2e7fea5920d8258c17f177f26e55b",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "tag_pressure": {
+      "script": "league/opponents/tag_pressure.py",
+      "tier": "F",
+      "idea": "F tier tag_pressure: balanced with fixed declared thresholds.",
+      "source_sha256": "b85b91f257baefe5610f32eb3d84b584e689d30f4a10544423abb5100aff1cdd",
+      "source_files": {
+        "league/opponents/tag_pressure.py": "b85b91f257baefe5610f32eb3d84b584e689d30f4a10544423abb5100aff1cdd",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "lag_halfpot": {
+      "script": "league/opponents/lag_halfpot.py",
+      "tier": "F",
+      "idea": "F tier lag_halfpot: balanced with fixed declared thresholds.",
+      "source_sha256": "63981c608c7ef9c34d64332229c3f52c34070dc47f70c3220a75db310a11443b",
+      "source_files": {
+        "league/opponents/lag_halfpot.py": "63981c608c7ef9c34d64332229c3f52c34070dc47f70c3220a75db310a11443b",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "lag_pot": {
+      "script": "league/opponents/lag_pot.py",
+      "tier": "F",
+      "idea": "F tier lag_pot: balanced with fixed declared thresholds.",
+      "source_sha256": "3aa65b71594bd4d438ad1788904ecc96858c18bc9314f8fdfd0172eb6104ba46",
+      "source_files": {
+        "league/opponents/lag_pot.py": "3aa65b71594bd4d438ad1788904ecc96858c18bc9314f8fdfd0172eb6104ba46",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "lag_position": {
+      "script": "league/opponents/lag_position.py",
+      "tier": "F",
+      "idea": "F tier lag_position: street_pressure with fixed declared thresholds.",
+      "source_sha256": "67f66454f566cb376c4821978134c0419be8600b149852a67a810fc10f3f6aa8",
+      "source_files": {
+        "league/opponents/lag_position.py": "67f66454f566cb376c4821978134c0419be8600b149852a67a810fc10f3f6aa8",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "maniac_selective": {
+      "script": "league/opponents/maniac_selective.py",
+      "tier": "F",
+      "idea": "F tier maniac_selective: balanced with fixed declared thresholds.",
+      "source_sha256": "ba303aeb8087409f227bc6da4bd04ff2548028d260e671658f4c5a228622ddec",
+      "source_files": {
+        "league/opponents/maniac_selective.py": "ba303aeb8087409f227bc6da4bd04ff2548028d260e671658f4c5a228622ddec",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "maniac_halfpot": {
+      "script": "league/opponents/maniac_halfpot.py",
+      "tier": "F",
+      "idea": "F tier maniac_halfpot: balanced with fixed declared thresholds.",
+      "source_sha256": "667059f4f42191acd30bf898dadd148816faa777177fed52bab03bc757d737d8",
+      "source_files": {
+        "league/opponents/maniac_halfpot.py": "667059f4f42191acd30bf898dadd148816faa777177fed52bab03bc757d737d8",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "maniac_value": {
+      "script": "league/opponents/maniac_value.py",
+      "tier": "F",
+      "idea": "F tier maniac_value: balanced with fixed declared thresholds.",
+      "source_sha256": "47d6a3c3325694a11d99f93fdc31fe0d69535019c5a0654da4c5daffc0c88045",
+      "source_files": {
+        "league/opponents/maniac_value.py": "47d6a3c3325694a11d99f93fdc31fe0d69535019c5a0654da4c5daffc0c88045",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "odds_tight": {
+      "script": "league/opponents/odds_tight.py",
+      "tier": "F",
+      "idea": "F tier odds_tight: balanced with fixed declared thresholds.",
+      "source_sha256": "b6195a2193e7a41d06cffe91faf1703dc079e64a67bd2ad856ca25043f1bc032",
+      "source_files": {
+        "league/opponents/odds_tight.py": "b6195a2193e7a41d06cffe91faf1703dc079e64a67bd2ad856ca25043f1bc032",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "odds_wide": {
+      "script": "league/opponents/odds_wide.py",
+      "tier": "F",
+      "idea": "F tier odds_wide: balanced with fixed declared thresholds.",
+      "source_sha256": "8bcaf90e88bec05f9293e987fa6b76ae097b918765b9e4211a1017ca6b7cb175",
+      "source_files": {
+        "league/opponents/odds_wide.py": "8bcaf90e88bec05f9293e987fa6b76ae097b918765b9e4211a1017ca6b7cb175",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "odds_balanced": {
+      "script": "league/opponents/odds_balanced.py",
+      "tier": "F",
+      "idea": "F tier odds_balanced: balanced with fixed declared thresholds.",
+      "source_sha256": "dde688976511ef74f1a6d6deebab7cac5f24b35335d2a9e0227ce0a4d7e1dcfd",
+      "source_files": {
+        "league/opponents/odds_balanced.py": "dde688976511ef74f1a6d6deebab7cac5f24b35335d2a9e0227ce0a4d7e1dcfd",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "equity_conservative": {
+      "script": "league/opponents/equity_conservative.py",
+      "tier": "F",
+      "idea": "F tier equity_conservative: balanced with fixed declared thresholds.",
+      "source_sha256": "d1fdddac32ae7b1ebfc442edc8c42afa766a6b43755ad2b6207366ed86f5e852",
+      "source_files": {
+        "league/opponents/equity_conservative.py": "d1fdddac32ae7b1ebfc442edc8c42afa766a6b43755ad2b6207366ed86f5e852",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "equity_semibluff": {
+      "script": "league/opponents/equity_semibluff.py",
+      "tier": "F",
+      "idea": "F tier equity_semibluff: balanced with fixed declared thresholds.",
+      "source_sha256": "b10a2e672072d85df5f1df94b4d07dde66b350fb200de6c6b14407bb438800dc",
+      "source_files": {
+        "league/opponents/equity_semibluff.py": "b10a2e672072d85df5f1df94b4d07dde66b350fb200de6c6b14407bb438800dc",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "equity_rangewise": {
+      "script": "league/opponents/equity_rangewise.py",
+      "tier": "F",
+      "idea": "F tier equity_rangewise: range_reader with fixed declared thresholds.",
+      "source_sha256": "0bcd9be911fd34a7f3b27700cc76dc494741c24465b2da6daa9a2b22dc1d4ad1",
+      "source_files": {
+        "league/opponents/equity_rangewise.py": "0bcd9be911fd34a7f3b27700cc76dc494741c24465b2da6daa9a2b22dc1d4ad1",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "mixed_street": {
+      "script": "league/opponents/mixed_street.py",
+      "tier": "F",
+      "idea": "F tier mixed_street: street_pressure with fixed declared thresholds.",
+      "source_sha256": "70972a703e69e5ae8bd1fdc6bc29d81a932fd9cd78d29b03b3b570ac83166330",
+      "source_files": {
+        "league/opponents/mixed_street.py": "70972a703e69e5ae8bd1fdc6bc29d81a932fd9cd78d29b03b3b570ac83166330",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "mixed_cycle": {
+      "script": "league/opponents/mixed_cycle.py",
+      "tier": "F",
+      "idea": "F tier mixed_cycle: gear_cycle with fixed declared thresholds.",
+      "source_sha256": "4c83adcc4163eff2b258679519cb4d7b533843faae09e33184ec8d026a370449",
+      "source_files": {
+        "league/opponents/mixed_cycle.py": "4c83adcc4163eff2b258679519cb4d7b533843faae09e33184ec8d026a370449",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_1": {
+      "script": "league/opponents/folder_lock_1.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_1: folder_lock with fixed declared thresholds.",
+      "source_sha256": "86f34729149853c4d080599826b671648e8981e4765f77e65b1403f4d5b78f09",
+      "source_files": {
+        "league/opponents/folder_lock_1.py": "86f34729149853c4d080599826b671648e8981e4765f77e65b1403f4d5b78f09",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_2": {
+      "script": "league/opponents/folder_lock_2.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_2: folder_lock with fixed declared thresholds.",
+      "source_sha256": "19ffd79f91d4e68108e480594c6566c31b02af3a677a15c732418f732d398a38",
+      "source_files": {
+        "league/opponents/folder_lock_2.py": "19ffd79f91d4e68108e480594c6566c31b02af3a677a15c732418f732d398a38",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_3": {
+      "script": "league/opponents/folder_lock_3.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_3: folder_lock with fixed declared thresholds.",
+      "source_sha256": "03827889fa7223b3a3cdcc0010f0239fb19634042ac5bbb954e8f4d7aba52e0a",
+      "source_files": {
+        "league/opponents/folder_lock_3.py": "03827889fa7223b3a3cdcc0010f0239fb19634042ac5bbb954e8f4d7aba52e0a",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_4": {
+      "script": "league/opponents/folder_lock_4.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_4: folder_lock with fixed declared thresholds.",
+      "source_sha256": "2a2b0b74528f41d87e5a6d66876981d7a8beeb5f7864e4d8cd44b46701b5c86d",
+      "source_files": {
+        "league/opponents/folder_lock_4.py": "2a2b0b74528f41d87e5a6d66876981d7a8beeb5f7864e4d8cd44b46701b5c86d",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_5": {
+      "script": "league/opponents/folder_lock_5.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_5: folder_lock with fixed declared thresholds.",
+      "source_sha256": "4b1ca4a95d84d04b4d3d7f0b11d06c6bbc0f5d246a85cd00f0c172e362228e4e",
+      "source_files": {
+        "league/opponents/folder_lock_5.py": "4b1ca4a95d84d04b4d3d7f0b11d06c6bbc0f5d246a85cd00f0c172e362228e4e",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "folder_lock_6": {
+      "script": "league/opponents/folder_lock_6.py",
+      "tier": "H",
+      "idea": "H tier folder_lock_6: folder_lock with fixed declared thresholds.",
+      "source_sha256": "b2eeefe77e391704a3cc0493bf89ad8937b9179db7e8ffdedbdf8c96a165b518",
+      "source_files": {
+        "league/opponents/folder_lock_6.py": "b2eeefe77e391704a3cc0493bf89ad8937b9179db7e8ffdedbdf8c96a165b518",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "value_trap_1": {
+      "script": "league/opponents/value_trap_1.py",
+      "tier": "H",
+      "idea": "H tier value_trap_1: value_trap with fixed declared thresholds.",
+      "source_sha256": "c335ed131573025dfe5e2df8dbf8c5a57de8576883bd6f7fada4ead6d4d4b2ff",
+      "source_files": {
+        "league/opponents/value_trap_1.py": "c335ed131573025dfe5e2df8dbf8c5a57de8576883bd6f7fada4ead6d4d4b2ff",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "value_trap_2": {
+      "script": "league/opponents/value_trap_2.py",
+      "tier": "H",
+      "idea": "H tier value_trap_2: value_trap with fixed declared thresholds.",
+      "source_sha256": "675185bdf0d9eca76013f8cea3ecf60d123d42d16b2afda38dc32b17417533ac",
+      "source_files": {
+        "league/opponents/value_trap_2.py": "675185bdf0d9eca76013f8cea3ecf60d123d42d16b2afda38dc32b17417533ac",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "value_trap_3": {
+      "script": "league/opponents/value_trap_3.py",
+      "tier": "H",
+      "idea": "H tier value_trap_3: value_trap with fixed declared thresholds.",
+      "source_sha256": "9b1807a45b719da6c84bfd48f50c29fa30c62a5ef580e2d83f76dae90520128f",
+      "source_files": {
+        "league/opponents/value_trap_3.py": "9b1807a45b719da6c84bfd48f50c29fa30c62a5ef580e2d83f76dae90520128f",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "value_trap_4": {
+      "script": "league/opponents/value_trap_4.py",
+      "tier": "H",
+      "idea": "H tier value_trap_4: value_trap with fixed declared thresholds.",
+      "source_sha256": "12049e27a31e31d0e41fa74346056a2539dc5f4e0ab0af3c145f4ca2f08dbfa9",
+      "source_files": {
+        "league/opponents/value_trap_4.py": "12049e27a31e31d0e41fa74346056a2539dc5f4e0ab0af3c145f4ca2f08dbfa9",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "reraise_bait_1": {
+      "script": "league/opponents/reraise_bait_1.py",
+      "tier": "H",
+      "idea": "H tier reraise_bait_1: reraise_bait with fixed declared thresholds.",
+      "source_sha256": "c66527c8235db0e210cacd81c09ea3a1ce67006e7df278981fabb382cce5b0a4",
+      "source_files": {
+        "league/opponents/reraise_bait_1.py": "c66527c8235db0e210cacd81c09ea3a1ce67006e7df278981fabb382cce5b0a4",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "reraise_bait_2": {
+      "script": "league/opponents/reraise_bait_2.py",
+      "tier": "H",
+      "idea": "H tier reraise_bait_2: reraise_bait with fixed declared thresholds.",
+      "source_sha256": "84691630cdc99ff4ae59f68000924c36a5d28df32d9141a888f65ca5e553c3e7",
+      "source_files": {
+        "league/opponents/reraise_bait_2.py": "84691630cdc99ff4ae59f68000924c36a5d28df32d9141a888f65ca5e553c3e7",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "reraise_bait_3": {
+      "script": "league/opponents/reraise_bait_3.py",
+      "tier": "H",
+      "idea": "H tier reraise_bait_3: reraise_bait with fixed declared thresholds.",
+      "source_sha256": "ecab4f33f313a2703e89aafe08ae1bf4e191dcf78aaeae91ea2bf0ef1b9989d7",
+      "source_files": {
+        "league/opponents/reraise_bait_3.py": "ecab4f33f313a2703e89aafe08ae1bf4e191dcf78aaeae91ea2bf0ef1b9989d7",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "detector_bait_1": {
+      "script": "league/opponents/detector_bait_1.py",
+      "tier": "H",
+      "idea": "H tier detector_bait_1: detector_bait with fixed declared thresholds.",
+      "source_sha256": "1c17cdd9fbdaa34ee51a6b46ae42cdcdc72c3787518849ada948b9d9c4fcf1ab",
+      "source_files": {
+        "league/opponents/detector_bait_1.py": "1c17cdd9fbdaa34ee51a6b46ae42cdcdc72c3787518849ada948b9d9c4fcf1ab",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "detector_bait_2": {
+      "script": "league/opponents/detector_bait_2.py",
+      "tier": "H",
+      "idea": "H tier detector_bait_2: detector_bait with fixed declared thresholds.",
+      "source_sha256": "4339543b572cc45858cedb9fc21bdf9f389a1dcbc2d3ec67c2e8117266ed27e1",
+      "source_files": {
+        "league/opponents/detector_bait_2.py": "4339543b572cc45858cedb9fc21bdf9f389a1dcbc2d3ec67c2e8117266ed27e1",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "detector_bait_3": {
+      "script": "league/opponents/detector_bait_3.py",
+      "tier": "H",
+      "idea": "H tier detector_bait_3: detector_bait with fixed declared thresholds.",
+      "source_sha256": "07b2c88a6e3c5f4aab940b4be79b1892eb114ffb549cf95e9d4cc532957b0857",
+      "source_files": {
+        "league/opponents/detector_bait_3.py": "07b2c88a6e3c5f4aab940b4be79b1892eb114ffb549cf95e9d4cc532957b0857",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "gear_cycle_1": {
+      "script": "league/opponents/gear_cycle_1.py",
+      "tier": "H",
+      "idea": "H tier gear_cycle_1: gear_cycle with fixed declared thresholds.",
+      "source_sha256": "0e15a2a9c96a1c3f97c3d569950e9ee323373f1f864feaac908208110b9e547c",
+      "source_files": {
+        "league/opponents/gear_cycle_1.py": "0e15a2a9c96a1c3f97c3d569950e9ee323373f1f864feaac908208110b9e547c",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "gear_cycle_2": {
+      "script": "league/opponents/gear_cycle_2.py",
+      "tier": "H",
+      "idea": "H tier gear_cycle_2: gear_cycle with fixed declared thresholds.",
+      "source_sha256": "b3fa1055dfd725b063adcb74af734226e3c1fe170577fff986fa6f3cf72901b5",
+      "source_files": {
+        "league/opponents/gear_cycle_2.py": "b3fa1055dfd725b063adcb74af734226e3c1fe170577fff986fa6f3cf72901b5",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "gear_cycle_3": {
+      "script": "league/opponents/gear_cycle_3.py",
+      "tier": "H",
+      "idea": "H tier gear_cycle_3: gear_cycle with fixed declared thresholds.",
+      "source_sha256": "7ca59ab1316ec7135b1d3d68e64792693539010648fb9100b24f3e55aa294ef9",
+      "source_files": {
+        "league/opponents/gear_cycle_3.py": "7ca59ab1316ec7135b1d3d68e64792693539010648fb9100b24f3e55aa294ef9",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "range_counter": {
+      "script": "league/opponents/range_counter.py",
+      "tier": "H",
+      "idea": "H tier range_counter: range_reader with fixed declared thresholds.",
+      "source_sha256": "aff55bcf7fec08f15620a54889108aa83120e0d1a51dcd9e762ec301332e876c",
+      "source_files": {
+        "league/opponents/range_counter.py": "aff55bcf7fec08f15620a54889108aa83120e0d1a51dcd9e762ec301332e876c",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "river_pressure": {
+      "script": "league/opponents/river_pressure.py",
+      "tier": "H",
+      "idea": "H tier river_pressure: street_pressure with fixed declared thresholds.",
+      "source_sha256": "068c7ee301b9ab93d1525e3190a0380ce9bad4b56cef7a3f744c2fb1880bf9bc",
+      "source_files": {
+        "league/opponents/river_pressure.py": "068c7ee301b9ab93d1525e3190a0380ce9bad4b56cef7a3f744c2fb1880bf9bc",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "pot_value_counter": {
+      "script": "league/opponents/pot_value_counter.py",
+      "tier": "H",
+      "idea": "H tier pot_value_counter: balanced with fixed declared thresholds.",
+      "source_sha256": "a730878a8f0136e4572a49fa26ffe5d7401a357e81b4f568c69eb7ba45ffe5e8",
+      "source_files": {
+        "league/opponents/pot_value_counter.py": "a730878a8f0136e4572a49fa26ffe5d7401a357e81b4f568c69eb7ba45ffe5e8",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_station": {
+      "script": "league/opponents/holdout3_station.py",
+      "tier": "F",
+      "source_sha256": "3a528fb587b8c65911338bca104378946db361c8159e80ea7572061b4a71656e",
+      "source_files": {
+        "league/opponents/holdout3_station.py": "3a528fb587b8c65911338bca104378946db361c8159e80ea7572061b4a71656e",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_nit": {
+      "script": "league/opponents/holdout3_nit.py",
+      "tier": "F",
+      "source_sha256": "b5a554e8ad4dd5ffe5ef0e15b02d83f7b87992045ebc1d82d404dc14413c639d",
+      "source_files": {
+        "league/opponents/holdout3_nit.py": "b5a554e8ad4dd5ffe5ef0e15b02d83f7b87992045ebc1d82d404dc14413c639d",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_tag": {
+      "script": "league/opponents/holdout3_tag.py",
+      "tier": "F",
+      "source_sha256": "c94b44c46dbc4e62cf7ca0b687890e4e3b52bc081efc44f2354bd1d9f1378335",
+      "source_files": {
+        "league/opponents/holdout3_tag.py": "c94b44c46dbc4e62cf7ca0b687890e4e3b52bc081efc44f2354bd1d9f1378335",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_lag": {
+      "script": "league/opponents/holdout3_lag.py",
+      "tier": "F",
+      "source_sha256": "c6943d7c0a5c223a21857c52f64e34f9bf3afac70bda015429c633636ad22e3e",
+      "source_files": {
+        "league/opponents/holdout3_lag.py": "c6943d7c0a5c223a21857c52f64e34f9bf3afac70bda015429c633636ad22e3e",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_odds": {
+      "script": "league/opponents/holdout3_odds.py",
+      "tier": "F",
+      "source_sha256": "3a0788dd4ec61d28d7609bb607de8f2ffaf820f1d3294195c4f0fe7c85a8e4c6",
+      "source_files": {
+        "league/opponents/holdout3_odds.py": "3a0788dd4ec61d28d7609bb607de8f2ffaf820f1d3294195c4f0fe7c85a8e4c6",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_equity": {
+      "script": "league/opponents/holdout3_equity.py",
+      "tier": "F",
+      "source_sha256": "26c3c8657391c9631140e01fec176dec7da84dea5d71e4c05174712cac84d0bd",
+      "source_files": {
+        "league/opponents/holdout3_equity.py": "26c3c8657391c9631140e01fec176dec7da84dea5d71e4c05174712cac84d0bd",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_cycle": {
+      "script": "league/opponents/holdout3_cycle.py",
+      "tier": "F",
+      "source_sha256": "36a5f6e675c306496979fd7a993316d3fb7bbd39480a965efbfba86208738e59",
+      "source_files": {
+        "league/opponents/holdout3_cycle.py": "36a5f6e675c306496979fd7a993316d3fb7bbd39480a965efbfba86208738e59",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_folder": {
+      "script": "league/opponents/holdout3_folder.py",
+      "tier": "H",
+      "source_sha256": "54bd1ad6f70a691cb689ffa431a862a3d36566c04cc1ed80928f31b3d016d48a",
+      "source_files": {
+        "league/opponents/holdout3_folder.py": "54bd1ad6f70a691cb689ffa431a862a3d36566c04cc1ed80928f31b3d016d48a",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_trap": {
+      "script": "league/opponents/holdout3_trap.py",
+      "tier": "H",
+      "source_sha256": "0c760f04b1af360ebc336cfd7216ddfd9f65f3ec203fca87f3c463c6346a77f3",
+      "source_files": {
+        "league/opponents/holdout3_trap.py": "0c760f04b1af360ebc336cfd7216ddfd9f65f3ec203fca87f3c463c6346a77f3",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_reraiser": {
+      "script": "league/opponents/holdout3_reraiser.py",
+      "tier": "H",
+      "source_sha256": "61e6e46b93eb1f28b2102097316f27a18e967e483b3078c37941cd691dfa67e9",
+      "source_files": {
+        "league/opponents/holdout3_reraiser.py": "61e6e46b93eb1f28b2102097316f27a18e967e483b3078c37941cd691dfa67e9",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "holdout3_blocker_counter": {
+      "script": "league/opponents/holdout3_blocker_counter.py",
+      "tier": "H",
+      "unique_idea": true,
+      "source_sha256": "dacc3546b01507af1db98171f93a6a0328753ded5cd38953224038a998a90695",
+      "source_files": {
+        "league/opponents/holdout3_blocker_counter.py": "dacc3546b01507af1db98171f93a6a0328753ded5cd38953224038a998a90695",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "oracle_full": {
+      "script": "league/opponents/oracle_full.py",
+      "tier": "C",
+      "time_bank_seconds": 8.0,
+      "source_sha256": "44b4f2e51f1beec9594ad16ce2ccc252aff8acf69500a3efdbb477b2e42e30aa",
+      "source_files": {
+        "league/opponents/oracle_full.py": "44b4f2e51f1beec9594ad16ce2ccc252aff8acf69500a3efdbb477b2e42e30aa",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "oracle_partial": {
+      "script": "league/opponents/oracle_partial.py",
+      "tier": "C",
+      "time_bank_seconds": 8.0,
+      "source_sha256": "07b243a4785ae87e76552b9789793542ec5eda4370a19cd597739ed73e5629c3",
+      "source_files": {
+        "league/opponents/oracle_partial.py": "07b243a4785ae87e76552b9789793542ec5eda4370a19cd597739ed73e5629c3",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "board_oracle": {
+      "script": "league/opponents/board_oracle.py",
+      "tier": "C",
+      "time_bank_seconds": 8.0,
+      "source_sha256": "996a470b72163de6fa7c1f7bcb5285e521edfe703a3184cb672f0adc00e70b1d",
+      "source_files": {
+        "league/opponents/board_oracle.py": "996a470b72163de6fa7c1f7bcb5285e521edfe703a3184cb672f0adc00e70b1d",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "unlimited_compute": {
+      "script": "league/opponents/unlimited_compute.py",
+      "tier": "C",
+      "time_bank_seconds": 1000000000.0,
+      "source_sha256": "0ec69ac2f2e0b6013ce02e587d394b059ff9414a8a4c49b8cd66eff99f66b746",
+      "source_files": {
+        "league/opponents/unlimited_compute.py": "0ec69ac2f2e0b6013ce02e587d394b059ff9414a8a4c49b8cd66eff99f66b746",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "oracle_counter": {
+      "script": "league/opponents/oracle_counter.py",
+      "tier": "C",
+      "time_bank_seconds": 8.0,
+      "source_sha256": "3298802848f420315baac8f11c6c90ef8b593c63fd15d574d343bd1f9c770838",
+      "source_files": {
+        "league/opponents/oracle_counter.py": "3298802848f420315baac8f11c6c90ef8b593c63fd15d574d343bd1f9c770838",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c"
+      }
+    },
+    "evolved_e0001": {
+      "script": "league/opponents/evolved/e0001/agent.py",
+      "tier": "H",
+      "evolved": true,
+      "source_sha256": "d449171f1e5603c5833bd405d2dcdc388d55abb2c69b6832c05cf9bfcaab15f0",
+      "source_files": {
+        "league/opponents/evolved/e0001/agent.py": "d449171f1e5603c5833bd405d2dcdc388d55abb2c69b6832c05cf9bfcaab15f0",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c",
+        "league/opponents/evolved/e0001/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/evolved/e0001/family.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/evolved/e0001/META.json": "e519d2ddaa785fa95e1373e2099d27a0e2a416f16e3213e2a09edeb30b560ab3"
+      }
+    },
+    "evolved_e0002": {
+      "script": "league/opponents/evolved/e0002/agent.py",
+      "tier": "H",
+      "evolved": true,
+      "source_sha256": "ea8beff9db89b092258fda750ac59943bdd85b334d9d33044ca060e62feb046b",
+      "source_files": {
+        "league/opponents/evolved/e0002/agent.py": "ea8beff9db89b092258fda750ac59943bdd85b334d9d33044ca060e62feb046b",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c",
+        "league/opponents/evolved/e0002/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/evolved/e0002/family.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/evolved/e0002/META.json": "91beb6c97e9b862a9cabc627f5ad5df11ac247d880aad410fdeed8ff771be0c6"
+      }
+    },
+    "evolved_e0003": {
+      "script": "league/opponents/evolved/e0003/agent.py",
+      "tier": "H",
+      "evolved": true,
+      "source_sha256": "512c69da6b97c5765441ebed49c91eb2bb120ec24a6d8446f563f61b818e282d",
+      "source_files": {
+        "league/opponents/evolved/e0003/agent.py": "512c69da6b97c5765441ebed49c91eb2bb120ec24a6d8446f563f61b818e282d",
+        "league/opponents/parametric.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/common.py": "e65fb083764ab82f50ed3beb71952fc22b9fa516e3f1754d479b09642748dad9",
+        "league/opponents/styles.py": "fa1a28b0999e0b744ea4f2787c66f4944bfdf70b678c3545817c1e93135e2846",
+        "league/opponents/oracle_common.py": "f079c171263562b70ead96147e31cc72d217d3d3c7a18bac7117759ad7fdd20c",
+        "league/opponents/evolved/e0003/server.py": "9f71a4c5d9dfa23fb8f7901f9382a363568fab82ad74626a36f1c2718000d2ef",
+        "league/opponents/evolved/e0003/family.py": "2c1234bf3736a580be97263302f3a5e1d7fe0ee962f293a713633a985e83e869",
+        "league/opponents/evolved/e0003/META.json": "0b35220f7d93e4f0cfdb09e24088b18ce640509f3a0d8fd8d1f1949b764f98c2"
+      }
     }
   },
   "timing_controls": {
@@ -184,6 +1357,28 @@
       "requires_milestone": true,
       "generation": 1,
       "consumed_by": "iteration-1 v2 promotion"
+    },
+    {
+      "generation": 2,
+      "opponents": [
+        "holdout_sentinel_a",
+        "adaptive_counter",
+        "erratic"
+      ],
+      "seeds": [
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210
+      ],
+      "requires_milestone": true,
+      "consumed_by": "Reserved but not scored during rejected timing audit"
     }
   ],
   "holdout_rotation_plan": {
@@ -208,5 +1403,49 @@
       ]
     },
     "reason": "fixed round-robin slot rotation and fresh seed decade; declared before validation scores"
-  }
+  },
+  "tiers": {
+    "F": {
+      "description": "Fair population style variants"
+    },
+    "H": {
+      "description": "Jester-specific fair counters and permanent hall of fame",
+      "maximum_champion_edge": 0.75
+    },
+    "C": {
+      "description": "Unfair test-only guardrail, excluded from points"
+    }
+  },
+  "screening": {
+    "opponents": [
+      "baseline_random",
+      "calling_station",
+      "pot_maniac",
+      "pot_odds_bot",
+      "anti_maniac",
+      "tag_value",
+      "lag_pot",
+      "odds_tight",
+      "folder_lock_2",
+      "folder_lock_4",
+      "value_trap_2",
+      "reraise_bait_2",
+      "gear_cycle_2",
+      "range_counter"
+    ]
+  },
+  "cheaters": {
+    "seeds": [
+      41,
+      42,
+      43
+    ],
+    "excluded_from_points": true
+  },
+  "declared_at": "2026-11-08T16:34:42.809659+00:00",
+  "hall_of_fame": [
+    "evolved_e0001",
+    "evolved_e0002",
+    "evolved_e0003"
+  ]
 }
